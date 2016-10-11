@@ -22,6 +22,7 @@ import android.widget.TableLayout;
 public class TableFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String TAG = "TableFragment";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -70,7 +71,6 @@ public class TableFragment extends Fragment {
         FrameLayout frameLayout = (FrameLayout)view.findViewById(R.id.fl_main);
         TableLayout tableLayout = new TableLayout(getContext());
         TableHelper tableHelper = new TableHelper(tableLayout);
-        tableHelper.makeTableCool();
         frameLayout.addView(tableLayout);
 
         return view;
