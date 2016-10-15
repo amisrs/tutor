@@ -7,6 +7,10 @@
     <string name="zid">zID</string>
     <string name="fname">First Name</string>
     <string name="lname">Last Name</string>
+    
+    <string name="name">Name</string>
+    <string name="timeSlot">Time Slot</string>
+    <string name="location">Location</string>
 
     <string name="hello">Hello, </string>
 
@@ -16,9 +20,10 @@
     -->
     <string name="login">Login</string>
     <string name="newTutor">New Tutor</string>
+    <string name="newTutorial">New Tutorial</string>
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
-
+    <string name="attendance">Attendance</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

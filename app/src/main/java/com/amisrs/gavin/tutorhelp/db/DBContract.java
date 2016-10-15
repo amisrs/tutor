@@ -1,4 +1,4 @@
-package com.amisrs.gavin.tutorhelp;
+package com.amisrs.gavin.tutorhelp.db;
 
 import android.provider.BaseColumns;
 

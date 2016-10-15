@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tutorialListName">24sp</dimen>
+    <dimen name="tutorialListOther">16sp</dimen>
+    <dimen name="tutorialListBig">36sp</dimen>
+</resources>

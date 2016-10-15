@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.db.TutorQueries;
+import com.amisrs.gavin.tutorhelp.model.Person;
+import com.amisrs.gavin.tutorhelp.model.Tutor;
 
 import java.util.ArrayList;
 
@@ -43,21 +46,25 @@ public class TutorActivity extends AppCompatActivity {
         });
 
         //might use EditText + password
-        ArrayList<Integer> tutorList = new ArrayList<>();
-        tutorList.add(1234567);
-        tutorList.add(9876543);
 
-        ArrayAdapter<Integer> tutorSpinnerAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, tutorList);
-        tutorSpinner.setAdapter(tutorSpinnerAdapter);
+        //get arraylist of tutors from db
+
+        //test tutor
+//        Person testperson = new Person("Gavin", "Chiem", 5062206);
+//        Tutor test = new Tutor(5,testperson);
+//        tutorList.add(test);
+        refreshTutorSpinner();
     }
 
     public void login() {
-        int tutorZID = Integer.parseInt(tutorSpinner.getSelectedItem().toString());
-        Log.d(TAG, "Login button pressed. Logging in with: " + tutorZID);
+        Tutor tutor = (Tutor)tutorSpinner.getSelectedItem();
+
+        Log.d(TAG, "Login button pressed. Logging in with tutor: " + tutor.getTutorID());
 
         //go to TutorialListActivity with the tutorID
         Intent intent = new Intent(this, TutorialListActivity.class);
-        intent.putExtra("zid", tutorZID);
+        intent.putExtra("tutor", tutor);
+
         startActivity(intent);
     }
 
@@ -65,4 +72,18 @@ public class TutorActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NewTutorActivity.class);
         startActivity(intent);
     }
+
+    public void refreshTutorSpinner() {
+        TutorQueries tutorQueries = new TutorQueries(this);
+        ArrayList<Tutor> tutorList = tutorQueries.getTutorList();
+        ArrayAdapter<Tutor> tutorSpinnerAdapter = new ArrayAdapter<Tutor>(this, android.R.layout.simple_spinner_item, tutorList);
+        tutorSpinner.setAdapter(tutorSpinnerAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshTutorSpinner();
+    }
+
 }

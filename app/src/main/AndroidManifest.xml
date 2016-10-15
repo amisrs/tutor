@@ -17,7 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.TutorialListActivity" />
-        <activity android:name=".view.NewTutorActivity"></activity>
+        <activity android:name=".view.NewTutorActivity" />
+        <activity android:name=".view.MenuActivity" />
+        <activity android:name=".view.NewTutorialActivity"></activity>
     </application>
 
 </manifest>

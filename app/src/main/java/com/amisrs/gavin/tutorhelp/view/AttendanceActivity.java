@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.amisrs.gavin.tutorhelp.DBHelper;
+import com.amisrs.gavin.tutorhelp.db.DBHelper;
 import com.amisrs.gavin.tutorhelp.R;
 
 public class AttendanceActivity extends AppCompatActivity implements TableFragment.OnFragmentInteractionListener {

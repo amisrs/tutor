@@ -1,18 +1,43 @@
 package com.amisrs.gavin.tutorhelp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 /**
  * Created by Gavin on 15/10/2016.
  */
-public class Tutorial {
+public class Tutorial implements Parcelable{
     private static final String TAG = "Tutorial";
+    public static final Creator CREATOR = new TutorialCreator();
 
     private int tutorialID;
     private int tutorID;
     private String name;
     private String timeSlot;
     private String location;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(tutorialID);
+        parcel.writeInt(tutorID);
+        parcel.writeString(name);
+        parcel.writeString(timeSlot);
+        parcel.writeString(location);
+    }
+    //from parcel
+    public Tutorial(Parcel parcel) {
+        this.tutorialID = parcel.readInt();
+        this.tutorID = parcel.readInt();
+        this.name = parcel.readString();
+        this.timeSlot = parcel.readString();
+        this.location = parcel.readString();
+    }
 
 
     //constructor for adding a new tutorial
@@ -35,6 +60,7 @@ public class Tutorial {
         this.location = location;
         Log.d(TAG, "Retrieved tutorial data from database: " + tutorialID + " " + tutorID + "" + "name");
     }
+
 
     public String getTimeSlot() {
         return timeSlot;
@@ -74,5 +100,17 @@ public class Tutorial {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    static class TutorialCreator implements Creator<Tutorial> {
+        @Override
+        public Tutorial createFromParcel(Parcel parcel) {
+            return new Tutorial(parcel);
+        }
+
+        @Override
+        public Tutorial[] newArray(int i) {
+            return new Tutorial[0];
+        }
     }
 }
