@@ -1,4 +1,4 @@
-package com.amisrs.gavin.tutorhelp;
+package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TableLayout;
+
+import com.amisrs.gavin.tutorhelp.R;
 
 
 /**

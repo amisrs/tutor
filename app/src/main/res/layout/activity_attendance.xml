@@ -7,9 +7,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.amisrs.gavin.tutorhelp.MainActivity">
+    tools:context=".view.AttendanceActivity">
     <fragment
-        android:name="com.amisrs.gavin.tutorhelp.TableFragment"
+        android:name="com.amisrs.gavin.tutorhelp.view.TableFragment"
         android:id="@+id/f_table"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

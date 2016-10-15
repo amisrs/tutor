@@ -1,4 +1,4 @@
-package com.amisrs.gavin.tutorhelp;
+package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.amisrs.gavin.tutorhelp.R;
 
 /**
  * Created by Gavin on 11/10/2016.

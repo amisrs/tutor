@@ -1,4 +1,4 @@
-package com.amisrs.gavin.tutorhelp;
+package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.amisrs.gavin.tutorhelp.R;
 
 /**
  * TODO: document your custom view class.
