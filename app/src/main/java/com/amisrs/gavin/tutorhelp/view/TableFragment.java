@@ -1,16 +1,22 @@
 package com.amisrs.gavin.tutorhelp.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
 
 /**
@@ -25,12 +31,10 @@ public class TableFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "TableFragment";
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_TUTORIAL = "param1";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Tutorial mParam1;
 
     private OnFragmentInteractionListener mListener;
 
@@ -42,16 +46,14 @@ public class TableFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param tutorial Parameter 1.
      * @return A new instance of fragment TableFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TableFragment newInstance(String param1, String param2) {
+    public static TableFragment newInstance(Tutorial tutorial) {
         TableFragment fragment = new TableFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelable(ARG_TUTORIAL, tutorial);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,8 +62,7 @@ public class TableFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getParcelable(ARG_TUTORIAL);
         }
     }
 
@@ -70,10 +71,16 @@ public class TableFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_table, container, false);
-        FrameLayout frameLayout = (FrameLayout)view.findViewById(R.id.fl_main);
+        RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.rl_insideHSV);
+        Log.d(TAG, "Fragment param1: " + mParam1.getName());
+
+
+
         TableLayout tableLayout = new TableLayout(getContext());
-        TableHelper tableHelper = new TableHelper(tableLayout);
-        frameLayout.addView(tableLayout);
+        TableHelper tableHelper = new TableHelper(tableLayout, mParam1);
+
+
+        relativeLayout.addView(tableLayout);
 
         return view;
     }

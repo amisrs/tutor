@@ -2,14 +2,17 @@ package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
 /**
  * Created by Gavin on 11/10/2016.
@@ -17,13 +20,16 @@ import com.amisrs.gavin.tutorhelp.R;
 public class TableHelper {
     private static final String TAG = "TableHelper";
 
+    public Tutorial tutorial;
     public TableLayout tableLayout;
     public TableRow firstRow;
     public Context context;
 
-    public TableHelper(TableLayout tableLayout) {
+    public TableHelper(TableLayout tableLayout, Tutorial tutorial) {
         this.tableLayout = tableLayout;
         this.firstRow = (TableRow)tableLayout.getChildAt(0);
+        this.tutorial = tutorial;
+        Log.d(TAG, "TableHelper created for tutorial: " + tutorial.getName());
         context = tableLayout.getContext();
         makeTableCool();
     }
@@ -31,7 +37,8 @@ public class TableHelper {
     private void makeTableCool() {
         TableRow firstRow = new TableRow(context);
         TextView studentLabel = new TextView(context);
-        studentLabel.setText(context.getString(R.string.studentLabel));
+        //this is the top left corner of the table
+        studentLabel.setText(tutorial.getName());
         firstRow.addView(studentLabel);
         tableLayout.addView(firstRow);
 
@@ -45,15 +52,18 @@ public class TableHelper {
         TableRow topRow = (TableRow)tableLayout.getChildAt(0);
 
         topRow.removeView(topRow.getChildAt(topRow.getChildCount()-1));
+        //top row should have week square
+        TextView weekSquare = new TextView(context);
+        weekSquare.setText("new week");
+        topRow.addView(weekSquare);
+        //add new column by adding child to each row (except first)
 
-
-        //add new column by adding child to each row
         Log.d(TAG, "Add new week, number of rows: " + tableLayout.getChildCount());
-        for(int i=0; i<tableLayout.getChildCount()-1; i++) {
-            Log.d(TAG, "Adding box for new week column; " + i);
+        for(int i=1; i<tableLayout.getChildCount()-1; i++) { //i=1 to skip first
+            Log.d(TAG, "Adding box for new week column; row " + i);
             TableRow row = (TableRow)tableLayout.getChildAt(i);
-            TextView placeholderForStudentWeek = new TextView(context);
-            placeholderForStudentWeek.setText(String.valueOf(i));
+
+            StudentWeekSquare placeholderForStudentWeek = new StudentWeekSquare(context);
             row.addView(placeholderForStudentWeek);
         }
         addAddWeekButton();
@@ -65,7 +75,7 @@ public class TableHelper {
         Log.d(TAG, "Row count = " + tableLayout.getChildCount());
 
         int rowCount = tableLayout.getChildCount();
-        View lastView = tableLayout.getChildAt(rowCount - 1);
+        View lastView = tableLayout.getChildAt(rowCount-1);
         tableLayout.removeView(lastView);
         //add row and add box child for each week
         TableRow firstRow = new TableRow(context);
@@ -75,10 +85,16 @@ public class TableHelper {
 
         int rowItems = firstRow.getChildCount();
 
+        //first column should have student square
+
         TableRow newRow = new TableRow(context);
-        for(int i=0; i<rowItems-1; i++) {
-            TextView placeHolderForStudentWeek = new TextView(context);
-            placeHolderForStudentWeek.setText(String.valueOf(i));
+        //newrow add student square first
+        TextView studentSquare = new TextView(context);
+        studentSquare.setText("new student");
+        newRow.addView(studentSquare);
+        for(int i=1; i<rowItems-1; i++) { //i=1 because skip first column
+            Log.d(TAG, "Adding new square for number of rowItems, currently at: " + i);
+            StudentWeekSquare placeHolderForStudentWeek = new StudentWeekSquare(context);
             newRow.addView(placeHolderForStudentWeek);
         }
         tableLayout.addView(newRow);

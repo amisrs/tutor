@@ -3,14 +3,17 @@ package com.amisrs.gavin.tutorhelp.view;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
 public class MenuActivity extends AppCompatActivity {
+    private static final String TAG = "MenuActivity";
     TextView nameTextView;
     Button attendanceButton;
     Tutorial tutorial;
@@ -37,6 +40,7 @@ public class MenuActivity extends AppCompatActivity {
     public void goToAttendance() {
         Intent intent = new Intent(this, AttendanceActivity.class);
         intent.putExtra("tutorial", tutorial);
+        Log.d(TAG, "Put extra tutorial: " + tutorial.getName());
         startActivity(intent);
     }
 }
