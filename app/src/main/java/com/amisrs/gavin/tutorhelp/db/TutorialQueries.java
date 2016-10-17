@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.amisrs.gavin.tutorhelp.model.Person;
+import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
@@ -69,6 +71,37 @@ public class TutorialQueries extends QueryBase {
         long newRowId = db.insert(DBContract.TutorialTable.TABLE_NAME, null, contentValues);
         Log.d(TAG, "Added new Tutorial: " + tutorial.getTutorID() + " " + tutorial.getName() + tutorial.getTimeSlot() + tutorial.getLocation());
         close();
+    }
+
+    public ArrayList<Student> getStudentsForTutorial(Tutorial tutorial) {
+        open();
+        ArrayList<Student> students = new ArrayList<>();
+
+        String query = "select s." + DBContract.StudentTable.COLUMN_PERSONID + COMMA_SEP +
+                              "s." + DBContract.StudentTable.COLUMN_STUDENTID + COMMA_SEP +
+                              "p." + DBContract.PersonTable.COLUMN_ZID + COMMA_SEP +
+                              "p." + DBContract.PersonTable.COLUMN_FIRSTNAME + COMMA_SEP +
+                              "p." + DBContract.PersonTable.COLUMN_LASTNAME +
+                " from " + DBContract.PersonTable.TABLE_NAME + " p" +
+                " join " + DBContract.StudentTable.TABLE_NAME + " s" +
+                " on s." + DBContract.StudentTable.COLUMN_PERSONID + " = " +
+                "p." + DBContract.PersonTable.COLUMN_PERSONID +
+                " join " + DBContract.EnrolmentTable.TABLE_NAME + " e" +
+                " on s." + DBContract.StudentTable.COLUMN_STUDENTID + " = " +
+                "e." + DBContract.EnrolmentTable.COLUMN_STUDENTID +
+                " where " + DBContract.EnrolmentTable.COLUMN_TUTORIALID + " = ?";
+
+        Cursor c = db.rawQuery(query, new String[] { String.valueOf(tutorial.getTutorialID()) });
+        c.moveToFirst();
+        while(!c.isAfterLast()) {
+            Person newPerson = new Person(c.getInt(0), c.getString(3), c.getString(4), c.getInt(2));
+            Student newStudent = new Student(c.getInt(1), c.getInt(0), newPerson);
+            students.add(newStudent);
+            c.moveToNext();
+        }
+        c.close();
+        close();
+        return students;
     }
 
 }

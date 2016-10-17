@@ -1,6 +1,7 @@
 package com.amisrs.gavin.tutorhelp.view;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.RelativeLayout;
@@ -22,7 +24,14 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.db.PersonQueries;
+import com.amisrs.gavin.tutorhelp.db.StudentQueries;
+import com.amisrs.gavin.tutorhelp.model.Person;
+import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -84,9 +93,11 @@ public class TableFragment extends Fragment {
         floatingActionButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                Log.d(TAG, "FAB touched.");
-                //onButtonPressed("add");
-                addStudent();
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    Log.d(TAG, "FAB touched.");
+                    //onButtonPressed("add");
+                    addStudent();
+                }
                 return true;
             }
         });
@@ -146,4 +157,5 @@ public class TableFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(String name);
     }
+
 }

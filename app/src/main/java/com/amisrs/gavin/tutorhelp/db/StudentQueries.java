@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class StudentQueries extends QueryBase {
         super(context);
     }
 
-    public void addStudent(Student student) {
+    public void addStudent(Student student, Tutorial tutorial) {
         open();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBContract.StudentTable.COLUMN_PERSONID, student.getPersonID());
@@ -29,8 +30,18 @@ public class StudentQueries extends QueryBase {
         long newRowId = db.insert(DBContract.StudentTable.TABLE_NAME, null, contentValues);
 
         Log.d(TAG, "Inserted new student to database: " + student.getStudentID() + " rowId = " + newRowId);
+
+        ContentValues contentValues1 = new ContentValues();
+        contentValues1.put(DBContract.EnrolmentTable.COLUMN_STUDENTID, (int)newRowId);
+        contentValues1.put(DBContract.EnrolmentTable.COLUMN_TUTORIALID, tutorial.getTutorialID());
+
+        long newRowId1 = db.insert(DBContract.EnrolmentTable.TABLE_NAME, null, contentValues1);
+
+        Log.d(TAG, "Inserted enrolment for that student to tutorial " + tutorial.getName());
+
         close();
     }
+
 
     public ArrayList<Student> getStudentList() {
         open();

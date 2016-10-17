@@ -58,7 +58,7 @@ public class NewStudentActivity extends Activity {
             Person addedPerson = personQueries.addPerson(new Person(fnameString, lnameString, zidInt));
 
             StudentQueries studentQueries = new StudentQueries(this);
-            studentQueries.addStudent(new Student(addedPerson.getPersonID(), addedPerson));
+            //studentQueries.addStudent(new Student(addedPerson.getPersonID(), addedPerson));
 
             Log.d(TAG, "Added person to database: " + addedPerson.getzID() + " " + addedPerson.getFirstName() + " " + addedPerson.getLastName());
             //add stuff to database

@@ -35,6 +35,12 @@ public class NewStudentDialogFragment extends DialogFragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private NewStudentDialogFragmentListener dialogListener;
+
+    public interface NewStudentDialogFragmentListener {
+        public void onDialogPositiveClick(DialogFragment fragment);
+        public void onDialogNegativeClick(DialogFragment fragment);
+    }
 
     public NewStudentDialogFragment() {
         // Required empty public constructor
@@ -85,18 +91,22 @@ public class NewStudentDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.activity_new_student, null));
-        builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
+        builder
+        .setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Log.d("aa", "create");
+                dialogListener.onDialogPositiveClick(NewStudentDialogFragment.this);
             }
         })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("aa", "cancel");
-                    }
-                });
+        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.d("aa", "cancel");
+                dialogListener.onDialogNegativeClick(NewStudentDialogFragment.this);
+                dialogInterface.cancel();
+            }
+        });
 
         return builder.create();
     }
@@ -106,6 +116,7 @@ public class NewStudentDialogFragment extends DialogFragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(name);
         }
+
     }
 
     @Override
@@ -113,6 +124,7 @@ public class NewStudentDialogFragment extends DialogFragment {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
+            dialogListener = (NewStudentDialogFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -123,6 +135,7 @@ public class NewStudentDialogFragment extends DialogFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        dialogListener = null;
     }
 
     /**

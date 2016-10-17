@@ -12,8 +12,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+
+import java.util.ArrayList;
 
 /**
  * Created by Gavin on 11/10/2016.
@@ -43,8 +46,14 @@ public class TableHelper {
         firstRow.addView(studentLabel);
         tableLayout.addView(firstRow);
 
+        TutorialQueries tutorialQueries = new TutorialQueries(context);
+        ArrayList<Student> students = tutorialQueries.getStudentsForTutorial(tutorial);
+        for(Student s : students) {
+            addRow(s);
+        }
+
         addAddWeekButton();
-        addAddStudentButton();
+        //addAddStudentButton();
     }
 
     public void addColumn() {
@@ -60,7 +69,7 @@ public class TableHelper {
         //add new column by adding child to each row (except first)
 
         Log.d(TAG, "Add new week, number of rows: " + tableLayout.getChildCount());
-        for(int i=1; i<tableLayout.getChildCount()-1; i++) { //i=1 to skip first
+        for(int i=1; i<tableLayout.getChildCount(); i++) {
             Log.d(TAG, "Adding box for new week column; row " + i);
             TableRow row = (TableRow)tableLayout.getChildAt(i);
 
@@ -70,14 +79,14 @@ public class TableHelper {
         addAddWeekButton();
     }
 
-    public void addRow() {
+    public void addRow(Student student) {
         //use this when you add a student
         //remove the last one (it should be an add button)
         Log.d(TAG, "Row count = " + tableLayout.getChildCount());
 
-        int rowCount = tableLayout.getChildCount();
-        View lastView = tableLayout.getChildAt(rowCount-1);
-        tableLayout.removeView(lastView);
+//        int rowCount = tableLayout.getChildCount();
+//        View lastView = tableLayout.getChildAt(rowCount-1);
+//        tableLayout.removeView(lastView);
         //add row and add box child for each week
         TableRow firstRow = new TableRow(context);
         Log.d(TAG, "First row should exist; " + firstRow.getId());
@@ -91,15 +100,15 @@ public class TableHelper {
         TableRow newRow = new TableRow(context);
         //newrow add student square first
         TextView studentSquare = new TextView(context);
-        studentSquare.setText("new student");
+        studentSquare.setText(student.toString());
         newRow.addView(studentSquare);
-        for(int i=1; i<rowItems-1; i++) { //i=1 because skip first column
+        for(int i=0; i<rowItems-1; i++) {
             Log.d(TAG, "Adding new square for number of rowItems, currently at: " + i);
             StudentWeekSquare placeHolderForStudentWeek = new StudentWeekSquare(context);
             newRow.addView(placeHolderForStudentWeek);
         }
         tableLayout.addView(newRow);
-        addAddStudentButton();
+        //addAddStudentButton();
     }
 
     public void addAddWeekButton() {
@@ -115,20 +124,20 @@ public class TableHelper {
         topRow.addView(addWeekButton);
     }
 
-    public void addAddStudentButton() {
-        //add new row that just has a button
-        TableRow bottomRow = new TableRow(context);
-        Button addStudentButton = new Button(context);
-        addStudentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addRow();
-            }
-        });
-        bottomRow.addView(addStudentButton);
-        tableLayout.addView(bottomRow);
-
-
-    }
+//    public void addAddStudentButton() {
+//        //add new row that just has a button
+//        TableRow bottomRow = new TableRow(context);
+//        Button addStudentButton = new Button(context);
+//        addStudentButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                addRow();
+//            }
+//        });
+//        bottomRow.addView(addStudentButton);
+//        tableLayout.addView(bottomRow);
+//
+//
+//    }
 
 }
