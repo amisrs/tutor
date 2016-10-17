@@ -1,6 +1,8 @@
 package com.amisrs.gavin.tutorhelp.view;
 
-import android.app.FragmentManager;
+import android.app.DialogFragment;
+import android.nfc.Tag;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,18 +11,20 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
 
 import com.amisrs.gavin.tutorhelp.db.DBHelper;
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
-public class AttendanceActivity extends AppCompatActivity implements TableFragment.OnFragmentInteractionListener {
+public class AttendanceActivity extends AppCompatActivity implements TableFragment.OnFragmentInteractionListener, NewStudentDialogFragment.OnFragmentInteractionListener {
     private static final String TAG = "AttendanceActivity";
     Tutorial tutorial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_attendance);
         Intent fromIntent = getIntent();
         tutorial = fromIntent.getParcelableExtra("tutorial");
@@ -37,9 +41,11 @@ public class AttendanceActivity extends AppCompatActivity implements TableFragme
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(String name) {
 
     }
+
+
 
     public Tutorial getTutorial() {
         return tutorial;

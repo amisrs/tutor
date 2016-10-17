@@ -1,50 +1,42 @@
 package com.amisrs.gavin.tutorhelp.view;
 
-import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.app.Fragment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
 
 import com.amisrs.gavin.tutorhelp.R;
-import com.amisrs.gavin.tutorhelp.model.Tutorial;
-
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TableFragment.OnFragmentInteractionListener} interface
+ * {@link NewStudentDialogFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TableFragment#newInstance} factory method to
+ * Use the {@link NewStudentDialogFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TableFragment extends Fragment {
+public class NewStudentDialogFragment extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String TAG = "TableFragment";
-    private static final String ARG_TUTORIAL = "param1";
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private Tutorial mParam1;
+    private String mParam1;
+    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public TableFragment() {
+    public NewStudentDialogFragment() {
         // Required empty public constructor
     }
 
@@ -52,14 +44,16 @@ public class TableFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param tutorial Parameter 1.
-     * @return A new instance of fragment TableFragment.
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment NewStudentDialogFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TableFragment newInstance(Tutorial tutorial) {
-        TableFragment fragment = new TableFragment();
+    public static NewStudentDialogFragment newInstance(String param1, String param2) {
+        NewStudentDialogFragment fragment = new NewStudentDialogFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_TUTORIAL, tutorial);
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,38 +62,43 @@ public class TableFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getParcelable(ARG_TUTORIAL);
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    public static NewStudentDialogFragment newInstance() {
+        NewStudentDialogFragment newStudentDialogFragment = new NewStudentDialogFragment();
+        return newStudentDialogFragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_table, container, false);
-        RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.rl_insideHSV);
-        Log.d(TAG, "Fragment param1: " + mParam1.getName());
-        FloatingActionButton floatingActionButton = new FloatingActionButton(getContext());
-        floatingActionButton = (FloatingActionButton)view.findViewById(R.id.fab_add);
-        floatingActionButton.setOnTouchListener(new View.OnTouchListener() {
+        return inflater.inflate(R.layout.fragment_new_student_dialog, container, false);
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.activity_new_student, null));
+        builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                Log.d(TAG, "FAB touched.");
-                //onButtonPressed("add");
-                addStudent();
-                return true;
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.d("aa", "create");
             }
-        });
+        })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.d("aa", "cancel");
+                    }
+                });
 
-
-
-        TableLayout tableLayout = new TableLayout(getContext());
-        TableHelper tableHelper = new TableHelper(tableLayout, mParam1);
-
-
-        relativeLayout.addView(tableLayout);
-
-        return view;
+        return builder.create();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -124,12 +123,6 @@ public class TableFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    public void addStudent() {
-        NewStudentDialogFragment nsdf = NewStudentDialogFragment.newInstance();
-        FragmentManager fragmentManager = getChildFragmentManager();
-        nsdf.show(fragmentManager, "dialog");
     }
 
     /**
