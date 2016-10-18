@@ -19,6 +19,15 @@ public class StudentWeek {
         publicComment = "";
     }
 
+    //from db
+    public StudentWeek(int studentID, int weekID, int attended, String privateComment, String publicComment) {
+        this.studentID = studentID;
+        this.weekID = weekID;
+        this.attended = attended;
+        this.privateComment = privateComment;
+        this.publicComment = publicComment;
+    }
+
     public int getStudentID() {
         return studentID;
     }

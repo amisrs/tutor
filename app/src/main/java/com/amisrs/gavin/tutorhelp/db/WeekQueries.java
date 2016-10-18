@@ -5,10 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.StudentWeek;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.model.Week;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 /**
  * Created by Gavin on 17/10/2016.
@@ -66,7 +69,31 @@ public class WeekQueries extends QueryBase {
         return weeks;
     }
 
-    public void getStudentWeekForWeek(Week week) {
+    public StudentWeek getStudentWeekForWeekAndStudentAndTutorial(Week week, Student student, Tutorial tutorial) {
+        open();
+        String query = "select sw." + DBContract.StudentWeekTable.COLUMN_STUDENTID + ", " +
+                              "sw." + DBContract.StudentWeekTable.COLUMN_WEEKID + ", " +
+                              "sw." + DBContract.StudentWeekTable.COLUMN_ATTENDED + ", " +
+                              "sw." + DBContract.StudentWeekTable.COLUMN_PRIVATECOMMENT + ", " +
+                              "sw." + DBContract.StudentWeekTable.COLUMN_PUBLICCOMMENT +
+                        " from " + DBContract.StudentWeekTable.TABLE_NAME + " sw" +
+                        " join " + DBContract.WeekTable.TABLE_NAME + " w" +
+                        " on w."+ DBContract.WeekTable.COLUMN_WEEKID + " = sw." + DBContract.StudentWeekTable.COLUMN_WEEKID +
+                        " where w." + DBContract.WeekTable.COLUMN_TUTORIALID + " = ?" +
+                        " and sw." + DBContract.StudentWeekTable.COLUMN_STUDENTID + " = ?" +
+                        " and sw." + DBContract.StudentWeekTable.COLUMN_WEEKID + " = ?";
+
+        String[] selectionArgs = { String.valueOf(tutorial.getTutorialID()),
+                                   String.valueOf(student.getStudentID()),
+                                   String.valueOf(week.getWeekID()) };
+
+        Cursor c = db.rawQuery(query, selectionArgs);
+        c.moveToFirst();
+
+        StudentWeek retval = new StudentWeek(c.getInt(0), c.getInt(1), c.getInt(2), c.getString(3), c.getString(4));
+        return retval;
 
     }
+
+    //TODO: update studentweek
 }

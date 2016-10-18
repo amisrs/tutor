@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.db.WeekQueries;
 import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.StudentWeek;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.model.Week;
 
@@ -33,6 +35,7 @@ public class StudentWeekDetailsFragment extends Fragment {
     private Week weekParam;
     private Student studentParam;
     private Tutorial tutorialParam;
+    private StudentWeek studentWeek;
 
     private OnFragmentInteractionListener mListener;
 
@@ -76,6 +79,10 @@ public class StudentWeekDetailsFragment extends Fragment {
 
         weekText.setText(weekParam.toString());
         studentText.setText(studentParam.toString());
+        WeekQueries weekQueries = new WeekQueries(getContext());
+        studentWeek = weekQueries.getStudentWeekForWeekAndStudentAndTutorial(weekParam, studentParam, tutorialParam);
+
+        //TODO: add in ui elements to manipulate and save to this studentWeek
 
         // Inflate the layout for this fragment
         return view;
