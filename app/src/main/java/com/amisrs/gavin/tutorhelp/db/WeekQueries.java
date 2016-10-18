@@ -91,6 +91,8 @@ public class WeekQueries extends QueryBase {
         c.moveToFirst();
 
         StudentWeek retval = new StudentWeek(c.getInt(0), c.getInt(1), c.getInt(2), c.getString(3), c.getString(4));
+        c.close();
+        close();
         return retval;
 
     }

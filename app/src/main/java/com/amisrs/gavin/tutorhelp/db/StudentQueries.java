@@ -8,6 +8,7 @@ import android.util.Log;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.amisrs.gavin.tutorhelp.model.Week;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,14 @@ public class StudentQueries extends QueryBase {
 
         Log.d(TAG, "Inserted enrolment for that student to tutorial " + tutorial.getName());
 
+        WeekQueries weekQueries = new WeekQueries(context);
+        ArrayList<Week> weeks;
+
+        for(int i=1; i<14; i++) {
+            ContentValues contentValues2 = new ContentValues();
+            contentValues2.put(DBContract.StudentWeekTable.COLUMN_STUDENTID, (int) newRowId);
+            contentValues2.put(DBContract.StudentWeekTable.COLUMN_WEEKID, );
+        }
         close();
     }
 

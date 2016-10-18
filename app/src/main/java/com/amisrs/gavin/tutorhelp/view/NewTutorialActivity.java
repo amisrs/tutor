@@ -9,11 +9,14 @@ import android.widget.EditText;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
+import com.amisrs.gavin.tutorhelp.db.WeekQueries;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.amisrs.gavin.tutorhelp.model.Week;
 
 public class NewTutorialActivity extends AppCompatActivity {
     private static final String TAG = "NewTutorialActivity";
+    private static final int NUMBER_OF_WEEKS = 13;
 
     Tutor tutor;
     Button createButton;
@@ -47,6 +50,12 @@ public class NewTutorialActivity extends AppCompatActivity {
                                             timeSlot.getText().toString(),
                                             location.getText().toString());
         tutorialQueries.addTutorial(newTutorial);
+        WeekQueries weekQueries = new WeekQueries(this);
+        for(int i=1; i<=NUMBER_OF_WEEKS; i++) {
+            Week newWeek = new Week(newTutorial.getTutorialID(), i, "");
+            weekQueries.addWeek(newWeek);
+        }
+
         finish();
     }
 }
