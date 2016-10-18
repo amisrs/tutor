@@ -3,6 +3,7 @@ package com.amisrs.gavin.tutorhelp.controller;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,11 @@ import java.util.ArrayList;
 public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.StudentViewHolder> {
     private static final String TAG = "StudentListAdapter";
     ArrayList<Student> students;
+    OnItemClickListener studentListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        studentListener = listener;
+    }
 
     public void giveList(ArrayList<Student> list) {
         students = list;
@@ -39,7 +45,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
         return new StudentViewHolder(inflatedView);
     }
     class StudentViewHolder extends RecyclerView.ViewHolder {
-
+        private View view;
         private TextView fname;
         private TextView lname;
         private TextView zid;
@@ -47,6 +53,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
 
         public StudentViewHolder(View itemView) {
             super(itemView);
+            view = itemView;
             fname = (TextView)itemView.findViewById(R.id.student_fname);
             lname = (TextView)itemView.findViewById(R.id.student_lname);
             zid = (TextView)itemView.findViewById(R.id.student_zid);
@@ -57,9 +64,13 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
             fname.setText(student.getPerson().getFirstName());
             lname.setText(student.getPerson().getLastName());
             zid.setText(String.valueOf(student.getPerson().getzID()));
-
-
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d(TAG, "Student clicked");
+                    studentListener.onStudentClick(view, student);
+                }
+            });
         }
 
     }

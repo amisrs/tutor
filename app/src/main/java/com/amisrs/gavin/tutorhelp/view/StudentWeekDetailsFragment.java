@@ -72,8 +72,11 @@ public class StudentWeekDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_student_week_details, container, false);
         TextView weekText = (TextView)view.findViewById(R.id.tv_week);
+        TextView studentText = (TextView)view.findViewById(R.id.tv_student);
 
         weekText.setText(weekParam.toString());
+        studentText.setText(studentParam.toString());
+
         // Inflate the layout for this fragment
         return view;
     }

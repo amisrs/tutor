@@ -13,26 +13,37 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.controller.OnItemClickListener;
+import com.amisrs.gavin.tutorhelp.db.StudentQueries;
+import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.db.WeekQueries;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.StudentWeek;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.model.Week;
 
 import java.util.ArrayList;
 
-public class BaseActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener, StudentWeekDetailsFragment.OnFragmentInteractionListener {
+public class BaseActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener, StudentWeekDetailsFragment.OnFragmentInteractionListener, OnItemClickListener {
     private static final String TAG = "BaseActivity";
     Tutorial tutorial;
     Spinner spinner;
+    Student currentStudent;
+    Week currentWeek;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         tutorial = getIntent().getParcelableExtra("tutorial");
-        Person fakePerson = new Person(1, "test", "testlname", 2222);
-        Student fakeStudent = new Student(1,1,fakePerson);
+
+
+        TutorialQueries tutorialQueries = new TutorialQueries(this);
+        ArrayList<Student> students = tutorialQueries.getStudentsForTutorial(tutorial);
+
+
+        currentStudent = students.get(0);
 
         ArrayList<Week> weeks = new ArrayList<>();
         WeekQueries weekQueries = new WeekQueries(this);
@@ -45,6 +56,7 @@ public class BaseActivity extends AppCompatActivity implements StudentListFragme
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Week selectedWeek = (Week)adapterView.getItemAtPosition(i);
+                currentWeek = selectedWeek;
                 changeFragmentWeek(selectedWeek);
             }
 
@@ -57,23 +69,29 @@ public class BaseActivity extends AppCompatActivity implements StudentListFragme
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.rl_left, StudentListFragment.newInstance(tutorial));
-        fragmentTransaction.add(R.id.rl_right, StudentWeekDetailsFragment.newInstance(weeks.get(weeks.size()-1),fakeStudent,tutorial));
+        fragmentTransaction.add(R.id.rl_right, StudentWeekDetailsFragment.newInstance(weeks.get(weeks.size()-1),currentStudent,tutorial));
         fragmentTransaction.commit();
     }
 
     public void changeFragmentWeek(Week week) {
-        Person fakePerson = new Person(1, "test", "testlname", 2222);
-        Student fakeStudent = new Student(1,1,fakePerson);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.rl_right, StudentWeekDetailsFragment.newInstance(week,fakeStudent,tutorial));
+        fragmentTransaction.replace(R.id.rl_right, StudentWeekDetailsFragment.newInstance(week,currentStudent,tutorial));
         fragmentTransaction.commit();
-
     }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onStudentClick(View view, Student student) {
+        currentStudent = student;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.rl_right, StudentWeekDetailsFragment.newInstance(currentWeek,currentStudent,tutorial));
+        fragmentTransaction.commit();
     }
 }

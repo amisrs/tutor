@@ -79,6 +79,8 @@ public class StudentListFragment extends Fragment {
 
         studentArrayList = tutorialQueries.getStudentsForTutorial(tutorialParam);
         StudentListAdapter adapter = new StudentListAdapter();
+        BaseActivity baseActivity = (BaseActivity)getActivity();
+        adapter.setOnItemClickListener(baseActivity);
         adapter.giveList(studentArrayList);
 
         recyclerView.setAdapter(adapter);

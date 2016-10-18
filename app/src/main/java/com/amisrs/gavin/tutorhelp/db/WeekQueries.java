@@ -65,4 +65,8 @@ public class WeekQueries extends QueryBase {
 
         return weeks;
     }
+
+    public void getStudentWeekForWeek(Week week) {
+
+    }
 }
