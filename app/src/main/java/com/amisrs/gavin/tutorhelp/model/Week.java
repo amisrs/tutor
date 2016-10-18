@@ -7,6 +7,7 @@ import android.os.Parcelable;
  * Created by Gavin on 17/10/2016.
  */
 public class Week implements Parcelable {
+    public static final Creator CREATOR = new WeekCreator();
     int weekID;
     int tutorialID;
     int weekNumber;
@@ -27,6 +28,12 @@ public class Week implements Parcelable {
         this.description = description;
     }
 
+    public Week(Parcel parcel) {
+        this.weekID = parcel.readInt();
+        this.tutorialID = parcel.readInt();
+        this.weekNumber = parcel.readInt();
+        this.description = parcel.readString();
+    }
 
     public int getWeekID() {
         return weekID;
@@ -72,4 +79,22 @@ public class Week implements Parcelable {
     public int describeContents() {
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return "Week " + weekNumber;
+    }
+
+    static class WeekCreator implements Parcelable.Creator<Week> {
+        @Override
+        public Week createFromParcel(Parcel parcel) {
+            return new Week(parcel);
+        }
+
+        @Override
+        public Week[] newArray(int i) {
+            return new Week[i];
+        }
+    }
+
 }
