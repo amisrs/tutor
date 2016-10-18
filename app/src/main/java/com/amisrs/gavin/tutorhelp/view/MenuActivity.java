@@ -13,6 +13,7 @@ import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
 public class MenuActivity extends AppCompatActivity {
+    //TODO: decide what happens with this activity (get rid of it?)
     private static final String TAG = "MenuActivity";
     TextView nameTextView;
     Button attendanceButton;
@@ -38,7 +39,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void goToAttendance() {
-        Intent intent = new Intent(this, AttendanceActivity.class);
+        Intent intent = new Intent(this, BaseActivity.class);
         intent.putExtra("tutorial", tutorial);
         Log.d(TAG, "Put extra tutorial: " + tutorial.getName());
         startActivity(intent);

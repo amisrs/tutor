@@ -19,16 +19,20 @@ import com.amisrs.gavin.tutorhelp.db.DBHelper;
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.db.PersonQueries;
 import com.amisrs.gavin.tutorhelp.db.StudentQueries;
+import com.amisrs.gavin.tutorhelp.db.WeekQueries;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.amisrs.gavin.tutorhelp.model.Week;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AttendanceActivity extends AppCompatActivity implements TableFragment.OnFragmentInteractionListener,
                                                                     NewStudentDialogFragment.OnFragmentInteractionListener,
                                                                     NewStudentDialogFragment.NewStudentDialogFragmentListener {
+    //TODO: make this the root activity for nav drawer?
     private static final String TAG = "AttendanceActivity";
     Tutorial tutorial;
 
@@ -49,7 +53,18 @@ public class AttendanceActivity extends AppCompatActivity implements TableFragme
 
     @Override
     public void onFragmentInteraction(String name) {
+        if(name.equals("addWeek")) {
+            ArrayList<Week> weeks = new ArrayList<>();
+            int weekNum = 0;
+            WeekQueries weekQueries = new WeekQueries(this);
+            weeks = weekQueries.getAllWeeksForTutorial(tutorial);
+            weekNum = weeks.size()+1;
 
+            Week newWeek = new Week(tutorial.getTutorialID(), weekNum, "");
+            weekQueries.addWeek(newWeek);
+            Log.d(TAG, "Added new week to database: weekNum " + weekNum);
+        }
+        refreshTable();
     }
 
     @Override
@@ -59,6 +74,7 @@ public class AttendanceActivity extends AppCompatActivity implements TableFragme
         EditText fname = (EditText)dialog.findViewById(R.id.student_fname);
         EditText lname = (EditText)dialog.findViewById(R.id.student_lname);
 
+        //TODO: improve validation
         String zidString = zid.getText().toString();
         Pattern zidPattern = Pattern.compile("\\d+");
         Matcher zidMatcher = zidPattern.matcher(zidString);

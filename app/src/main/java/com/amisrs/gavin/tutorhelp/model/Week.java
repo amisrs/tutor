@@ -1,9 +1,12 @@
 package com.amisrs.gavin.tutorhelp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Gavin on 17/10/2016.
  */
-public class Week {
+public class Week implements Parcelable {
     int weekID;
     int tutorialID;
     int weekNumber;
@@ -55,5 +58,18 @@ public class Week {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(weekID);
+        parcel.writeInt(tutorialID);
+        parcel.writeInt(weekNumber);
+        parcel.writeString(description);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

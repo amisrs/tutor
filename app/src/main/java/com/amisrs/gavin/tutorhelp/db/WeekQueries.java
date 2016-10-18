@@ -21,6 +21,7 @@ public class WeekQueries extends QueryBase {
     }
 
     public void addWeek(Week week) {
+        open();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBContract.WeekTable.COLUMN_TUTORIALID, week.getTutorialID());
         contentValues.put(DBContract.WeekTable.COLUMN_WEEKNUMBER, week.getWeekNumber());
@@ -28,9 +29,11 @@ public class WeekQueries extends QueryBase {
 
         long newRowId = db.insert(DBContract.WeekTable.TABLE_NAME, null, contentValues);
         Log.d(TAG, "Inserted new week into database: " + week.getWeekNumber() + " " + week.getDescription());
+        close();
     }
 
     public ArrayList<Week> getAllWeeksForTutorial(Tutorial tutorial) {
+        open();
         ArrayList<Week> weeks = new ArrayList<>();
         String[] projection = {
                 DBContract.WeekTable.COLUMN_WEEKID,

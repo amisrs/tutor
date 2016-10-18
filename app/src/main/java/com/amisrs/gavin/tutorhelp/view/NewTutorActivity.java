@@ -45,6 +45,7 @@ public class NewTutorActivity extends AppCompatActivity {
     public void createTutor() {
         //input validation
         //make sure zID has no 'z'
+        //TODO: improve validation, handle null
         String zidString = zid.getText().toString();
         Pattern zidPattern = Pattern.compile("\\d+");
         Matcher zidMatcher = zidPattern.matcher(zidString);

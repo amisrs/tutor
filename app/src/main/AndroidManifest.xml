@@ -19,11 +19,11 @@
         <activity android:name=".view.TutorialListActivity" />
         <activity android:name=".view.NewTutorActivity" />
         <activity android:name=".view.MenuActivity" />
-        <activity android:name=".view.NewTutorialActivity">
-        </activity>
-        <activity android:name=".view.NewStudentActivity"
-            android:theme="@android:style/Theme.Holo.Dialog">
-        </activity>
+        <activity android:name=".view.NewTutorialActivity"></activity>
+        <activity
+            android:name=".view.NewStudentActivity"
+            android:theme="@android:style/Theme.Holo.Dialog"></activity>
+        <activity android:name=".view.BaseActivity"></activity>
     </application>
 
 </manifest>

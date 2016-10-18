@@ -43,12 +43,9 @@ import java.util.regex.Pattern;
  * create an instance of this fragment.
  */
 public class TableFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "TableFragment";
     private static final String ARG_TUTORIAL = "param1";
 
-    // TODO: Rename and change types of parameters
     private Tutorial mParam1;
 
     private OnFragmentInteractionListener mListener;
@@ -64,7 +61,6 @@ public class TableFragment extends Fragment {
      * @param tutorial Parameter 1.
      * @return A new instance of fragment TableFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static TableFragment newInstance(Tutorial tutorial) {
         TableFragment fragment = new TableFragment();
         Bundle args = new Bundle();
@@ -88,6 +84,8 @@ public class TableFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_table, container, false);
         RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.rl_insideHSV);
         Log.d(TAG, "Fragment param1: " + mParam1.getName());
+
+        //TODO: combine two fabs into fab menu
         FloatingActionButton floatingActionButton = new FloatingActionButton(getContext());
         floatingActionButton = (FloatingActionButton)view.findViewById(R.id.fab_add);
         floatingActionButton.setOnTouchListener(new View.OnTouchListener() {
@@ -97,6 +95,18 @@ public class TableFragment extends Fragment {
                     Log.d(TAG, "FAB touched.");
                     //onButtonPressed("add");
                     addStudent();
+                }
+                return true;
+            }
+        });
+
+        FloatingActionButton fabAddWeek = new FloatingActionButton(getContext());
+        fabAddWeek = (FloatingActionButton)view.findViewById(R.id.fab_addweek);
+        fabAddWeek.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    addWeek();
                 }
                 return true;
             }
@@ -113,7 +123,6 @@ public class TableFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(String name) {
         if (mListener != null) {
             mListener.onFragmentInteraction(name);
@@ -143,6 +152,10 @@ public class TableFragment extends Fragment {
         nsdf.show(fragmentManager, "dialog");
     }
 
+    public void addWeek() {
+        mListener.onFragmentInteraction("addWeek");
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -154,7 +167,6 @@ public class TableFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(String name);
     }
 

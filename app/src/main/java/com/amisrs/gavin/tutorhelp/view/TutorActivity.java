@@ -18,6 +18,7 @@ import com.amisrs.gavin.tutorhelp.model.Tutor;
 import java.util.ArrayList;
 
 public class TutorActivity extends AppCompatActivity {
+    //TODO: handle login as null
     private static final String TAG = "TutorActivity";
     Spinner tutorSpinner;
     Button loginButton;

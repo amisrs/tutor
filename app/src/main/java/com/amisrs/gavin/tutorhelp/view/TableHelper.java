@@ -13,8 +13,10 @@ import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
+import com.amisrs.gavin.tutorhelp.db.WeekQueries;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.amisrs.gavin.tutorhelp.model.Week;
 
 import java.util.ArrayList;
 
@@ -51,20 +53,25 @@ public class TableHelper {
         for(Student s : students) {
             addRow(s);
         }
+        WeekQueries weekQueries = new WeekQueries(context);
+        ArrayList<Week> weeks = weekQueries.getAllWeeksForTutorial(tutorial);
+        for(Week w : weeks) {
+            addColumn(w);
+        }
 
-        addAddWeekButton();
+        //addAddWeekButton();
         //addAddStudentButton();
     }
 
-    public void addColumn() {
+    public void addColumn(Week week) {
         //use this when you add a week
         //remove the last one (it should be an add button)
         TableRow topRow = (TableRow)tableLayout.getChildAt(0);
-
-        topRow.removeView(topRow.getChildAt(topRow.getChildCount()-1));
+//
+//        topRow.removeView(topRow.getChildAt(topRow.getChildCount()-1));
         //top row should have week square
         TextView weekSquare = new TextView(context);
-        weekSquare.setText("new week");
+        weekSquare.setText("Week " + week.getWeekNumber());
         topRow.addView(weekSquare);
         //add new column by adding child to each row (except first)
 
@@ -76,7 +83,7 @@ public class TableHelper {
             StudentWeekSquare placeholderForStudentWeek = new StudentWeekSquare(context);
             row.addView(placeholderForStudentWeek);
         }
-        addAddWeekButton();
+        //addAddWeekButton();
     }
 
     public void addRow(Student student) {
@@ -99,8 +106,8 @@ public class TableHelper {
 
         TableRow newRow = new TableRow(context);
         //newrow add student square first
-        TextView studentSquare = new TextView(context);
-        studentSquare.setText(student.toString());
+        StudentSquare studentSquare = new StudentSquare(context, student);
+        //studentSquare.setText(student.toString());
         newRow.addView(studentSquare);
         for(int i=0; i<rowItems-1; i++) {
             Log.d(TAG, "Adding new square for number of rowItems, currently at: " + i);
@@ -111,18 +118,18 @@ public class TableHelper {
         //addAddStudentButton();
     }
 
-    public void addAddWeekButton() {
-        //add button to the top row
-        TableRow topRow = (TableRow)tableLayout.getChildAt(0);
-        Button addWeekButton = new Button(context);
-        addWeekButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addColumn();
-            }
-        });
-        topRow.addView(addWeekButton);
-    }
+//    public void addAddWeekButton() {
+//        //add button to the top row
+//        TableRow topRow = (TableRow)tableLayout.getChildAt(0);
+//        Button addWeekButton = new Button(context);
+//        addWeekButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                addColumn();
+//            }
+//        });
+//        topRow.addView(addWeekButton);
+//    }
 
 //    public void addAddStudentButton() {
 //        //add new row that just has a button

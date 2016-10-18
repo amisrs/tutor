@@ -25,12 +25,10 @@ import com.amisrs.gavin.tutorhelp.R;
  * create an instance of this fragment.
  */
 public class NewStudentDialogFragment extends DialogFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String TAG = "NewStudentDialogFragment";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -54,7 +52,6 @@ public class NewStudentDialogFragment extends DialogFragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment NewStudentDialogFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static NewStudentDialogFragment newInstance(String param1, String param2) {
         NewStudentDialogFragment fragment = new NewStudentDialogFragment();
         Bundle args = new Bundle();
@@ -111,7 +108,6 @@ public class NewStudentDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(String name) {
         if (mListener != null) {
             mListener.onFragmentInteraction(name);
@@ -149,7 +145,6 @@ public class NewStudentDialogFragment extends DialogFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(String name);
     }
 }
