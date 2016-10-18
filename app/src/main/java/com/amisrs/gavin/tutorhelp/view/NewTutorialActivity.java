@@ -16,7 +16,6 @@ import com.amisrs.gavin.tutorhelp.model.Week;
 
 public class NewTutorialActivity extends AppCompatActivity {
     private static final String TAG = "NewTutorialActivity";
-    private static final int NUMBER_OF_WEEKS = 13;
 
     Tutor tutor;
     Button createButton;
@@ -49,11 +48,12 @@ public class NewTutorialActivity extends AppCompatActivity {
                                             name.getText().toString(),
                                             timeSlot.getText().toString(),
                                             location.getText().toString());
-        tutorialQueries.addTutorial(newTutorial);
+        int tutorialID = (int)tutorialQueries.addTutorial(newTutorial);
         WeekQueries weekQueries = new WeekQueries(this);
-        for(int i=1; i<=NUMBER_OF_WEEKS; i++) {
-            Week newWeek = new Week(newTutorial.getTutorialID(), i, "");
+        for(int i=1; i<Tutorial.MAX_WEEKS+1; i++) {
+            Week newWeek = new Week(tutorialID, i, "");
             weekQueries.addWeek(newWeek);
+            Log.d(TAG, "Added week " + i + " of 13 for tutorial " + newTutorial.getName());
         }
 
         finish();

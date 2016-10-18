@@ -10,6 +10,7 @@ import android.util.Log;
 public class Tutorial implements Parcelable{
     private static final String TAG = "Tutorial";
     public static final Creator CREATOR = new TutorialCreator();
+    public static final int MAX_WEEKS = 13;
 
     private int tutorialID;
     private int tutorID;

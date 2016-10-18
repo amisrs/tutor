@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 public class AttendanceActivity extends AppCompatActivity implements TableFragment.OnFragmentInteractionListener,
                                                                     NewStudentDialogFragment.OnFragmentInteractionListener,
                                                                     NewStudentDialogFragment.NewStudentDialogFragmentListener {
-    //TODO: make this the root activity for nav drawer?
+    //TODO: delete?
     private static final String TAG = "AttendanceActivity";
     Tutorial tutorial;
 

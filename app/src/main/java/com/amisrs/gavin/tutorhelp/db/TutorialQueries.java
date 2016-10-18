@@ -60,7 +60,7 @@ public class TutorialQueries extends QueryBase {
         return tutorials;
     }
 
-    public void addTutorial(Tutorial tutorial) {
+    public long addTutorial(Tutorial tutorial) {
         open();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBContract.TutorialTable.COLUMN_TUTORID, tutorial.getTutorID());
@@ -71,6 +71,8 @@ public class TutorialQueries extends QueryBase {
         long newRowId = db.insert(DBContract.TutorialTable.TABLE_NAME, null, contentValues);
         Log.d(TAG, "Added new Tutorial: " + tutorial.getTutorID() + " " + tutorial.getName() + tutorial.getTimeSlot() + tutorial.getLocation());
         close();
+
+        return newRowId;
     }
 
     public ArrayList<Student> getStudentsForTutorial(Tutorial tutorial) {

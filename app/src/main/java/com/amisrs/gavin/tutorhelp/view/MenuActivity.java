@@ -17,6 +17,7 @@ public class MenuActivity extends AppCompatActivity {
     private static final String TAG = "MenuActivity";
     TextView nameTextView;
     Button attendanceButton;
+    Button studentsButton;
     Tutorial tutorial;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class MenuActivity extends AppCompatActivity {
 
 
         attendanceButton = (Button)findViewById(R.id.btn_attendance);
+        studentsButton = (Button)findViewById(R.id.btn_students);
         nameTextView = (TextView)findViewById(R.id.tv_name);
 
         nameTextView.setText(tutorial.getName());
@@ -36,12 +38,24 @@ public class MenuActivity extends AppCompatActivity {
                 goToAttendance();
             }
         });
+        studentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToStudents();
+            }
+        });
     }
 
     public void goToAttendance() {
         Intent intent = new Intent(this, BaseActivity.class);
         intent.putExtra("tutorial", tutorial);
         Log.d(TAG, "Put extra tutorial: " + tutorial.getName());
+        startActivity(intent);
+    }
+
+    public void goToStudents() {
+        Intent intent = new Intent(this, StudentsActivity.class);
+        intent.putExtra("tutorial", tutorial);
         startActivity(intent);
     }
 }

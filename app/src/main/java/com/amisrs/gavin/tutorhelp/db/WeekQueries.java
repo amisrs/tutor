@@ -37,6 +37,7 @@ public class WeekQueries extends QueryBase {
 
     public ArrayList<Week> getAllWeeksForTutorial(Tutorial tutorial) {
         open();
+        Log.d(TAG, "Getting weeks for tutorial: " + tutorial.getName());
         ArrayList<Week> weeks = new ArrayList<>();
         String[] projection = {
                 DBContract.WeekTable.COLUMN_WEEKID,
@@ -61,8 +62,10 @@ public class WeekQueries extends QueryBase {
         while(!c.isAfterLast()) {
             Week newWeek = new Week(c.getInt(0), c.getInt(1), c.getInt(2), c.getString(3));
             weeks.add(newWeek);
+            Log.d(TAG, "Found week: " + newWeek.getWeekNumber());
             c.moveToNext();
         }
+        Log.d(TAG, "Returning list of weeks: " + weeks.size());
         c.close();
         close();
 
@@ -86,6 +89,9 @@ public class WeekQueries extends QueryBase {
         String[] selectionArgs = { String.valueOf(tutorial.getTutorialID()),
                                    String.valueOf(student.getStudentID()),
                                    String.valueOf(week.getWeekID()) };
+
+        Log.d(TAG, "Getting StudentWeek for: " + student.toString() + " week " + week.getWeekNumber() + " tutorial " + tutorial.getName());
+        Log.d(TAG, "args: " + tutorial.getTutorialID() + ", " + student.getStudentID() + ", " + week.getWeekID());
 
         Cursor c = db.rawQuery(query, selectionArgs);
         c.moveToFirst();

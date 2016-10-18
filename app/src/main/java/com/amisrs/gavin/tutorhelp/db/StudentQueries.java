@@ -41,12 +41,18 @@ public class StudentQueries extends QueryBase {
         Log.d(TAG, "Inserted enrolment for that student to tutorial " + tutorial.getName());
 
         WeekQueries weekQueries = new WeekQueries(context);
-        ArrayList<Week> weeks;
+        ArrayList<Week> weeks = weekQueries.getAllWeeksForTutorial(tutorial);
+        Log.d(TAG, "Starting to create StudentWeek for number of weeks: " + weeks.size());
 
-        for(int i=1; i<14; i++) {
+        for(Week w : weeks) {
             ContentValues contentValues2 = new ContentValues();
             contentValues2.put(DBContract.StudentWeekTable.COLUMN_STUDENTID, (int) newRowId);
-            contentValues2.put(DBContract.StudentWeekTable.COLUMN_WEEKID, );
+            contentValues2.put(DBContract.StudentWeekTable.COLUMN_WEEKID, w.getWeekID());
+            contentValues2.put(DBContract.StudentWeekTable.COLUMN_ATTENDED, 0);
+            contentValues2.put(DBContract.StudentWeekTable.COLUMN_PRIVATECOMMENT, "");
+            contentValues2.put(DBContract.StudentWeekTable.COLUMN_PUBLICCOMMENT, "");
+            long newRowId2 = db.insert(DBContract.StudentWeekTable.TABLE_NAME, null, contentValues2);
+            Log.d(TAG, "Inserted new StudentWeek for student " + student.toString() + " for week " + w.getWeekNumber());
         }
         close();
     }

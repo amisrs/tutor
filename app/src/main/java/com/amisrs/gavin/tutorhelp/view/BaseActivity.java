@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.controller.OnItemClickListener;
@@ -25,7 +26,9 @@ import com.amisrs.gavin.tutorhelp.model.Week;
 
 import java.util.ArrayList;
 
-public class BaseActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener, StudentWeekDetailsFragment.OnFragmentInteractionListener, OnItemClickListener {
+public class BaseActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener,
+        StudentWeekDetailsFragment.OnFragmentInteractionListener,
+        OnItemClickListener {
     private static final String TAG = "BaseActivity";
     Tutorial tutorial;
     Spinner spinner;
@@ -41,36 +44,40 @@ public class BaseActivity extends AppCompatActivity implements StudentListFragme
 
         TutorialQueries tutorialQueries = new TutorialQueries(this);
         ArrayList<Student> students = tutorialQueries.getStudentsForTutorial(tutorial);
+        if(students.size() < 1) {
+            Toast.makeText(BaseActivity.this, getString(R.string.nostudents), Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            currentStudent = students.get(0);
 
+            ArrayList<Week> weeks = new ArrayList<>();
+            WeekQueries weekQueries = new WeekQueries(this);
+            weeks = weekQueries.getAllWeeksForTutorial(tutorial);
 
-        currentStudent = students.get(0);
+            spinner = (Spinner) findViewById(R.id.sp_week);
+            ArrayAdapter<Week> arrayAdapter = new ArrayAdapter<Week>(this, android.R.layout.simple_spinner_item, weeks);
+            spinner.setAdapter(arrayAdapter);
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    Week selectedWeek = (Week) adapterView.getItemAtPosition(i);
+                    currentWeek = selectedWeek;
+                    changeFragmentWeek(selectedWeek);
+                }
 
-        ArrayList<Week> weeks = new ArrayList<>();
-        WeekQueries weekQueries = new WeekQueries(this);
-        weeks = weekQueries.getAllWeeksForTutorial(tutorial);
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    Log.d(TAG, "Nothing selected.");
+                }
+            });
 
-        spinner = (Spinner)findViewById(R.id.sp_week);
-        ArrayAdapter<Week> arrayAdapter = new ArrayAdapter<Week>(this, android.R.layout.simple_spinner_item, weeks);
-        spinner.setAdapter(arrayAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Week selectedWeek = (Week)adapterView.getItemAtPosition(i);
-                currentWeek = selectedWeek;
-                changeFragmentWeek(selectedWeek);
-            }
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.rl_left, StudentListFragment.newInstance(tutorial));
+            fragmentTransaction.add(R.id.rl_right, StudentWeekDetailsFragment.newInstance(weeks.get(weeks.size() - 1), currentStudent, tutorial));
+            fragmentTransaction.commit();
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.d(TAG, "Nothing selected.");
-            }
-        });
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.rl_left, StudentListFragment.newInstance(tutorial));
-        fragmentTransaction.add(R.id.rl_right, StudentWeekDetailsFragment.newInstance(weeks.get(weeks.size()-1),currentStudent,tutorial));
-        fragmentTransaction.commit();
+        }
     }
 
     public void changeFragmentWeek(Week week) {

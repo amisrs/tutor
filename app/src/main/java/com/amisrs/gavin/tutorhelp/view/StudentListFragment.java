@@ -9,12 +9,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.controller.StudentListAdapter;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -35,6 +38,7 @@ public class StudentListFragment extends Fragment {
     private Tutorial tutorialParam;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
+    private TextView noneTextView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,14 +77,25 @@ public class StudentListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_student_list, container, false);
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView = (RecyclerView)view.findViewById(R.id.rv_students);
+        noneTextView = (TextView)view.findViewById(R.id.tv_none);
         recyclerView.setLayoutManager(linearLayoutManager);
         TutorialQueries tutorialQueries = new TutorialQueries(getContext());
         ArrayList<Student> studentArrayList = new ArrayList<>();
 
         studentArrayList = tutorialQueries.getStudentsForTutorial(tutorialParam);
+        if(studentArrayList.size() < 1) {
+            noneTextView.setText(getString(R.string.nostudents));
+        } else {
+            noneTextView.setText("");
+        }
         StudentListAdapter adapter = new StudentListAdapter();
-        BaseActivity baseActivity = (BaseActivity)getActivity();
-        adapter.setOnItemClickListener(baseActivity);
+        if(getActivity() instanceof BaseActivity) {
+            BaseActivity baseActivity = (BaseActivity)getActivity();
+            adapter.setOnItemClickListener(baseActivity);
+        } else if (getActivity() instanceof StudentsActivity) {
+            StudentsActivity studentsActivity = (StudentsActivity)getActivity();
+            adapter.setOnItemClickListener(studentsActivity);
+        }
         adapter.giveList(studentArrayList);
 
         recyclerView.setAdapter(adapter);

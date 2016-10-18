@@ -22,4 +22,11 @@
         android:text="@string/attendance"
         android:layout_below="@id/tv_name"/>
 
+    <Button
+        android:id="@+id/btn_students"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="students"
+        android:layout_below="@id/btn_attendance"/>
+
 </RelativeLayout>

@@ -4,33 +4,36 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AttendanceFragment.OnFragmentInteractionListener} interface
+ * {@link StudentDetailsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AttendanceFragment#newInstance} factory method to
+ * Use the {@link StudentDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AttendanceFragment extends Fragment {
-    // TODO: delete?
+public class StudentDetailsFragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_STUDENT = "student";
     private static final String ARG_TUTORIAL = "tutorial";
 
+    // TODO: Rename and change types of parameters
+    private Student studentParam;
     private Tutorial tutorialParam;
 
     private OnFragmentInteractionListener mListener;
 
-    public AttendanceFragment() {
+    public StudentDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -38,12 +41,15 @@ public class AttendanceFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param tutorial Parameter 1.
-     * @return A new instance of fragment AttendanceFragment.
+     * @param student Parameter 1.
+     * @param tutorial Parameter 2.
+     * @return A new instance of fragment StudentDetailsFragment.
      */
-    public static AttendanceFragment newInstance(Tutorial tutorial) {
-        AttendanceFragment fragment = new AttendanceFragment();
+    // TODO: Rename and change types and number of parameters
+    public static StudentDetailsFragment newInstance(Student student, Tutorial tutorial) {
+        StudentDetailsFragment fragment = new StudentDetailsFragment();
         Bundle args = new Bundle();
+        args.putParcelable(ARG_STUDENT, student);
         args.putParcelable(ARG_TUTORIAL, tutorial);
         fragment.setArguments(args);
         return fragment;
@@ -53,22 +59,26 @@ public class AttendanceFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            studentParam = getArguments().getParcelable(ARG_STUDENT);
             tutorialParam = getArguments().getParcelable(ARG_TUTORIAL);
         }
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.rl_main, StudentListFragment.newInstance(tutorialParam));
-        fragmentTransaction.commit();
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_attendance, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_details, container, false);
+        TextView nameTextView = (TextView)view.findViewById(R.id.tv_name);
+        TextView zidTextView = (TextView)view.findViewById(R.id.tv_zid);
+
+        nameTextView.setText(studentParam.getPerson().getFirstName() + " " + studentParam.getPerson().getLastName());
+        zidTextView.setText(String.valueOf(studentParam.getPerson().getzID()));
+
+        return view;
     }
 
+    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -103,6 +113,7 @@ public class AttendanceFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

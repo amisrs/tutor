@@ -17,7 +17,6 @@ import com.amisrs.gavin.tutorhelp.model.Student;
 import java.util.ArrayList;
 
 public class StudentListActivity extends AppCompatActivity {
-    //TODO: activity currently not in use
     private static final String TAG = "StudentListActivity";
     RecyclerView recycler;
     LinearLayoutManager layoutManager;

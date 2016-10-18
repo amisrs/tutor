@@ -14,6 +14,7 @@
 
     <string name="hello">Hello, </string>
 
+    <string name="nostudents">There are no students in this tutorial!</string>
 
     <!--
         BUTTONS
