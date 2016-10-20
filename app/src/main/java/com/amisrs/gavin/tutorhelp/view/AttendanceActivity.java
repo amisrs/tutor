@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AttendanceActivity extends AppCompatActivity implements TableFragment.OnFragmentInteractionListener,
+public class AttendanceActivity extends DrawerActivity implements TableFragment.OnFragmentInteractionListener,
                                                                     NewStudentDialogFragment.OnFragmentInteractionListener,
                                                                     NewStudentDialogFragment.NewStudentDialogFragmentListener {
     //TODO: delete?

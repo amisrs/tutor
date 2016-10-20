@@ -2,6 +2,7 @@ package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,7 @@ import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
 import java.util.ArrayList;
 
-public class TutorialListActivity extends AppCompatActivity {
+public class TutorialListActivity extends DrawerActivity {
     //TODO: update student number, better layout
     private static final String TAG = "TutorialListActivity";
     RecyclerView recycler;
@@ -30,6 +31,8 @@ public class TutorialListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial_list);
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         layoutManager = new LinearLayoutManager(this);
 
         recycler = (RecyclerView)findViewById(R.id.rv_tutorials);

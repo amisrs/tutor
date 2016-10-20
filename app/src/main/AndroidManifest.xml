@@ -24,7 +24,8 @@
             android:name=".view.NewStudentActivity"
             android:theme="@android:style/Theme.Holo.Dialog" />
         <activity android:name=".view.BaseActivity" />
-        <activity android:name=".view.StudentsActivity"></activity>
+        <activity android:name=".view.StudentsActivity" />
+        <activity android:name=".view.DrawerActivity"></activity>
     </application>
 
 </manifest>

@@ -59,8 +59,10 @@ public class TutorQueries extends QueryBase {
             Log.d(TAG, "Populating tutor list: " + newTutor.getPerson().getFirstName());
             c.moveToNext();
         }
-
+        c.close();
+        close();
         return tutors;
+
     }
 
 //    public Tutor getTutorByZID(int zid) {

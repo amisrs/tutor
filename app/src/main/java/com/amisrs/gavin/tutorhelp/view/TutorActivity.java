@@ -28,6 +28,8 @@ public class TutorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor);
+
+
         tutorSpinner = (Spinner)findViewById(R.id.sp_tutor);
         loginButton = (Button)findViewById(R.id.btn_login);
         newButton = (Button)findViewById(R.id.btn_newTutor);

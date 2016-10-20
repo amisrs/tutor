@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nd_home"
+        android:icon="@android:drawable/ic_btn_speak_now"
+        android:title="Home"/>
+    <item
+        android:id="@+id/nd_attendance"
+        android:icon="@android:drawable/ic_btn_speak_now"
+        android:title="Attendance"/>
+
+    <item
+        android:id="@+id/nd_tutor"
+        android:icon="@android:drawable/ic_btn_speak_now"
+        android:title="Tutor"/>
+    <item
+        android:id="@+id/nd_student"
+        android:icon="@android:drawable/ic_btn_speak_now"
+        android:title="Student"/>
+
+</menu>

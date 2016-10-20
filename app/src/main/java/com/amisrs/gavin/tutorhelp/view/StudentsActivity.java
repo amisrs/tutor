@@ -23,7 +23,7 @@ import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StudentsActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener,
+public class StudentsActivity extends DrawerActivity implements StudentListFragment.OnFragmentInteractionListener,
         OnItemClickListener,
         NewStudentDialogFragment.OnFragmentInteractionListener,
         NewStudentDialogFragment.NewStudentDialogFragmentListener,
