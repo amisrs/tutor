@@ -31,7 +31,7 @@ public class MenuActivity extends AppCompatActivity {
         studentsButton = (Button)findViewById(R.id.btn_students);
         nameTextView = (TextView)findViewById(R.id.tv_name);
 
-        nameTextView.setText(tutorial.getName());
+        //nameTextView.setText(tutorial.getName());
         attendanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

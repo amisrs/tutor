@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/nd_home"
-        android:icon="@android:drawable/ic_btn_speak_now"
-        android:title="Home"/>
+
+    <!--TODO: change the icons-->
+    <group android:id="@+id/menuGrp1">
+        <item
+            android:id="@+id/nd_home"
+            android:icon="@android:drawable/ic_btn_speak_now"
+            android:title="Home" />
+    </group>
+    <!--TODO: change attendance and student as they should not be accessed here, they should always go through tutorialList-->
+    <group android:id="@+id/menuGrp2">
     <item
         android:id="@+id/nd_attendance"
         android:icon="@android:drawable/ic_btn_speak_now"
-        android:title="Attendance"/>
-
+        android:title="Tutorial" />
+    </group>
+    <group android:id="@+id/menuGrp3">
     <item
         android:id="@+id/nd_tutor"
         android:icon="@android:drawable/ic_btn_speak_now"
-        android:title="Tutor"/>
+        android:title="do not click - Assignments" />
+    </group>
+    <group android:id="@+id/menuGrp4">
     <item
         android:id="@+id/nd_student"
         android:icon="@android:drawable/ic_btn_speak_now"
-        android:title="Student"/>
+        android:title="do not click - Student" />
+    </group>
 
 </menu>

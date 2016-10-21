@@ -32,7 +32,8 @@ public class TutorialListActivity extends DrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial_list);
 
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
         layoutManager = new LinearLayoutManager(this);
 
         recycler = (RecyclerView)findViewById(R.id.rv_tutorials);

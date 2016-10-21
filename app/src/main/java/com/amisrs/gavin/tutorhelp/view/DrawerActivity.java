@@ -9,24 +9,45 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
+import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 //https://github.com/j-mateo/MultiActivityToolbar
-public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "DrawerActivity";
     DrawerLayout drawerLayout;
     FrameLayout activityContainer;
     Toolbar toolbar;
     NavigationView navigationView;
-    private int selectedNavItemId;
-//TODO: add <include> in xml
+    private int navItemIndex;
+    Tutor tutor;
+    Tutorial tutorial;
+    TextView tutorName;
+    ImageView navHeaderBg, tutorProfile;
+
+    //TODO: add <include> in xml
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /*tutor = getIntent().getParcelableExtra("tutor");
+        if (tutor == null) {
+            Log.e(TAG, "No tutor was received from the Intent.");
+            //stop
+            finish();
+        }*/
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_drawer);
+        setContentView(R.layout.activity_drawer);
+
 
         //this is the parent layout
 
@@ -34,8 +55,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     }
 
     @Override
-    public void setContentView(int layoutResID)
-    {
+    public void setContentView(int layoutResID) {
+
         //this is the parent layout
         drawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_drawer, null);
         //inflate the child layout
@@ -48,58 +69,104 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         navigationView = (NavigationView) findViewById(R.id.navigationView);
 
+
+        tutorName = (TextView) findViewById(R.id.tv_tutorName);
+        navHeaderBg = (ImageView) findViewById(R.id.iv_navDrawer_bg);
+        tutorProfile = (ImageView) findViewById(R.id.iv_tutor_profile);
+
         setSupportActionBar(toolbar);
         setTitle("NAV DRAW TEST");
 
         prepareNavView();
+        //loadNavHeader();
+
     }
 
-    protected void prepareNavView(){
+  /*  private void loadNavHeader() {
+
+        tutor = getIntent().getParcelableExtra("tutor");
+        if (tutor == null) {
+            Log.e(TAG, "No tutor was received from the Intent.");
+            //stop
+            finish();
+        }
+       //Setting the tutor name to be displayed in the header
+        tutorName.setText(tutor.getPerson().getFirstName() + " " + tutor.getPerson().getLastName());
+
+        //Loading the header background image
+        Glide.with(this)
+                .load("http://api.androidhive.info/images/nav-menu-header-bg.jpg")
+                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(navHeaderBg);
+
+        Glide.with(this)
+                .load("http://api.androidhive.info/images/nav-menu-header-bg.jpg")
+                .crossFade()
+                .transform(new ProfileCircle(this))
+                .into(tutorProfile);
+
+
+    }
+*/
+    protected void prepareNavView() {
         navigationView.setNavigationItemSelectedListener(this);
-        if(getSupportActionBar() != null ){
+        if (getSupportActionBar() != null) {
             // Use home/back button instead
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //TODO: change home image
-            getSupportActionBar().setHomeAsUpIndicator(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_person_black_24dp_2x));
+            getSupportActionBar().setHomeAsUpIndicator(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_person_black_24dp_2x));
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         drawerLayout.closeDrawer(GravityCompat.START);
-        selectedNavItemId = menuItem.getItemId();
+        navItemIndex = menuItem.getItemId();
 
         return onOptionsItemSelected(menuItem);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        switch (id)
-        {
-            //TODO: Remove nd_home as this should be handled by the Home/Up button
-            case R.id.nd_home:
-                startActivity(new Intent(this, TutorialListActivity.class));
+
+        switch (menuItem.getItemId()) {
+
+            //TODO: Remove nd_home or set to something else as this should be handled by the Home/Up button
+            //TODO: same problem as getting the nav header image
+          /*  case R.id.nd_home:
+
+                navItemIndex = 0;
+                Intent homeIntent = new Intent(this, TutorialListActivity.class);
+                homeIntent.putExtra("tutor", tutor);
+                startActivity(homeIntent);
+                return true;*/
+        //code below breaks because user has not selected a tutorial
+            /*case R.id.nd_attendance:
+                navItemIndex = 1;
+                Intent attendanceIntent = new Intent(this, AttendanceActivity.class);
+                attendanceIntent.putExtra("tutorial", tutorial);
+                startActivity(attendanceIntent);
+                return true;*/
+
+            case R.id.nd_student:
+                navItemIndex = 2;
+                Intent studentIntent = new Intent(this, StudentsActivity.class);
+
+                startActivity(studentIntent);
                 return true;
 
-            case R.id.nd_attendance:
-                startActivity(new Intent(this, AttendanceActivity.class));
-                return true;
-
-            case R.id.nd_student :
-                startActivity(new Intent(this, StudentsActivity.class));
-                return true;
-
-            case R.id.nd_tutor :
-                startActivity(new Intent(this, TutorialListActivity.class));
+            case R.id.nd_tutor:
+                navItemIndex = 3;
+                Intent tutorIntent = new Intent(this, TutorialListActivity.class);
+                startActivity(tutorIntent);
                 return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(menuItem);
     }
 }

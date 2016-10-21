@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical">
 
-    <TextView
-        android:orientation="vertical"
+    <ImageView
+        android:id="@+id/iv_navDrawer_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Header"
-        android:padding="30dp"
-        android:background="?attr/colorAccent"
-        android:textColor="@android:color/white"/>
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher" />
+<!--TODO: add padding into dimens-->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/iv_tutor_profile"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_person_black_24dp_2x"/>
+
+        <TextView
+            android:id="@+id/tv_tutorName"
+            android:layout_below="@id/iv_tutor_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:gravity="center_horizontal"
+            android:paddingTop="10dp"
+            android:text="TEST"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -5,10 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.AttendanceActivity">
+
     <!--<fragment-->
-        <!--android:name="com.amisrs.gavin.tutorhelp.view.TableFragment"-->
-        <!--android:id="@+id/f_table"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--tools:layout="@layout/fragment_table" />-->
+    <!--android:name="com.amisrs.gavin.tutorhelp.view.TableFragment"-->
+    <!--android:id="@+id/f_table"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--tools:layout="@layout/fragment_table" />-->
 </RelativeLayout>
+
+
+
