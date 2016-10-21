@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.amisrs.gavin.tutorhelp.model.Person;
+import com.amisrs.gavin.tutorhelp.other.DbBitmapUtility;
 
 /**
  * Created by Gavin on 15/10/2016.
@@ -23,11 +24,12 @@ public class PersonQueries extends QueryBase {
                 DBContract.PersonTable.COLUMN_PERSONID,
                 DBContract.PersonTable.COLUMN_FIRSTNAME,
                 DBContract.PersonTable.COLUMN_LASTNAME,
-                DBContract.PersonTable.COLUMN_ZID
+                DBContract.PersonTable.COLUMN_ZID,
+                DBContract.PersonTable.COLUMN_PROFILEPIC
         };
 
         String selection = DBContract.PersonTable.COLUMN_PERSONID + " = ?";
-        String[] selectionArgs = { personID+"" };
+        String[] selectionArgs = {personID + ""};
         Cursor c = db.query(
                 DBContract.PersonTable.TABLE_NAME,
                 projection,
@@ -39,9 +41,9 @@ public class PersonQueries extends QueryBase {
         );
         c.moveToFirst();
         Person person = new Person();
-        if(c.getCount() != 0) {
+        if (c.getCount() != 0) {
             Log.d(TAG, "Person: " + c.getString(1) + " " + c.getString(2));
-            person = new Person(c.getInt(0), c.getString(1), c.getString(2), c.getInt(3));
+            person = new Person(c.getInt(0), c.getString(1), c.getString(2), c.getInt(3), c.getString(4));
         }
         c.close();
         close();
@@ -54,15 +56,21 @@ public class PersonQueries extends QueryBase {
         contentValues.put(DBContract.PersonTable.COLUMN_FIRSTNAME, person.getFirstName());
         contentValues.put(DBContract.PersonTable.COLUMN_LASTNAME, person.getLastName());
         contentValues.put(DBContract.PersonTable.COLUMN_ZID, person.getzID());
+        contentValues.put(DBContract.PersonTable.COLUMN_PROFILEPIC, person.getProfilePath());
 
         long newRowID = db.insert(DBContract.PersonTable.TABLE_NAME, null, contentValues);
         Log.d(TAG, "Added new Person to database: " + person.getFirstName() + " " + person.getLastName() + " rowId = " + newRowID);
-        person.setPersonID((int)newRowID);
+        person.setPersonID((int) newRowID);
         Log.d(TAG, "Set new PersonID to equal newRowID... now is " + person.getPersonID());
         close();
         return person;
     }
 
+    public void addImageFilePathForPerson(String imgPath) {
+        String updatePath = "UPDATE" + DBContract.PersonTable.TABLE_NAME + " SET " + DBContract.PersonTable.COLUMN_PROFILEPIC + " = " + imgPath;
+        db.execSQL(updatePath);
+        close();
+    }
 
 
 }

@@ -16,6 +16,7 @@ public class DBContract {
         public static final String COLUMN_FIRSTNAME = "FirstName";
         public static final String COLUMN_LASTNAME = "LastName";
         public static final String COLUMN_ZID = "ZID";
+        public static final String COLUMN_PROFILEPIC = "ProfilePic";
     }
 
     public static class StudentTable implements BaseColumns {

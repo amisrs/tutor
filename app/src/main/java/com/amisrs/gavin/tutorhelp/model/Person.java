@@ -14,25 +14,35 @@ public class Person implements Parcelable{
     private String firstName;
     private String lastName;
     private int zID;
+    private String profilePath;
 
     public Person() {
+
+    }
+//TODO: this is for Student, make sure to delete after camera implemented for student
+    public Person(String firstName, String lastName, int zID) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.zID = zID;
 
     }
 
     //constructor for adding to database, aka from login screen
     //should always make the Person first, then make the Tutor/Student from the PersonID
-    public Person(String firstName, String lastName, int zID) {
+    public Person(String firstName, String lastName, int zID, String profilePath) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.zID = zID;
+        this.profilePath = profilePath;
     }
 
     //constructor for getting from database
-    public Person(int personID, String firstName, String lastName, int zID) {
+    public Person(int personID, String firstName, String lastName, int zID, String profilePath) {
         this.personID = personID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.zID = zID;
+        this.profilePath = profilePath;
     }
 
     //read from parcel
@@ -41,6 +51,7 @@ public class Person implements Parcelable{
         this.firstName = parcel.readString();
         this.lastName = parcel.readString();
         this.zID = parcel.readInt();
+        this.profilePath = parcel.readString();
     }
 
     @Override
@@ -49,6 +60,7 @@ public class Person implements Parcelable{
         parcel.writeString(firstName);
         parcel.writeString(lastName);
         parcel.writeInt(zID);
+        parcel.writeString(profilePath);
     }
 
     @Override
@@ -86,6 +98,14 @@ public class Person implements Parcelable{
 
     public void setzID(int zID) {
         this.zID = zID;
+    }
+
+    public String getProfilePath() {
+        return profilePath;
+    }
+
+    public void setProfilePath(String profilePath) {
+        this.profilePath = profilePath;
     }
 
     static class PersonCreator implements Parcelable.Creator<Person> {

@@ -96,7 +96,7 @@ public class TutorialQueries extends QueryBase {
         Cursor c = db.rawQuery(query, new String[] { String.valueOf(tutorial.getTutorialID()) });
         c.moveToFirst();
         while(!c.isAfterLast()) {
-            Person newPerson = new Person(c.getInt(0), c.getString(3), c.getString(4), c.getInt(2));
+            Person newPerson = new Person(c.getInt(0),c.getString(1), c.getString(2), c.getInt(3), c.getString(4));
             Student newStudent = new Student(c.getInt(1), c.getInt(0), newPerson);
             students.add(newStudent);
             c.moveToNext();
