@@ -22,16 +22,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.db.PersonQueries;
 import com.amisrs.gavin.tutorhelp.db.StudentQueries;
+import com.amisrs.gavin.tutorhelp.db.TutorQueries;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.other.DbBitmapUtility;
 
@@ -44,20 +44,16 @@ import java.util.regex.Pattern;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link NewStudentDialogFragment.OnFragmentInteractionListener} interface
+ * {@link NewTutorDialogFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link NewStudentDialogFragment#newInstance} factory method to
+ * Use the {@link NewTutorDialogFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NewStudentDialogFragment extends DialogFragment {
-    private static final String TAG = "NewStudentDialogFragmen";
-    private static final String ARG_TUTORIAL = "tutorial";
-
-    private Tutorial tutorialParam;
-
+public class NewTutorDialogFragment extends DialogFragment {
+    private static final String TAG = "NewTutorDialogFragment";
     private ImageView profilePic;
     private ImageButton captureButton;
-   // private Button btn;
+    // private Button btn;
     private String fileName;
     private String[] permissions = new String[]{Manifest.permission.CAMERA};
     private static final int CAMERA_PERMISSION_CODE = 1;
@@ -71,16 +67,16 @@ public class NewStudentDialogFragment extends DialogFragment {
     TextInputEditText lname;
     TextInputEditText email;
 
-    private OnFragmentInteractionListener mListener;
-    private NewStudentDialogFragmentListener dialogListener;
+    private NewTutorDialogFragment.OnFragmentInteractionListener mListener;
+    private NewTutorDialogFragment.NewTutorDialogFragmentListener dialogListener;
 
-    public interface NewStudentDialogFragmentListener {
+    public interface NewTutorDialogFragmentListener {
         public void onDialogPositiveClick(DialogFragment fragment);
 
         public void onDialogNegativeClick(DialogFragment fragment);
     }
 
-    public NewStudentDialogFragment() {
+    public NewTutorDialogFragment() {
         // Required empty public constructor
     }
 
@@ -88,14 +84,13 @@ public class NewStudentDialogFragment extends DialogFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param tutorial Parameter 1.
      * @return A new instance of fragment NewStudentDialogFragment.
      */
-    public static NewStudentDialogFragment newInstance(Tutorial tutorial) {
-        NewStudentDialogFragment fragment = new NewStudentDialogFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(ARG_TUTORIAL, tutorial);
-        fragment.setArguments(args);
+    public static NewTutorDialogFragment newInstance() {
+        NewTutorDialogFragment fragment = new NewTutorDialogFragment();
+        //Bundle args = new Bundle();
+        //args.putParcelable(ARG_TUTORIAL, tutorial);
+        //fragment.setArguments(args);
         return fragment;
     }
 
@@ -103,7 +98,7 @@ public class NewStudentDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            tutorialParam = getArguments().getParcelable(ARG_TUTORIAL);
+           // tutorialParam = getArguments().getParcelable(ARG_TUTORIAL);
         }
 
 
@@ -114,8 +109,7 @@ public class NewStudentDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_new_student_dialog, container, false);
-        //loadCamera(getDialog());
+        View view = inflater.inflate(R.layout.fragment_new_tutor_dialog, container, false);
 
         return view;
     }
@@ -127,7 +121,7 @@ public class NewStudentDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.activity_new_student, null);
+        View view = inflater.inflate(R.layout.activity_new_tutor, null);
         builder.setView(view);
 
         captureButton = (ImageButton) view.findViewById(R.id.btn_camera_capture);
@@ -147,14 +141,14 @@ public class NewStudentDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.d("aa", "create");
                         positivePress();
-                        dialogListener.onDialogPositiveClick(NewStudentDialogFragment.this);
+                        dialogListener.onDialogPositiveClick(NewTutorDialogFragment.this);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.d("aa", "cancel");
-                        dialogListener.onDialogNegativeClick(NewStudentDialogFragment.this);
+                        dialogListener.onDialogNegativeClick(NewTutorDialogFragment.this);
                         dialogInterface.cancel();
                     }
                 });
@@ -192,7 +186,7 @@ public class NewStudentDialogFragment extends DialogFragment {
 
     public void takePicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        NewStudentDialogFragment.this.startActivityForResult(intent, REQUEST_CODE);
+        NewTutorDialogFragment.this.startActivityForResult(intent, REQUEST_CODE);
     }
 
     //http://stackoverflow.com/questions/28450049/how-get-result-from-onactivityresult-in-fragment
@@ -228,7 +222,7 @@ public class NewStudentDialogFragment extends DialogFragment {
     private String saveImagePath(Bitmap bitmap){
         FileOutputStream fileOutputStream = null;
         String imgFilePath = getContext().getFilesDir().toString();
-        //TODO : handle for case of null
+
         fileName = zid.getText().toString()+"_tutor.PNG";
         try{
             fileOutputStream = getContext().openFileOutput(fileName, Context.MODE_PRIVATE);
@@ -257,11 +251,10 @@ public class NewStudentDialogFragment extends DialogFragment {
 
     public void positivePress() {
         Dialog dialog = getDialog();
-        //loadCamera(dialog);
-        zid = (TextInputEditText) dialog.findViewById(R.id.et_student_zid);
-        fname = (TextInputEditText) dialog.findViewById(R.id.et_student_fname);
-        lname = (TextInputEditText) dialog.findViewById(R.id.et_student_lname);
-        email = (TextInputEditText) dialog.findViewById(R.id.et_student_email);
+        zid = (TextInputEditText) dialog.findViewById(R.id.et_zid);
+        fname = (TextInputEditText) dialog.findViewById(R.id.et_fname);
+        lname = (TextInputEditText) dialog.findViewById(R.id.et_lname);
+        email = (TextInputEditText) dialog.findViewById(R.id.et_email);
         if(imgTaken) {
             saveImagePath(photo);
         }
@@ -280,16 +273,16 @@ public class NewStudentDialogFragment extends DialogFragment {
             String emailString = email.getText().toString();
             String profilePath = imgPath;
             System.out.println("imgPath = " + imgPath);
-//TODO: add in image path for camera
+
+            //add to database
             PersonQueries personQueries = new PersonQueries(getContext());
             Person addedPerson = personQueries.addPerson(new Person(fnameString, lnameString, zidInt, profilePath , emailString));
 
-            StudentQueries studentQueries = new StudentQueries(getContext());
-            studentQueries.addStudent(new Student(addedPerson.getPersonID(), addedPerson), tutorialParam);
+            TutorQueries tutorQueries = new TutorQueries(getContext());
+            tutorQueries.addTutor(new Tutor(addedPerson.getPersonID(), addedPerson));
 
             Log.d(TAG, "Added person to database: " + addedPerson.getzID() + " " + addedPerson.getFirstName() + " " + addedPerson.getLastName());
             dialogListener.onDialogPositiveClick(this);
-
         } else {
             //the zid has non-digits in it
             zid.setError("zID must only contain numbers.");
@@ -306,9 +299,9 @@ public class NewStudentDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-            dialogListener = (NewStudentDialogFragmentListener) context;
+        if (context instanceof NewTutorDialogFragment.OnFragmentInteractionListener) {
+            mListener = (NewTutorDialogFragment.OnFragmentInteractionListener) context;
+            dialogListener = (NewTutorDialogFragment.NewTutorDialogFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");

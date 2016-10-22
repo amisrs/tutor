@@ -1,3 +1,4 @@
+/*
 package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Context;
@@ -16,9 +17,11 @@ import android.widget.TextView;
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.model.Student;
 
+*/
 /**
  * TODO: document your custom view class.
- */
+ *//*
+
 public class StudentSquare extends TextView implements GestureDetector.OnGestureListener {
     private Student student;
 
@@ -76,3 +79,4 @@ public class StudentSquare extends TextView implements GestureDetector.OnGesture
         return false;
     }
 }
+*/

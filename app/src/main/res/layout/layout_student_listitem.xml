@@ -15,19 +15,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         />
 
     <TextView
         android:id="@+id/student_lname"
-        android:layout_below="@+id/student_fname"
+        android:layout_toRightOf="@id/student_fname"
+        android:paddingLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@color/colorAccent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
     <TextView
         android:id="@+id/student_zid"
         android:layout_below="@+id/student_lname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@color/colorAccent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 </RelativeLayout>

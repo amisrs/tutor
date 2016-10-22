@@ -1,3 +1,4 @@
+/*
 package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Context;
@@ -14,9 +15,11 @@ import android.widget.ImageView;
 
 import com.amisrs.gavin.tutorhelp.R;
 
+*/
 /**
  * Created by Gavin on 16/10/2016.
- */
+ *//*
+
 public class StudentWeekSquare extends ImageView implements GestureDetector.OnGestureListener {
     //TODO: make it look better; handle more touch events; change colour on comment
     private static final String TAG = "StudentWeekSquare";
@@ -104,3 +107,4 @@ public class StudentWeekSquare extends ImageView implements GestureDetector.OnGe
         return false;
     }
 }
+*/

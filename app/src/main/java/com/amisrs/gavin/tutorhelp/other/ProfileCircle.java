@@ -11,8 +11,10 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
 /**
  * Created by karenhuang on 21/10/16.
- * http://www.androidhive.info/2013/11/android-sliding-menu-using-navigation-drawer/  * This class is a custom view to transform profile images to be displayed in a circular fashion  * <p>  * Glide.with(this).load(URL).transform(new ProfileCircle(context)).into(imageView);
- * This class is a custom view to transform profile images to be displayed in a circular fashion
+ * http://www.androidhive.info/2013/11/android-sliding-menu-using-navigation-drawer/ 
+ * This class is a custom view to transform profile images to be displayed in a circular fashion 
+ * Glide.with(this).load(URL).transform(new ProfileCircle(context)).into(imageView);
+ *
  */
 
 public class ProfileCircle extends BitmapTransformation {

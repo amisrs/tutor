@@ -28,17 +28,17 @@ public class TutorialQueries extends QueryBase {
         ArrayList<Tutorial> tutorials = new ArrayList<>();
         String[] projection = {
                 DBContract.TutorialTable.COLUMN_TUTORIALID + COMMA_SEP +
-                DBContract.TutorialTable.COLUMN_TUTORID + COMMA_SEP +
-                DBContract.TutorialTable.COLUMN_NAME + COMMA_SEP +
-                DBContract.TutorialTable.COLUMN_TIMESLOT + COMMA_SEP +
-                DBContract.TutorialTable.COLUMN_LOCATION
+                        DBContract.TutorialTable.COLUMN_TUTORID + COMMA_SEP +
+                        DBContract.TutorialTable.COLUMN_NAME + COMMA_SEP +
+                        DBContract.TutorialTable.COLUMN_TIMESLOT + COMMA_SEP +
+                        DBContract.TutorialTable.COLUMN_LOCATION
         };
 
         //get tutor by zid
 
 
         String selection = DBContract.TutorialTable.COLUMN_TUTORID + " = ?";
-        String[] selectionArgs = { String.valueOf(tutor.getTutorID()) };
+        String[] selectionArgs = {String.valueOf(tutor.getTutorID())};
 
         Cursor c = db.query(
                 DBContract.TutorialTable.TABLE_NAME,
@@ -50,7 +50,7 @@ public class TutorialQueries extends QueryBase {
                 null
         );
         c.moveToFirst();
-        while(!c.isAfterLast()) {
+        while (!c.isAfterLast()) {
             Tutorial newTutorial = new Tutorial(c.getInt(0), c.getInt(1), c.getString(2), c.getString(3), c.getString(4));
             tutorials.add(newTutorial);
             c.moveToNext();
@@ -81,9 +81,11 @@ public class TutorialQueries extends QueryBase {
 
         String query = "select s." + DBContract.StudentTable.COLUMN_PERSONID + COMMA_SEP +
                               "s." + DBContract.StudentTable.COLUMN_STUDENTID + COMMA_SEP +
-                              "p." + DBContract.PersonTable.COLUMN_ZID + COMMA_SEP +
                               "p." + DBContract.PersonTable.COLUMN_FIRSTNAME + COMMA_SEP +
-                              "p." + DBContract.PersonTable.COLUMN_LASTNAME +
+                              "p." + DBContract.PersonTable.COLUMN_LASTNAME + COMMA_SEP +
+                              "p." + DBContract.PersonTable.COLUMN_ZID + COMMA_SEP +
+                              "p." + DBContract.PersonTable.COLUMN_PROFILEPIC + COMMA_SEP +
+                              "p." + DBContract.PersonTable.COLUMN_EMAIL +
                 " from " + DBContract.PersonTable.TABLE_NAME + " p" +
                 " join " + DBContract.StudentTable.TABLE_NAME + " s" +
                 " on s." + DBContract.StudentTable.COLUMN_PERSONID + " = " +
@@ -93,10 +95,10 @@ public class TutorialQueries extends QueryBase {
                 "e." + DBContract.EnrolmentTable.COLUMN_STUDENTID +
                 " where " + DBContract.EnrolmentTable.COLUMN_TUTORIALID + " = ?";
 
-        Cursor c = db.rawQuery(query, new String[] { String.valueOf(tutorial.getTutorialID()) });
+        Cursor c = db.rawQuery(query, new String[]{String.valueOf(tutorial.getTutorialID())});
         c.moveToFirst();
-        while(!c.isAfterLast()) {
-            Person newPerson = new Person(c.getInt(0),c.getString(1), c.getString(2), c.getInt(3), c.getString(4));
+        while (!c.isAfterLast()) {
+            Person newPerson = new Person(c.getInt(0), c.getString(2), c.getString(3), c.getInt(4), c.getString(5), c.getString(6));
             Student newStudent = new Student(c.getInt(1), c.getInt(0), newPerson);
             students.add(newStudent);
             c.moveToNext();

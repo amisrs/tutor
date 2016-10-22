@@ -4,12 +4,13 @@
     android:layout_height="match_parent"
     tools:context="com.amisrs.gavin.tutorhelp.view.StudentDetailsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- TODO: Update blank fragment layout, ADD PADDING-->
     <ImageView
         android:id="@+id/iv_pic"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:background="@color/colorPrimaryDark"/>
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"/>
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"

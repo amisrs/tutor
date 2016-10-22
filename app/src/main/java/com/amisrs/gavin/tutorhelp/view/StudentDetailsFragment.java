@@ -7,11 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
+import com.bumptech.glide.Glide;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,6 +74,13 @@ public class StudentDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_student_details, container, false);
         TextView nameTextView = (TextView)view.findViewById(R.id.tv_name);
         TextView zidTextView = (TextView)view.findViewById(R.id.tv_zid);
+        ImageView profile = (ImageView) view.findViewById(R.id.iv_pic);
+        Glide.with(getContext())
+                .load(studentParam.getPerson().getProfilePath())
+                .asBitmap()
+                .placeholder(R.drawable.ic_default_profile_pic)
+                .transform(new ProfileCircle(getContext()))
+                .into(profile);
 
         nameTextView.setText(studentParam.getPerson().getFirstName() + " " + studentParam.getPerson().getLastName());
         zidTextView.setText(String.valueOf(studentParam.getPerson().getzID()));

@@ -1,3 +1,4 @@
+/*
 package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Context;
@@ -20,9 +21,11 @@ import com.amisrs.gavin.tutorhelp.model.Week;
 
 import java.util.ArrayList;
 
+*/
 /**
  * Created by Gavin on 11/10/2016.
- */
+ *//*
+
 public class TableHelper {
     private static final String TAG = "TableHelper";
 
@@ -148,3 +151,4 @@ public class TableHelper {
 //    }
 
 }
+*/

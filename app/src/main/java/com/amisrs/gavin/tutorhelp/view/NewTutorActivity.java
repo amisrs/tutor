@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.preference.DialogPreference;
 import android.provider.MediaStore;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -41,10 +42,14 @@ public class NewTutorActivity extends AppCompatActivity {
     private static final String TAG = "NewTutorActivity";
 
     Button createButton;
-    EditText zid;
-    EditText fname;
-    EditText lname;
-    TextInputLayout til_zid, til_fName, til_lName;
+    TextInputEditText zid;
+    TextInputEditText fname;
+    TextInputEditText lname;
+    TextInputEditText email;
+    TextInputLayout til_zid;
+    TextInputLayout til_fName;
+    TextInputLayout til_lName;
+    TextInputLayout til_email;
 
     ImageButton captureButton;
     ImageView profilePic;
@@ -62,14 +67,15 @@ public class NewTutorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_tutor);
 
         createButton = (Button) findViewById(R.id.btn_create);
-        zid = (EditText) findViewById(R.id.et_zid);
-        fname = (EditText) findViewById(R.id.et_fname);
-        lname = (EditText) findViewById(R.id.et_lname);
+        zid = (TextInputEditText) findViewById(R.id.et_zid);
+        fname = (TextInputEditText) findViewById(R.id.et_fname);
+        lname = (TextInputEditText) findViewById(R.id.et_lname);
+        email = (TextInputEditText) findViewById(R.id.et_email);
 
         til_zid = (TextInputLayout) findViewById(R.id.til_zid);
         til_fName = (TextInputLayout) findViewById(R.id.til_fname);
         til_lName = (TextInputLayout) findViewById(R.id.til_lname);
-
+        til_email = (TextInputLayout) findViewById(R.id.til_email);
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,11 +190,13 @@ public class NewTutorActivity extends AppCompatActivity {
             int zidInt = Integer.parseInt(zid.getText().toString());
             String fnameString = fname.getText().toString();
             String lnameString = lname.getText().toString();
+            String emailString = email.getText().toString();
             String profilePath = imgPath;
 
 
+
             PersonQueries personQueries = new PersonQueries(this);
-            Person addedPerson = personQueries.addPerson(new Person(fnameString, lnameString, zidInt, profilePath));
+            Person addedPerson = personQueries.addPerson(new Person(fnameString, lnameString, zidInt, profilePath, emailString));
 
             TutorQueries tutorQueries = new TutorQueries(this);
             tutorQueries.addTutor(new Tutor(addedPerson.getPersonID(), addedPerson));
