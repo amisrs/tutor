@@ -7,7 +7,7 @@ import android.util.Log;
 /**
  * Created by Gavin on 15/10/2016.
  */
-public class Person implements Parcelable{
+public class Person implements Parcelable {
     private static final String TAG = "Person";
     public static final Creator CREATOR = new PersonCreator();
     private int personID;
@@ -15,11 +15,13 @@ public class Person implements Parcelable{
     private String lastName;
     private int zID;
     private String profilePath;
+    private String email;
 
     public Person() {
 
     }
-//TODO: this is for Student, make sure to delete after camera implemented for student
+
+    //TODO: this is for Student, make sure to delete after camera implemented for student
     public Person(String firstName, String lastName, int zID) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,20 +31,22 @@ public class Person implements Parcelable{
 
     //constructor for adding to database, aka from login screen
     //should always make the Person first, then make the Tutor/Student from the PersonID
-    public Person(String firstName, String lastName, int zID, String profilePath) {
+    public Person(String firstName, String lastName, int zID, String profilePath, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.zID = zID;
         this.profilePath = profilePath;
+        this.email = email;
     }
 
     //constructor for getting from database
-    public Person(int personID, String firstName, String lastName, int zID, String profilePath) {
+    public Person(int personID, String firstName, String lastName, int zID, String profilePath, String email) {
         this.personID = personID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.zID = zID;
         this.profilePath = profilePath;
+        this.email = email;
     }
 
     //read from parcel
@@ -52,6 +56,7 @@ public class Person implements Parcelable{
         this.lastName = parcel.readString();
         this.zID = parcel.readInt();
         this.profilePath = parcel.readString();
+        this.email = parcel.readString();
     }
 
     @Override
@@ -61,6 +66,7 @@ public class Person implements Parcelable{
         parcel.writeString(lastName);
         parcel.writeInt(zID);
         parcel.writeString(profilePath);
+        parcel.writeString(email);
     }
 
     @Override
@@ -106,6 +112,14 @@ public class Person implements Parcelable{
 
     public void setProfilePath(String profilePath) {
         this.profilePath = profilePath;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     static class PersonCreator implements Parcelable.Creator<Person> {

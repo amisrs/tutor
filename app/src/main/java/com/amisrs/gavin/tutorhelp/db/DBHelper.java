@@ -31,7 +31,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     DBContract.PersonTable.COLUMN_FIRSTNAME + TEXT_TYPE + COMMA_SEP +
                     DBContract.PersonTable.COLUMN_LASTNAME + TEXT_TYPE + COMMA_SEP +
                     DBContract.PersonTable.COLUMN_ZID + INTEGER_TYPE + UNIQUE + COMMA_SEP +
-                    DBContract.PersonTable.COLUMN_PROFILEPIC + TEXT_TYPE +
+                    DBContract.PersonTable.COLUMN_PROFILEPIC + TEXT_TYPE + COMMA_SEP +
+                    DBContract.PersonTable.COLUMN_EMAIL + TEXT_TYPE +
                     ");";
 
     public static final String SQL_CREATE_STUDENTTABLE =

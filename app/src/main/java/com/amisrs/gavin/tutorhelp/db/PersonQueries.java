@@ -25,7 +25,8 @@ public class PersonQueries extends QueryBase {
                 DBContract.PersonTable.COLUMN_FIRSTNAME,
                 DBContract.PersonTable.COLUMN_LASTNAME,
                 DBContract.PersonTable.COLUMN_ZID,
-                DBContract.PersonTable.COLUMN_PROFILEPIC
+                DBContract.PersonTable.COLUMN_PROFILEPIC,
+                DBContract.PersonTable.COLUMN_EMAIL
         };
 
         String selection = DBContract.PersonTable.COLUMN_PERSONID + " = ?";
@@ -43,7 +44,7 @@ public class PersonQueries extends QueryBase {
         Person person = new Person();
         if (c.getCount() != 0) {
             Log.d(TAG, "Person: " + c.getString(1) + " " + c.getString(2));
-            person = new Person(c.getInt(0), c.getString(1), c.getString(2), c.getInt(3), c.getString(4));
+            person = new Person(c.getInt(0), c.getString(1), c.getString(2), c.getInt(3), c.getString(4), c.getString(5));
         }
         c.close();
         close();
@@ -57,6 +58,8 @@ public class PersonQueries extends QueryBase {
         contentValues.put(DBContract.PersonTable.COLUMN_LASTNAME, person.getLastName());
         contentValues.put(DBContract.PersonTable.COLUMN_ZID, person.getzID());
         contentValues.put(DBContract.PersonTable.COLUMN_PROFILEPIC, person.getProfilePath());
+        contentValues.put(DBContract.PersonTable.COLUMN_EMAIL, person.getEmail());
+
 
         long newRowID = db.insert(DBContract.PersonTable.TABLE_NAME, null, contentValues);
         Log.d(TAG, "Added new Person to database: " + person.getFirstName() + " " + person.getLastName() + " rowId = " + newRowID);

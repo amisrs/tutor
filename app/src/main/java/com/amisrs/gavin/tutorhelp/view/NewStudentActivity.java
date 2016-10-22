@@ -31,7 +31,7 @@ public class NewStudentActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_student);
 
-        createButton = (Button)findViewById(R.id.btn_create);
+
         zid = (EditText)findViewById(R.id.student_zid);
         fname = (EditText)findViewById(R.id.student_fname);
         lname = (EditText)findViewById(R.id.student_lname);
