@@ -4,14 +4,28 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.controller.TutorialListAdapter;
+import com.amisrs.gavin.tutorhelp.db.PersonQueries;
+import com.amisrs.gavin.tutorhelp.db.StudentQueries;
+import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
+import com.amisrs.gavin.tutorhelp.model.Enrolment;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +44,7 @@ public class StudentDetailsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private Student studentParam;
     private Tutorial tutorialParam;
+    private boolean isEdit;
 
     private OnFragmentInteractionListener mListener;
 
@@ -68,22 +83,97 @@ public class StudentDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_student_details, container, false);
-        TextView nameTextView = (TextView)view.findViewById(R.id.tv_name);
-        TextView zidTextView = (TextView)view.findViewById(R.id.tv_zid);
+        isEdit = false;
+        final View view = inflater.inflate(R.layout.fragment_student_details, container, false);
+        final EditText fnameTextView = (EditText) view.findViewById(R.id.tv_fname);
+        final EditText lnameTextView = (EditText) view.findViewById(R.id.tv_lname);
+        final EditText zidTextView = (EditText) view.findViewById(R.id.tv_zid);
+        final EditText gradeText = (EditText) view.findViewById(R.id.et_grade);
+        final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
+        final ImageButton saveButton = (ImageButton) view.findViewById(R.id.iv_save);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_tutorials);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
-        nameTextView.setText(studentParam.getPerson().getFirstName() + " " + studentParam.getPerson().getLastName());
+        final StudentQueries studentQueries = new StudentQueries(getContext());
+        final Enrolment enrolment = studentQueries.getEnrolmentForStudentAndTutorial(studentParam, tutorialParam);
+
+        TutorialQueries tutorialQueries = new TutorialQueries(getContext());
+        ArrayList<Tutorial> tutorialArrayList = tutorialQueries.getTutorialsForStudent(studentParam);
+        //get tutorials for student
+        TutorialListAdapter adapter = new TutorialListAdapter(getContext());
+        adapter.giveList(tutorialArrayList);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+
+        fnameTextView.setText(studentParam.getPerson().getFirstName());
+        lnameTextView.setText(studentParam.getPerson().getLastName());
         zidTextView.setText(String.valueOf(studentParam.getPerson().getzID()));
+        gradeText.setText(String.valueOf(enrolment.getGrade()));
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //update details
+                PersonQueries personQueries = new PersonQueries(getContext());
+                personQueries.updatePerson(studentParam.getPersonID(),
+                                           fnameTextView.getText().toString(),
+                                           lnameTextView.getText().toString(),
+                                           Integer.parseInt(zidTextView.getText().toString()));
+
+                //update grade
+
+                fnameTextView.setInputType(InputType.TYPE_NULL);
+                lnameTextView.setInputType(InputType.TYPE_NULL);
+                zidTextView.setInputType(InputType.TYPE_NULL);
+                gradeText.setInputType(InputType.TYPE_NULL);
+
+                editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
+                saveButton.setVisibility(View.GONE);
+                isEdit = false;
+                onButtonPressed("save");
+            }
+        });
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isEdit) {
+                    fnameTextView.setInputType(InputType.TYPE_CLASS_TEXT);
+                    lnameTextView.setInputType(InputType.TYPE_CLASS_TEXT);
+                    zidTextView.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    gradeText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_clear_black_36dp));
+                    saveButton.setVisibility(View.VISIBLE);
+
+                    isEdit = true;
+                } else {
+                    fnameTextView.setText(studentParam.getPerson().getFirstName());
+                    lnameTextView.setText(studentParam.getPerson().getLastName());
+                    zidTextView.setText(String.valueOf(studentParam.getPerson().getzID()));
+                    gradeText.setText(String.valueOf(enrolment.getGrade()));
+                    fnameTextView.setInputType(InputType.TYPE_NULL);
+                    lnameTextView.setInputType(InputType.TYPE_NULL);
+                    zidTextView.setInputType(InputType.TYPE_NULL);
+                    gradeText.setInputType(InputType.TYPE_NULL);
+
+                    editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
+                    saveButton.setVisibility(View.GONE);
+                    isEdit = false;
+                }
+            }
+        });
 
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    // TODO: Rename method, update argument and hook method into UI eventx
+    public void onButtonPressed(String string) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(string);
         }
     }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -114,6 +204,6 @@ public class StudentDetailsFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String string);
     }
 }

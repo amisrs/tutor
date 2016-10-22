@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.amisrs.gavin.tutorhelp.model.Enrolment;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
@@ -48,7 +49,7 @@ public class StudentQueries extends QueryBase {
             ContentValues contentValues2 = new ContentValues();
             contentValues2.put(DBContract.StudentWeekTable.COLUMN_STUDENTID, (int) newRowId);
             contentValues2.put(DBContract.StudentWeekTable.COLUMN_WEEKID, w.getWeekID());
-            contentValues2.put(DBContract.StudentWeekTable.COLUMN_ATTENDED, 0);
+            contentValues2.put(DBContract.StudentWeekTable.COLUMN_ATTENDED, 1);
             contentValues2.put(DBContract.StudentWeekTable.COLUMN_PRIVATECOMMENT, "");
             contentValues2.put(DBContract.StudentWeekTable.COLUMN_PUBLICCOMMENT, "");
             long newRowId2 = db.insert(DBContract.StudentWeekTable.TABLE_NAME, null, contentValues2);
@@ -91,4 +92,35 @@ public class StudentQueries extends QueryBase {
         return students;
     }
 
+    public Enrolment getEnrolmentForStudentAndTutorial(Student student, Tutorial tutorial) {
+        open();
+        String[] projection = {
+                DBContract.EnrolmentTable.COLUMN_STUDENTID,
+                DBContract.EnrolmentTable.COLUMN_TUTORIALID,
+                DBContract.EnrolmentTable.COLUMN_GRADE
+        };
+
+        String selection = DBContract.EnrolmentTable.COLUMN_STUDENTID + " = ? AND " +
+                DBContract.EnrolmentTable.COLUMN_TUTORIALID + " = ?";
+        String[] selectionArgs = {
+                String.valueOf(student.getStudentID()),
+                String.valueOf(tutorial.getTutorialID())
+        };
+
+        Cursor c = db.query(
+                DBContract.EnrolmentTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        c.moveToFirst();
+        Enrolment enrolment = new Enrolment(c.getInt(0), c.getInt(1), c.getInt(2));
+        c.close();
+        close();
+
+        return enrolment;
+    }
 }

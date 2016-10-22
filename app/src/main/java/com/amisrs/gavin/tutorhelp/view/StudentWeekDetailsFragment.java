@@ -4,9 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
@@ -76,16 +80,37 @@ public class StudentWeekDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_student_week_details, container, false);
         TextView weekText = (TextView)view.findViewById(R.id.tv_week);
         TextView studentText = (TextView)view.findViewById(R.id.tv_student);
+        Switch aSwitch = (Switch) view.findViewById(R.id.cb_attended);
 
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                toggleAttended(b);
+            }
+        });
         weekText.setText(weekParam.toString());
         studentText.setText(studentParam.toString());
         WeekQueries weekQueries = new WeekQueries(getContext());
         studentWeek = weekQueries.getStudentWeekForWeekAndStudentAndTutorial(weekParam, studentParam, tutorialParam);
-
+        if(studentWeek.getAttended() == 0) {
+            aSwitch.setChecked(false);
+        } else {
+            aSwitch.setChecked(true);
+        }
         //TODO: add in ui elements to manipulate and save to this studentWeek
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    public void toggleAttended(boolean b) {
+        WeekQueries weekQueries = new WeekQueries(getContext());
+        if(b) {
+            //now attended
+            weekQueries.setAttendanceForStudentWeek(studentParam, weekParam, 1);
+        } else {
+            weekQueries.setAttendanceForStudentWeek(studentParam, weekParam, 0);
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -94,6 +119,8 @@ public class StudentWeekDetailsFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+
 
     @Override
     public void onAttach(Context context) {

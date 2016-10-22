@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.view.MenuActivity;
 
@@ -23,6 +24,11 @@ import java.util.ArrayList;
 public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapter.TutorialViewHolder> {
     private static final String TAG = "TutorialListAdapter";
     ArrayList<Tutorial> tutorials;
+    Context context;
+
+    public TutorialListAdapter(Context context) {
+        this.context = context;
+    }
 
     public void giveList(ArrayList<Tutorial> list) {
         tutorials = list;
@@ -67,6 +73,9 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
             time.setText(tutorial.getTimeSlot());
             place.setText(tutorial.getLocation());
             //get count of students in this tutorial; from enrolment table
+            TutorialQueries tutorialQueries = new TutorialQueries(context);
+            int size = tutorialQueries.getStudentsForTutorial(tutorial).size();
+            population.setText(String.valueOf(size));
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override

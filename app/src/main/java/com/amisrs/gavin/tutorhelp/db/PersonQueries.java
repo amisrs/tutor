@@ -13,7 +13,7 @@ import com.amisrs.gavin.tutorhelp.other.DbBitmapUtility;
  */
 public class PersonQueries extends QueryBase {
     private static final String TAG = "PersonQueries";
-
+    private static final String COMMA_SEP = ",";
     public PersonQueries(Context context) {
         super(context);
     }
@@ -66,8 +66,24 @@ public class PersonQueries extends QueryBase {
         return person;
     }
 
-    public void addImageFilePathForPerson(String imgPath) {
-        String updatePath = "UPDATE" + DBContract.PersonTable.TABLE_NAME + " SET " + DBContract.PersonTable.COLUMN_PROFILEPIC + " = " + imgPath;
+    public void updatePerson(int id, String fname, String lname, int zid) {
+        open();
+        String update = "update " + DBContract.PersonTable.TABLE_NAME +
+                " set " + DBContract.PersonTable.COLUMN_FIRSTNAME + " = \"" + fname + "\"" + COMMA_SEP +
+                DBContract.PersonTable.COLUMN_LASTNAME + " = \"" + lname + "\"" + COMMA_SEP +
+                DBContract.PersonTable.COLUMN_ZID + " = " + zid +
+                " where " + DBContract.PersonTable.COLUMN_PERSONID + " = " + id;
+
+        db.execSQL(update);
+        Log.d(TAG, "Updated person, is now " + fname + " " + lname);
+        close();
+    }
+
+    public void addImageFilePathForPerson(int id, String imgPath) {
+        open();
+        String updatePath = "update" + DBContract.PersonTable.TABLE_NAME +
+                " set " + DBContract.PersonTable.COLUMN_PROFILEPIC + " = \"" + imgPath + "\"" +
+                " where " + DBContract.PersonTable.COLUMN_PERSONID + " = " + id;
         db.execSQL(updatePath);
         close();
     }

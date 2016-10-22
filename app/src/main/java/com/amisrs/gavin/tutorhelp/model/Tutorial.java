@@ -63,6 +63,8 @@ public class Tutorial implements Parcelable{
     }
 
 
+
+
     public String getTimeSlot() {
         return timeSlot;
     }

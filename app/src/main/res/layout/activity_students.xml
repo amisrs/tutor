@@ -18,7 +18,8 @@
                 android:layout_alignParentBottom="true"/>
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/rl_right">
+            android:id="@+id/rl_right"
+            android:layout_width="match_parent">
 
         </RelativeLayout>
     </TableRow>

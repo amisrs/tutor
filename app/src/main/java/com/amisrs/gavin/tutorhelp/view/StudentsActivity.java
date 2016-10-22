@@ -29,6 +29,7 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
         NewStudentDialogFragment.NewStudentDialogFragmentListener,
         StudentDetailsFragment.OnFragmentInteractionListener {
     private static final String TAG = "StudentsActivity";
+    private Student currentStudent;
 
 
     Tutorial tutorial;
@@ -70,6 +71,8 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
     }
 
     public void changeStudent(Student student) {
+        currentStudent = student;
+        Log.d(TAG, "Swapping details fragment to student: " + student.toString());
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.rl_right, StudentDetailsFragment.newInstance(student, tutorial));
@@ -91,7 +94,10 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
 
     @Override
     public void onFragmentInteraction(String name) {
-
+        if(name.equals("save")) {
+            refreshStudentList();
+            changeStudent(currentStudent);
+        }
     }
 
     @Override
@@ -106,6 +112,9 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
 
     @Override
     public void onStudentClick(View view, Student student) {
+        currentStudent = student;
+        Log.d(TAG, "currentStudent is " + currentStudent.toString());
         changeStudent(student);
+
     }
 }

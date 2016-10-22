@@ -37,11 +37,4 @@
         android:layout_height="wrap_content"
         android:hint="@string/lname"/>
 
-    <Button
-        android:id="@+id/btn_create"
-        android:layout_below="@id/student_lname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/create"/>
-
 </RelativeLayout>

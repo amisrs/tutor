@@ -65,7 +65,7 @@ public class TutorialListActivity extends DrawerActivity {
         TutorialQueries tutorialQueries = new TutorialQueries(this);
         ArrayList<Tutorial> tutorialArrayList = tutorialQueries.getTutorialListForTutor(theTutor);
 
-        TutorialListAdapter adapter = new TutorialListAdapter();
+        TutorialListAdapter adapter = new TutorialListAdapter(this);
         adapter.giveList(tutorialArrayList);
         recycler.setAdapter(adapter);
 

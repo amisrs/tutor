@@ -104,4 +104,15 @@ public class WeekQueries extends QueryBase {
     }
 
     //TODO: update studentweek
+
+    public void setAttendanceForStudentWeek(Student student, Week week, int attended) {
+        open();
+        String query = "update " + DBContract.StudentWeekTable.TABLE_NAME +
+                " set " + DBContract.StudentWeekTable.COLUMN_ATTENDED + " = " + attended +
+                " where " + DBContract.StudentWeekTable.COLUMN_WEEKID + " = " + week.getWeekID() + " and " +
+                DBContract.StudentWeekTable.COLUMN_STUDENTID + " = " + student.getStudentID();
+
+        db.execSQL(query);
+        close();
+    }
 }

@@ -73,8 +73,8 @@ public class BaseActivity extends AppCompatActivity implements StudentListFragme
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.rl_left, StudentListFragment.newInstance(tutorial));
-            fragmentTransaction.add(R.id.rl_right, StudentWeekDetailsFragment.newInstance(weeks.get(weeks.size() - 1), currentStudent, tutorial));
+            fragmentTransaction.replace(R.id.rl_left, StudentListFragment.newInstance(tutorial));
+            fragmentTransaction.replace(R.id.rl_right, StudentWeekDetailsFragment.newInstance(weeks.get(weeks.size() - 1), currentStudent, tutorial));
             fragmentTransaction.commit();
 
         }
