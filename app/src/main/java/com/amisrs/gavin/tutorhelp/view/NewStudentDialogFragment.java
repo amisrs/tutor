@@ -57,7 +57,7 @@ public class NewStudentDialogFragment extends DialogFragment {
 
     private ImageView profilePic;
     private ImageButton captureButton;
-   // private Button btn;
+    // private Button btn;
     private String fileName;
     private String[] permissions = new String[]{Manifest.permission.CAMERA};
     private static final int CAMERA_PERMISSION_CODE = 1;
@@ -139,7 +139,7 @@ public class NewStudentDialogFragment extends DialogFragment {
             }
         });
         profilePic = (ImageView) view.findViewById(R.id.iv_camera);
-        profilePic.setImageResource(R.drawable.ic_default_profile_pic);
+        profilePic.setImageResource(R.drawable.ic_default);
 
         builder
                 .setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
@@ -229,7 +229,7 @@ public class NewStudentDialogFragment extends DialogFragment {
         FileOutputStream fileOutputStream = null;
         String imgFilePath = getContext().getFilesDir().toString();
         //TODO : handle for case of null
-        fileName = zid.getText().toString()+"_tutor.PNG";
+        fileName = zid.getText().toString()+"_student.PNG";
         try{
             fileOutputStream = getContext().openFileOutput(fileName, Context.MODE_PRIVATE);
             fileOutputStream.write(DbBitmapUtility.getBytes(bitmap));

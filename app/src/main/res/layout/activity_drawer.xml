@@ -16,6 +16,7 @@
             android:layout_height="?actionBarSize"
             android:background="@color/background_material_dark"
             />
+
         <FrameLayout
             android:id="@+id/fl_nav_content"
             android:layout_width="match_parent"
@@ -23,19 +24,51 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_tutorName"
+    <RelativeLayout
+        android:id="@+id/rl_header"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp">
+
+    <ImageView
+        android:id="@+id/iv_navDrawer_bg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher" />
+    <!--TODO: add padding into dimens-->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_tutor_profile"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_person_black_24dp_2x"/>
+
+        <TextView
+            android:id="@+id/tv_tutorName"
+            android:layout_below="@id/iv_tutor_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:gravity="center_horizontal"
+            android:paddingTop="10dp"
+            android:text="TEST"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
+    </RelativeLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigationView"
-
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/drawer_nav_header"
         app:menu="@menu/menu_drawer"/>
+       <!-- app:headerLayout="@layout/drawer_nav_header"-->
+
 
 </android.support.v4.widget.DrawerLayout>

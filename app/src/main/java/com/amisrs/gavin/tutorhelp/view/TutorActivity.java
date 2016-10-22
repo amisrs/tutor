@@ -102,7 +102,7 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
         super.onActivityResult(requestCode, resultCode, data);
 
     }
-    
+
 
     @Override
     public void onFragmentInteraction(String name) {

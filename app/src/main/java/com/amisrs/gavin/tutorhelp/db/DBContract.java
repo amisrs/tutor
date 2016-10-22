@@ -39,6 +39,7 @@ public class DBContract {
         public static final String COLUMN_NAME = "Name";
         public static final String COLUMN_TIMESLOT = "TimeSlot";
         public static final String COLUMN_LOCATION = "Location";
+        public static final String COLUMN_TERM = "Term";
     }
 
     public static class WeekTable implements BaseColumns {
@@ -54,6 +55,8 @@ public class DBContract {
         public static final String COLUMN_ASSESSMENTID = "AssessmentID";
         public static final String COLUMN_NAME = "Name";
         public static final String COLUMN_DESCRIPTION = "Description";
+        public static final String COLUMN_TERM = "Term";
+        public static final String COLUMN_WEIGHTING = "Weighting";
     }
 
     public static class StudentWeekTable implements BaseColumns {

@@ -133,7 +133,7 @@ public class NewTutorDialogFragment extends DialogFragment {
             }
         });
         profilePic = (ImageView) view.findViewById(R.id.iv_camera);
-        profilePic.setImageResource(R.drawable.ic_default_profile_pic);
+        profilePic.setImageResource(R.drawable.ic_default);
 
         builder
                 .setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {

@@ -19,7 +19,7 @@ import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
 import java.util.ArrayList;
 
-public class TutorialListActivity extends DrawerActivity {
+public class TutorialListActivity extends AppCompatActivity {
     //TODO: update student number, better layout
     private static final String TAG = "TutorialListActivity";
     RecyclerView recycler;
@@ -65,7 +65,7 @@ public class TutorialListActivity extends DrawerActivity {
         TutorialQueries tutorialQueries = new TutorialQueries(this);
         ArrayList<Tutorial> tutorialArrayList = tutorialQueries.getTutorialListForTutor(theTutor);
 
-        TutorialListAdapter adapter = new TutorialListAdapter();
+        TutorialListAdapter adapter = new TutorialListAdapter(this);
         adapter.giveList(tutorialArrayList);
         recycler.setAdapter(adapter);
 

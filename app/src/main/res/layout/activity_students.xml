@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.amisrs.gavin.tutorhelp.view.StudentsActivity">
-    <TableRow>
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
         <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_weight="4"
             android:id="@+id/rl_left"
             android:background="@color/white"
             android:elevation="1dp">
@@ -18,8 +23,11 @@
                 android:layout_alignParentBottom="true"/>
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/rl_right">
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/rl_right"
+            android:layout_weight="1">
 
         </RelativeLayout>
-    </TableRow>
-</TableLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.amisrs.gavin.tutorhelp.view;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -26,7 +27,7 @@ import com.amisrs.gavin.tutorhelp.model.Week;
 
 import java.util.ArrayList;
 
-public class BaseActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener,
+public class BaseActivity extends DrawerActivity implements StudentListFragment.OnFragmentInteractionListener,
         StudentWeekDetailsFragment.OnFragmentInteractionListener,
         OnItemClickListener {
     private static final String TAG = "BaseActivity";
@@ -46,7 +47,9 @@ public class BaseActivity extends AppCompatActivity implements StudentListFragme
         ArrayList<Student> students = tutorialQueries.getStudentsForTutorial(tutorial);
         if(students.size() < 1) {
             Toast.makeText(BaseActivity.this, getString(R.string.nostudents), Toast.LENGTH_SHORT).show();
-            finish();
+            Intent intent = new Intent(this, StudentsActivity.class);
+            intent.putExtra("tutorial", tutorial);
+            startActivity(intent);
         } else {
             currentStudent = students.get(0);
 
@@ -73,8 +76,8 @@ public class BaseActivity extends AppCompatActivity implements StudentListFragme
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.rl_left, StudentListFragment.newInstance(tutorial));
-            fragmentTransaction.add(R.id.rl_right, StudentWeekDetailsFragment.newInstance(weeks.get(weeks.size() - 1), currentStudent, tutorial));
+            fragmentTransaction.replace(R.id.rl_left, StudentListFragment.newInstance(tutorial));
+            fragmentTransaction.replace(R.id.rl_right, StudentWeekDetailsFragment.newInstance(weeks.get(weeks.size() - 1), currentStudent, tutorial));
             fragmentTransaction.commit();
 
         }
@@ -91,6 +94,14 @@ public class BaseActivity extends AppCompatActivity implements StudentListFragme
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onFragmentInteraction(String string) {
+        if(string.equals("save")) {
+            Log.d(TAG, "save was pressed");
+            changeFragmentWeek(currentWeek);
+        }
     }
 
     @Override

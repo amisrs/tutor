@@ -18,6 +18,8 @@
 
     <string name="nostudents">There are no students in this tutorial!</string>
 
+    <string name="grade">Grade</string>
+
     <!--
         BUTTONS
     -->
@@ -27,6 +29,13 @@
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
     <string name="attendance">Attendance</string>
+
+    <string name="attended">Attended</string>
+    <string name="publicComment">Public Comment</string>
+
+    <string name="S1">Semester 1</string>
+    <string name="S2">Semester 2</string>
+    <string name="ST">Summer</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
