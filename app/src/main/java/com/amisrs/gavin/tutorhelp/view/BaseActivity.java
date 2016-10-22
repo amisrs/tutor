@@ -1,6 +1,8 @@
 package com.amisrs.gavin.tutorhelp.view;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +29,8 @@ import com.amisrs.gavin.tutorhelp.model.Week;
 import java.util.ArrayList;
 
 public class BaseActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener,
-        StudentWeekDetailsFragment.OnFragmentInteractionListener,
+        StudentWeekDetailsFragment.OnFragmentInteractionListener,NewStudentDialogFragment.OnFragmentInteractionListener,
+        NewStudentDialogFragment.NewStudentDialogFragmentListener,
         OnItemClickListener {
     private static final String TAG = "BaseActivity";
     Tutorial tutorial;
@@ -45,8 +48,10 @@ public class BaseActivity extends AppCompatActivity implements StudentListFragme
         TutorialQueries tutorialQueries = new TutorialQueries(this);
         ArrayList<Student> students = tutorialQueries.getStudentsForTutorial(tutorial);
         if(students.size() < 1) {
-            Toast.makeText(BaseActivity.this, getString(R.string.nostudents), Toast.LENGTH_SHORT).show();
-            finish();
+            NewStudentDialogFragment nsdf = NewStudentDialogFragment.newInstance(tutorial);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            nsdf.show(fragmentManager, "dialog");
+
         } else {
             currentStudent = students.get(0);
 
@@ -90,6 +95,19 @@ public class BaseActivity extends AppCompatActivity implements StudentListFragme
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment fragment) {
+        Intent intent = new Intent(this, BaseActivity.class);
+        intent.putExtra("tutorial", tutorial);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment fragment) {
 
     }
 

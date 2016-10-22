@@ -1,29 +1,24 @@
-package com.amisrs.gavin.tutorhelp.view;
+package com.amisrs.gavin.tutorhelp.view.Assessment;
 
-import android.app.Dialog;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.controller.OnItemClickListener;
-import com.amisrs.gavin.tutorhelp.db.PersonQueries;
-import com.amisrs.gavin.tutorhelp.db.StudentQueries;
-import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.amisrs.gavin.tutorhelp.view.NewStudentDialogFragment;
+import com.amisrs.gavin.tutorhelp.view.StudentDetailsFragment;
+import com.amisrs.gavin.tutorhelp.view.StudentListFragment;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-public class StudentsActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener,
+public class AssessmentsActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener,
         OnItemClickListener,
         NewStudentDialogFragment.OnFragmentInteractionListener,
         NewStudentDialogFragment.NewStudentDialogFragmentListener,

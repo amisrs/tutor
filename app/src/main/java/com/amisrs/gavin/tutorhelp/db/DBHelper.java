@@ -16,10 +16,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TEXT_TYPE = " text";
     private static final String INTEGER_TYPE = " integer";
+    private static final String REAL_TYPE = " real";
 
     private static final String NOT_NULL = " not null";
     private static final String PRIMARY_KEY = " primary key";
     private static final String UNIQUE = " unique";
+
+    private static final String ON_DELETE_CASCADE = " on delete cascade";
 
     private static final String COMMA_SEP = ", ";
 
@@ -40,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     DBContract.StudentTable.COLUMN_STUDENTID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
                     DBContract.StudentTable.COLUMN_PERSONID + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                     "foreign key(" + DBContract.StudentTable.COLUMN_PERSONID + ")" +
-                        " references " + DBContract.PersonTable.TABLE_NAME + "(" + DBContract.PersonTable.COLUMN_PERSONID + ")" +
+                        " references " + DBContract.PersonTable.TABLE_NAME + "(" + DBContract.PersonTable.COLUMN_PERSONID + ")" + ON_DELETE_CASCADE +
                     "); ";
 
     public static final String SQL_CREATE_TUTORTABLE =
@@ -48,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     DBContract.TutorTable.COLUMN_TUTORID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
                     DBContract.TutorTable.COLUMN_PERSONID + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                     "foreign key(" + DBContract.TutorTable.COLUMN_PERSONID + ")" +
-                        " references " + DBContract.PersonTable.TABLE_NAME + "(" + DBContract.PersonTable.COLUMN_PERSONID + ")" +
+                        " references " + DBContract.PersonTable.TABLE_NAME + "(" + DBContract.PersonTable.COLUMN_PERSONID + ")" + ON_DELETE_CASCADE +
                     "); ";
 
     public static final String SQL_CREATE_TUTORIALTABLE =
@@ -60,7 +63,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     DBContract.TutorialTable.COLUMN_LOCATION + TEXT_TYPE + COMMA_SEP +
                     DBContract.TutorialTable.COLUMN_TERM + TEXT_TYPE + COMMA_SEP +
                     "foreign key(" + DBContract.TutorialTable.COLUMN_TUTORID + ")" +
-                        " references " + DBContract.TutorTable.TABLE_NAME + "(" + DBContract.TutorialTable.COLUMN_TUTORID + ")" +
+                        " references " + DBContract.TutorTable.TABLE_NAME + "(" + DBContract.TutorialTable.COLUMN_TUTORID + ")" + ON_DELETE_CASCADE +
                     "); ";
 
     public static final String SQL_CREATE_WEEKTABLE =
@@ -70,7 +73,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     DBContract.WeekTable.COLUMN_WEEKNUMBER + INTEGER_TYPE + COMMA_SEP +
                     DBContract.WeekTable.COLUMN_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
                     "foreign key(" + DBContract.WeekTable.COLUMN_TUTORIALID + ")" +
-                        " references " + DBContract.TutorialTable.TABLE_NAME + "(" + DBContract.TutorialTable.COLUMN_TUTORIALID + ")" +
+                        " references " + DBContract.TutorialTable.TABLE_NAME + "(" + DBContract.TutorialTable.COLUMN_TUTORIALID + ")" + ON_DELETE_CASCADE +
                     "); ";
 
     public static final String SQL_CREATE_ASSESSMENTTABLE =
@@ -78,7 +81,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     DBContract.AssessmentTable.COLUMN_ASSESSMENTID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
                     DBContract.AssessmentTable.COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
                     DBContract.AssessmentTable.COLUMN_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
-                    DBContract.AssessmentTable.COLUMN_TERM + TEXT_TYPE +
+                    DBContract.AssessmentTable.COLUMN_TERM + TEXT_TYPE + COMMA_SEP +
+                    DBContract.AssessmentTable.COLUMN_WEIGHTING + REAL_TYPE +
                     "); ";
 
     public static final String SQL_CREATE_STUDENTWEEKTABLE =
@@ -91,21 +95,21 @@ public class DBHelper extends SQLiteOpenHelper {
                     DBContract.StudentWeekTable.COLUMN_PUBLICCOMMENT + TEXT_TYPE + COMMA_SEP +
                     "primary key(" + DBContract.StudentWeekTable.COLUMN_STUDENTID + COMMA_SEP + DBContract.StudentWeekTable.COLUMN_WEEKID + ")" + COMMA_SEP +
                     "foreign key(" + DBContract.StudentWeekTable.COLUMN_STUDENTID + ")" +
-                        " references " + DBContract.StudentTable.TABLE_NAME + "(" + DBContract.StudentTable.COLUMN_STUDENTID + ")" + COMMA_SEP +
+                        " references " + DBContract.StudentTable.TABLE_NAME + "(" + DBContract.StudentTable.COLUMN_STUDENTID + ")" + ON_DELETE_CASCADE + COMMA_SEP +
                     "foreign key(" + DBContract.StudentWeekTable.COLUMN_WEEKID + ")" +
-                        " references " + DBContract.WeekTable.TABLE_NAME + "(" + DBContract.WeekTable.COLUMN_WEEKID + ")" +
+                        " references " + DBContract.WeekTable.TABLE_NAME + "(" + DBContract.WeekTable.COLUMN_WEEKID + ")" + ON_DELETE_CASCADE +
                     "); ";
 
     public static final String SQL_CREATE_ENROLMENTTABLE =
             "create table " + DBContract.EnrolmentTable.TABLE_NAME + "(" +
                     DBContract.EnrolmentTable.COLUMN_STUDENTID + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                     DBContract.EnrolmentTable.COLUMN_TUTORIALID + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
-                    DBContract.EnrolmentTable.COLUMN_GRADE + INTEGER_TYPE + COMMA_SEP +
+                    DBContract.EnrolmentTable.COLUMN_GRADE + REAL_TYPE + COMMA_SEP +
                     "primary key(" + DBContract.EnrolmentTable.COLUMN_STUDENTID + COMMA_SEP + DBContract.EnrolmentTable.COLUMN_TUTORIALID + ")" + COMMA_SEP +
                     "foreign key(" + DBContract.EnrolmentTable.COLUMN_STUDENTID + ") " +
-                        " references " + DBContract.StudentTable.TABLE_NAME + "(" + DBContract.StudentTable.COLUMN_STUDENTID + ")" + COMMA_SEP +
+                        " references " + DBContract.StudentTable.TABLE_NAME + "(" + DBContract.StudentTable.COLUMN_STUDENTID + ")" + ON_DELETE_CASCADE + COMMA_SEP +
                     "foreign key(" + DBContract.EnrolmentTable.COLUMN_TUTORIALID + ")" +
-                        " references " + DBContract.TutorialTable.TABLE_NAME + "(" + DBContract.TutorialTable.COLUMN_TUTORIALID + ")" +
+                        " references " + DBContract.TutorialTable.TABLE_NAME + "(" + DBContract.TutorialTable.COLUMN_TUTORIALID + ")" + ON_DELETE_CASCADE +
                     "); ";
 
     public static final String SQL_CREATE_MARKTABLE =
@@ -118,11 +122,11 @@ public class DBHelper extends SQLiteOpenHelper {
                                      DBContract.MarkTable.COLUMN_TUTORIALID + COMMA_SEP +
                                      DBContract.MarkTable.COLUMN_ASSESSMENTID + ")" + COMMA_SEP +
                     "foreign key(" + DBContract.MarkTable.COLUMN_STUDENTID + ")" +
-                        " references " + DBContract.StudentTable.TABLE_NAME + "(" + DBContract.StudentTable.COLUMN_STUDENTID + ")" + COMMA_SEP +
+                        " references " + DBContract.StudentTable.TABLE_NAME + "(" + DBContract.StudentTable.COLUMN_STUDENTID + ")" + ON_DELETE_CASCADE + COMMA_SEP +
                     "foreign key(" + DBContract.MarkTable.COLUMN_TUTORIALID + ")" +
-                        " references " + DBContract.TutorialTable.TABLE_NAME + "(" + DBContract.TutorialTable.COLUMN_TUTORIALID + ")" + COMMA_SEP +
+                        " references " + DBContract.TutorialTable.TABLE_NAME + "(" + DBContract.TutorialTable.COLUMN_TUTORIALID + ")" + ON_DELETE_CASCADE + COMMA_SEP +
                     "foreign key(" + DBContract.MarkTable.COLUMN_ASSESSMENTID + ")" +
-                        " references " + DBContract.AssessmentTable.TABLE_NAME + "(" + DBContract.AssessmentTable.COLUMN_ASSESSMENTID + ")" +
+                        " references " + DBContract.AssessmentTable.TABLE_NAME + "(" + DBContract.AssessmentTable.COLUMN_ASSESSMENTID + ")" + ON_DELETE_CASCADE +
                     "); ";
 
     public static final String SQL_DROP_PERSONTABLE =
@@ -191,4 +195,12 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_DROP_ENROLMENTTABLE);
         sqLiteDatabase.execSQL(SQL_DROP_MARKTABLE);
     }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        db.execSQL("PRAGMA foreign_keys=ON");
+    }
+
+
 }

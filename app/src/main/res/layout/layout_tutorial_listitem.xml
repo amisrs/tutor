@@ -32,6 +32,13 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/tutorialListOther"
         android:text="place"/>
+    <TextView
+        android:id="@+id/tv_term"
+        android:layout_below="@id/tv_tutorialLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/tutorialListOther"
+        android:text="term"/>
 
     <TextView
         android:id="@+id/tv_pop"

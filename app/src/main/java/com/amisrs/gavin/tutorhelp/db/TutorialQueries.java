@@ -55,6 +55,7 @@ public class TutorialQueries extends QueryBase {
         while(!c.isAfterLast()) {
             Tutorial newTutorial = new Tutorial(c.getInt(0), c.getInt(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5));
             tutorials.add(newTutorial);
+            Log.d(TAG, "tutorial in term: " + c.getString(5));
             c.moveToNext();
         }
         c.close();
@@ -69,6 +70,7 @@ public class TutorialQueries extends QueryBase {
         contentValues.put(DBContract.TutorialTable.COLUMN_NAME, tutorial.getName());
         contentValues.put(DBContract.TutorialTable.COLUMN_TIMESLOT, tutorial.getTimeSlot());
         contentValues.put(DBContract.TutorialTable.COLUMN_LOCATION, tutorial.getLocation());
+        contentValues.put(DBContract.TutorialTable.COLUMN_TERM, tutorial.getTerm());
 
         long newRowId = db.insert(DBContract.TutorialTable.TABLE_NAME, null, contentValues);
         Log.d(TAG, "Added new Tutorial: " + tutorial.getTutorID() + " " + tutorial.getName() + tutorial.getTimeSlot() + tutorial.getLocation());

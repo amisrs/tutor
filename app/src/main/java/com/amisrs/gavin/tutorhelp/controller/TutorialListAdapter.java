@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -57,6 +58,7 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
         private TextView time;
         private TextView place;
         private TextView population;
+        private TextView term;
 
         public TutorialViewHolder(View itemView) {
             super(itemView);
@@ -64,6 +66,7 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
             time = (TextView)itemView.findViewById(R.id.tv_tutorialTime);
             place = (TextView)itemView.findViewById(R.id.tv_tutorialLocation);
             population = (TextView)itemView.findViewById(R.id.tv_pop);
+            term = (TextView)itemView.findViewById(R.id.tv_term);
             relativeLayout = (RelativeLayout)itemView.findViewById(R.id.rl_item);
 
         }
@@ -72,6 +75,8 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
             name.setText(tutorial.getName());
             time.setText(tutorial.getTimeSlot());
             place.setText(tutorial.getLocation());
+            term.setText(tutorial.getTerm());
+            System.out.println("tutorial term: " + tutorial.getTerm());
             //get count of students in this tutorial; from enrolment table
             TutorialQueries tutorialQueries = new TutorialQueries(context);
             int size = tutorialQueries.getStudentsForTutorial(tutorial).size();
