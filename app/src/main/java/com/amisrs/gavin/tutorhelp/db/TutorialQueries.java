@@ -32,7 +32,8 @@ public class TutorialQueries extends QueryBase {
                 DBContract.TutorialTable.COLUMN_TUTORID + COMMA_SEP +
                 DBContract.TutorialTable.COLUMN_NAME + COMMA_SEP +
                 DBContract.TutorialTable.COLUMN_TIMESLOT + COMMA_SEP +
-                DBContract.TutorialTable.COLUMN_LOCATION
+                DBContract.TutorialTable.COLUMN_LOCATION + COMMA_SEP +
+                DBContract.TutorialTable.COLUMN_TERM
         };
 
         //get tutor by zid
@@ -52,7 +53,7 @@ public class TutorialQueries extends QueryBase {
         );
         c.moveToFirst();
         while(!c.isAfterLast()) {
-            Tutorial newTutorial = new Tutorial(c.getInt(0), c.getInt(1), c.getString(2), c.getString(3), c.getString(4));
+            Tutorial newTutorial = new Tutorial(c.getInt(0), c.getInt(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5));
             tutorials.add(newTutorial);
             c.moveToNext();
         }
@@ -115,7 +116,8 @@ public class TutorialQueries extends QueryBase {
                        "t." + DBContract.TutorialTable.COLUMN_TUTORID + COMMA_SEP +
                        "t." + DBContract.TutorialTable.COLUMN_NAME + COMMA_SEP +
                        "t." + DBContract.TutorialTable.COLUMN_TIMESLOT + COMMA_SEP +
-                       "t." + DBContract.TutorialTable.COLUMN_LOCATION +
+                       "t." + DBContract.TutorialTable.COLUMN_LOCATION + COMMA_SEP +
+                       "t." + DBContract.TutorialTable.COLUMN_TERM +
                 " from " + DBContract.TutorialTable.TABLE_NAME + " t" +
                 " join " + DBContract.EnrolmentTable.TABLE_NAME + " e" +
                         " on t." + DBContract.TutorialTable.COLUMN_TUTORIALID + " = e." + DBContract.EnrolmentTable.COLUMN_TUTORIALID +
@@ -128,7 +130,7 @@ public class TutorialQueries extends QueryBase {
         ArrayList<Tutorial> tutorials = new ArrayList<>();
         c.moveToFirst();
         while(!c.isAfterLast()) {
-            Tutorial newTutorial = new Tutorial(c.getInt(0), c.getInt(1), c.getString(2), c.getString(3), c.getString(4));
+            Tutorial newTutorial = new Tutorial(c.getInt(0), c.getInt(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5));
             tutorials.add(newTutorial);
             c.moveToNext();
         }

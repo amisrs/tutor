@@ -58,6 +58,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     DBContract.TutorialTable.COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
                     DBContract.TutorialTable.COLUMN_TIMESLOT + TEXT_TYPE + COMMA_SEP +
                     DBContract.TutorialTable.COLUMN_LOCATION + TEXT_TYPE + COMMA_SEP +
+                    DBContract.TutorialTable.COLUMN_TERM + TEXT_TYPE + COMMA_SEP +
                     "foreign key(" + DBContract.TutorialTable.COLUMN_TUTORID + ")" +
                         " references " + DBContract.TutorTable.TABLE_NAME + "(" + DBContract.TutorialTable.COLUMN_TUTORID + ")" +
                     "); ";
@@ -76,7 +77,8 @@ public class DBHelper extends SQLiteOpenHelper {
             "create table " + DBContract.AssessmentTable.TABLE_NAME + "(" +
                     DBContract.AssessmentTable.COLUMN_ASSESSMENTID + INTEGER_TYPE + PRIMARY_KEY + COMMA_SEP +
                     DBContract.AssessmentTable.COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
-                    DBContract.AssessmentTable.COLUMN_DESCRIPTION + TEXT_TYPE +
+                    DBContract.AssessmentTable.COLUMN_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
+                    DBContract.AssessmentTable.COLUMN_TERM + TEXT_TYPE +
                     "); ";
 
     public static final String SQL_CREATE_STUDENTWEEKTABLE =

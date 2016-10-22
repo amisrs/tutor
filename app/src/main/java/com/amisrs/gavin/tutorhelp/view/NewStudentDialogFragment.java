@@ -86,6 +86,11 @@ public class NewStudentDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View view = inflater.inflate(R.layout.activity_new_student, null);
+        //fsfsfsff view.fid
+        //builder.setView(view);
+
         builder.setView(inflater.inflate(R.layout.activity_new_student, null));
         builder
         .setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
@@ -104,6 +109,7 @@ public class NewStudentDialogFragment extends DialogFragment {
                 dialogInterface.cancel();
             }
         });
+
 
         return builder.create();
     }

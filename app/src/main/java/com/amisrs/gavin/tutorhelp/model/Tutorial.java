@@ -17,6 +17,7 @@ public class Tutorial implements Parcelable{
     private String name;
     private String timeSlot;
     private String location;
+    private String term;
 
     @Override
     public int describeContents() {
@@ -30,6 +31,7 @@ public class Tutorial implements Parcelable{
         parcel.writeString(name);
         parcel.writeString(timeSlot);
         parcel.writeString(location);
+        parcel.writeString(term);
     }
     //from parcel
     public Tutorial(Parcel parcel) {
@@ -38,27 +40,30 @@ public class Tutorial implements Parcelable{
         this.name = parcel.readString();
         this.timeSlot = parcel.readString();
         this.location = parcel.readString();
+        this.term = parcel.readString();
     }
 
 
     //constructor for adding a new tutorial
     //the tutorialID should autoincrement in database
-    public Tutorial(int tutorID, String name, String timeSlot, String location) {
+    public Tutorial(int tutorID, String name, String timeSlot, String location, String term) {
         this.tutorID = tutorID;
         this.name = name;
         this.timeSlot = timeSlot;
         this.location = location;
+        this.term = term;
         Log.d(TAG, "Made new tutorial object for entry: " + tutorID + " " + name);
 
     }
 
     //constructor for getting object from database values
-    public Tutorial(int tutorialID, int tutorID, String name, String timeSlot, String location) {
+    public Tutorial(int tutorialID, int tutorID, String name, String timeSlot, String location, String term) {
         this.tutorialID = tutorialID;
         this.tutorID = tutorID;
         this.name = name;
         this.timeSlot = timeSlot;
         this.location = location;
+        this.term = term;
         Log.d(TAG, "Retrieved tutorial data from database: " + tutorialID + " " + tutorID + "" + "name");
     }
 
@@ -103,6 +108,14 @@ public class Tutorial implements Parcelable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
     }
 
     static class TutorialCreator implements Creator<Tutorial> {

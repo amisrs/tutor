@@ -4,16 +4,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.db.PersonQueries;
 import com.amisrs.gavin.tutorhelp.db.WeekQueries;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.StudentWeek;
@@ -34,12 +39,13 @@ public class StudentWeekDetailsFragment extends Fragment {
     private static final String ARG_WEEK = "weekParam";
     private static final String ARG_STUDENT = "studentParam";
     private static final String ARG_TUTORIAL = "tutorialParam";
-
+    private static final String TAG = "StudentWeekDetailsFrag";
     // TODO: Rename and change types of parameters
     private Week weekParam;
     private Student studentParam;
     private Tutorial tutorialParam;
     private StudentWeek studentWeek;
+    private boolean isEdit;
 
     private OnFragmentInteractionListener mListener;
 
@@ -77,10 +83,14 @@ public class StudentWeekDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        isEdit = false;
         View view = inflater.inflate(R.layout.fragment_student_week_details, container, false);
         TextView weekText = (TextView)view.findViewById(R.id.tv_week);
-        TextView studentText = (TextView)view.findViewById(R.id.tv_student);
+        final TextView studentText = (TextView)view.findViewById(R.id.tv_student);
         Switch aSwitch = (Switch) view.findViewById(R.id.cb_attended);
+        final EditText publicComment = (EditText)view.findViewById(R.id.et_pub);
+        final ImageButton editButton = (ImageButton)view.findViewById(R.id.iv_edit);
+        final ImageButton saveButton = (ImageButton)view.findViewById(R.id.iv_save);
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -88,16 +98,56 @@ public class StudentWeekDetailsFragment extends Fragment {
                 toggleAttended(b);
             }
         });
+
         weekText.setText(weekParam.toString());
         studentText.setText(studentParam.toString());
-        WeekQueries weekQueries = new WeekQueries(getContext());
+        final WeekQueries weekQueries = new WeekQueries(getContext());
         studentWeek = weekQueries.getStudentWeekForWeekAndStudentAndTutorial(weekParam, studentParam, tutorialParam);
+        Log.d(TAG, "the current student week public comment; " + studentWeek.getPublicComment());
+        publicComment.setText(studentWeek.getPublicComment());
         if(studentWeek.getAttended() == 0) {
             aSwitch.setChecked(false);
         } else {
             aSwitch.setChecked(true);
         }
         //TODO: add in ui elements to manipulate and save to this studentWeek
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //update details
+                studentWeek.setPublicComment(publicComment.getText().toString());
+                weekQueries.updateStudentWeek(studentWeek);
+                //update grade
+
+                publicComment.setInputType(InputType.TYPE_NULL);
+
+                editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
+                saveButton.setVisibility(View.GONE);
+                isEdit = false;
+                //onButtonPressed("save");
+            }
+        });
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isEdit) {
+                    publicComment.setInputType(InputType.TYPE_CLASS_TEXT);
+                    editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_clear_black_36dp));
+                    saveButton.setVisibility(View.VISIBLE);
+
+                    isEdit = true;
+                } else {
+                    publicComment.setText(studentWeek.getPublicComment());
+                    publicComment.setInputType(InputType.TYPE_NULL);
+
+                    editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
+                    saveButton.setVisibility(View.GONE);
+                    isEdit = false;
+                }
+            }
+        });
+
 
         // Inflate the layout for this fragment
         return view;
@@ -114,9 +164,9 @@ public class StudentWeekDetailsFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(String string) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFragmentInteraction(string);
         }
     }
 
@@ -151,6 +201,6 @@ public class StudentWeekDetailsFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(String string);
     }
 }

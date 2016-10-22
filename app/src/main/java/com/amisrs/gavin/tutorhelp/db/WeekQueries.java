@@ -18,6 +18,7 @@ import java.util.ConcurrentModificationException;
  */
 public class WeekQueries extends QueryBase {
     private static final String TAG = "WeekQueries";
+    private static final String COMMA_SEP = ", ";
 
     public WeekQueries(Context context) {
         super(context);
@@ -113,6 +114,18 @@ public class WeekQueries extends QueryBase {
                 DBContract.StudentWeekTable.COLUMN_STUDENTID + " = " + student.getStudentID();
 
         db.execSQL(query);
+        close();
+    }
+
+    public void updateStudentWeek(StudentWeek studentWeek) {
+        open();
+        String query = "update " + DBContract.StudentWeekTable.TABLE_NAME +
+                " set " + DBContract.StudentWeekTable.COLUMN_PUBLICCOMMENT + " = \"" + studentWeek.getPublicComment() +"\"" + COMMA_SEP +
+                DBContract.StudentWeekTable.COLUMN_PRIVATECOMMENT + " = \"" + studentWeek.getPrivateComment() + "\"" +
+                " where " + DBContract.StudentWeekTable.COLUMN_WEEKID + " = " + studentWeek.getWeekID() + " and " +
+                DBContract.StudentWeekTable.COLUMN_STUDENTID + " = " + studentWeek.getStudentID();
+        db.execSQL(query);
+        Log.d(TAG, "StudentWeek was updated with new public comment: " + studentWeek.getPublicComment());
         close();
     }
 }

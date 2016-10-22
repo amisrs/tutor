@@ -94,6 +94,14 @@ public class BaseActivity extends AppCompatActivity implements StudentListFragme
     }
 
     @Override
+    public void onFragmentInteraction(String string) {
+        if(string.equals("save")) {
+            Log.d(TAG, "save was pressed");
+            changeFragmentWeek(currentWeek);
+        }
+    }
+
+    @Override
     public void onStudentClick(View view, Student student) {
         currentStudent = student;
         FragmentManager fragmentManager = getSupportFragmentManager();

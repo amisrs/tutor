@@ -35,9 +35,27 @@
         android:layout_height="wrap_content"
         android:hint="@string/location"/>
 
+    <Spinner
+        android:id="@+id/sp_sem"
+        android:layout_below="@id/et_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </Spinner>
+
+    <Spinner
+        android:id="@+id/sp_year"
+        android:layout_below="@id/et_location"
+        android:paddingLeft="5dp"
+        android:layout_toRightOf="@id/sp_sem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </Spinner>
+
     <Button
         android:id="@+id/btn_create"
-        android:layout_below="@id/et_location"
+        android:layout_below="@id/sp_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create"/>
