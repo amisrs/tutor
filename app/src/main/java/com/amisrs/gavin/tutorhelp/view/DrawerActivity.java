@@ -55,8 +55,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         tutorName = (TextView) navHeader.findViewById(R.id.tv_tutorName);
         navHeaderBg = (ImageView) navHeader.findViewById(R.id.iv_navDrawer_bg);
         tutorProfile = (ImageView) navHeader.findViewById(R.id.iv_tutor_profile);*/
-        tutorName = (TextView) findViewById(R.id.tv_tutorName);
-        tutorName.setText(tutor.getPerson().getFirstName());
+//        tutorName = (TextView) findViewById(R.id.tv_tutorName);
+//        tutorName.setText(tutor.getPerson().getFirstName());
 
     }
 

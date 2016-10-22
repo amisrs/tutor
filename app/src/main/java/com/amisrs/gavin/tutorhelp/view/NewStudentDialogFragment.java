@@ -13,8 +13,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.db.PersonQueries;
+import com.amisrs.gavin.tutorhelp.db.StudentQueries;
+import com.amisrs.gavin.tutorhelp.model.Person;
+import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.Tutorial;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,12 +34,10 @@ import com.amisrs.gavin.tutorhelp.R;
  * create an instance of this fragment.
  */
 public class NewStudentDialogFragment extends DialogFragment {
-    private static final String TAG = "NewStudentDialogFragment";
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "NewStudentDialogFragmen";
+    private static final String ARG_TUTORIAL = "tutorial";
 
-    private String mParam1;
-    private String mParam2;
+    private Tutorial tutorialParam;
 
     private OnFragmentInteractionListener mListener;
     private NewStudentDialogFragmentListener dialogListener;
@@ -48,15 +55,13 @@ public class NewStudentDialogFragment extends DialogFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param tutorial Parameter 1.
      * @return A new instance of fragment NewStudentDialogFragment.
      */
-    public static NewStudentDialogFragment newInstance(String param1, String param2) {
+    public static NewStudentDialogFragment newInstance(Tutorial tutorial) {
         NewStudentDialogFragment fragment = new NewStudentDialogFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelable(ARG_TUTORIAL, tutorial);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,14 +70,8 @@ public class NewStudentDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            tutorialParam = getArguments().getParcelable(ARG_TUTORIAL);
         }
-    }
-
-    public static NewStudentDialogFragment newInstance() {
-        NewStudentDialogFragment newStudentDialogFragment = new NewStudentDialogFragment();
-        return newStudentDialogFragment;
     }
 
     @Override
@@ -93,6 +92,7 @@ public class NewStudentDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Log.d("aa", "create");
+                positivePress();
                 dialogListener.onDialogPositiveClick(NewStudentDialogFragment.this);
             }
         })
@@ -106,6 +106,38 @@ public class NewStudentDialogFragment extends DialogFragment {
         });
 
         return builder.create();
+    }
+
+    public void positivePress() {
+        Dialog dialog  = getDialog();
+        EditText zid = (EditText)dialog.findViewById(R.id.student_zid);
+        EditText fname = (EditText)dialog.findViewById(R.id.student_fname);
+        EditText lname = (EditText)dialog.findViewById(R.id.student_lname);
+
+        //TODO: improve validation
+        String zidString = zid.getText().toString();
+        Pattern zidPattern = Pattern.compile("\\d+");
+        Matcher zidMatcher = zidPattern.matcher(zidString);
+        if(zidMatcher.find()) {
+
+
+            String fnameString = fname.getText().toString();
+            String lnameString = lname.getText().toString();
+            int zidInt = Integer.parseInt(zid.getText().toString());
+
+            PersonQueries personQueries = new PersonQueries(getContext());
+            Person addedPerson = personQueries.addPerson(new Person(fnameString, lnameString, zidInt));
+
+            StudentQueries studentQueries = new StudentQueries(getContext());
+            studentQueries.addStudent(new Student(addedPerson.getPersonID(), addedPerson), tutorialParam);
+
+            Log.d(TAG, "Added person to database: " + addedPerson.getzID() + " " + addedPerson.getFirstName() + " " + addedPerson.getLastName());
+            dialogListener.onDialogPositiveClick(this);
+
+        } else {
+            //the zid has non-digits in it
+            zid.setError("zID must only contain numbers.");
+        }
     }
 
     public void onButtonPressed(String name) {
