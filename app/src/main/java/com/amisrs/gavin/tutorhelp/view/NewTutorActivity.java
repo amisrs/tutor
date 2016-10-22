@@ -148,7 +148,7 @@ public class NewTutorActivity extends AppCompatActivity {
     private String saveImagePath(Bitmap bitmap){
         FileOutputStream fileOutputStream = null;
         String imgFilePath = this.getFilesDir().toString();
-        fileName = zid.getText().toString()+".PNG";
+        fileName = zid.getText().toString()+"_tutor.PNG";
 
         try{
             fileOutputStream = this.openFileOutput(fileName, Context.MODE_PRIVATE);

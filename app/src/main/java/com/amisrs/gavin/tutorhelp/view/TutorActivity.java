@@ -67,7 +67,6 @@ public class TutorActivity extends AppCompatActivity {
         //go to TutorialListActivity with the tutorID
         Intent intent = new Intent(this, TutorialListActivity.class);
         intent.putExtra("tutor", tutor);
-
         startActivity(intent);
     }
 

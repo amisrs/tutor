@@ -29,7 +29,7 @@
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/tv_helloName"
+            android:id="@+id/tv_tutorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_hello"

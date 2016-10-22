@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+
 //https://github.com/j-mateo/MultiActivityToolbar
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "DrawerActivity";
@@ -30,6 +32,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     FrameLayout activityContainer;
     Toolbar toolbar;
     NavigationView navigationView;
+    View navHeader;
     private int navItemIndex;
     Tutor tutor;
     Tutorial tutorial;
@@ -39,20 +42,25 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     //TODO: add <include> in xml
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        /*tutor = getIntent().getParcelableExtra("tutor");
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_drawer);
+        tutor = getIntent().getParcelableExtra("tutor");
         if (tutor == null) {
             Log.e(TAG, "No tutor was received from the Intent.");
             //stop
             finish();
-        }*/
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drawer);
+        }
+  /*      navHeader = navigationView.inflateHeaderView(R.layout.drawer_nav_header);
+        tutorName = (TextView) navHeader.findViewById(R.id.tv_tutorName);
+        navHeaderBg = (ImageView) navHeader.findViewById(R.id.iv_navDrawer_bg);
+        tutorProfile = (ImageView) navHeader.findViewById(R.id.iv_tutor_profile);*/
+        tutorName = (TextView) findViewById(R.id.tv_tutorName);
+        tutorName.setText(tutor.getPerson().getFirstName());
 
-
-        //this is the parent layout
-
-        //inflate the child layout
     }
+
+
 
     @Override
     public void setContentView(int layoutResID) {
@@ -70,28 +78,28 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         navigationView = (NavigationView) findViewById(R.id.navigationView);
 
 
-        tutorName = (TextView) findViewById(R.id.tv_tutorName);
-        navHeaderBg = (ImageView) findViewById(R.id.iv_navDrawer_bg);
-        tutorProfile = (ImageView) findViewById(R.id.iv_tutor_profile);
+
 
         setSupportActionBar(toolbar);
         setTitle("NAV DRAW TEST");
 
         prepareNavView();
-        //loadNavHeader();
+
 
     }
+    // TextView tutorName
 
-  /*  private void loadNavHeader() {
+ /*   protected void loadNavHeader(Tutor tutor) {
 
-        tutor = getIntent().getParcelableExtra("tutor");
+       *//* tutor = getIntent().getParcelableExtra("tutor");
         if (tutor == null) {
             Log.e(TAG, "No tutor was received from the Intent.");
             //stop
             finish();
-        }
+        }*//*
        //Setting the tutor name to be displayed in the header
         tutorName.setText(tutor.getPerson().getFirstName() + " " + tutor.getPerson().getLastName());
+
 
         //Loading the header background image
         Glide.with(this)
@@ -107,15 +115,15 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 .into(tutorProfile);
 
 
-    }
-*/
+    }*/
+
     protected void prepareNavView() {
         navigationView.setNavigationItemSelectedListener(this);
         if (getSupportActionBar() != null) {
             // Use home/back button instead
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //TODO: change home image
-            getSupportActionBar().setHomeAsUpIndicator(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_person_black_24dp_2x));
+            //getSupportActionBar().setHomeAsUpIndicator(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_person_black_24dp_2x));
         }
     }
 
@@ -168,5 +176,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         }
 
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    public TextView getTutorName() {
+        return tutorName;
+    }
+
+    public void setTutorName(TextView tutorName) {
+        this.tutorName = tutorName;
     }
 }

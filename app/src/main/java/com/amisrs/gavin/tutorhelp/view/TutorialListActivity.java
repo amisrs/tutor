@@ -31,14 +31,11 @@ public class TutorialListActivity extends DrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial_list);
-
-
-
         layoutManager = new LinearLayoutManager(this);
 
         recycler = (RecyclerView)findViewById(R.id.rv_tutorials);
         fabAdd = (FloatingActionButton)findViewById(R.id.fab_add);
-        TextView helloName = (TextView)findViewById(R.id.tv_helloName);
+        TextView helloName = (TextView)findViewById(R.id.tv_tutorName);
 
         recycler.setLayoutManager(layoutManager);
 
@@ -49,7 +46,7 @@ public class TutorialListActivity extends DrawerActivity {
             //stop
             finish();
         }
-
+        //loadNavHeader(theTutor);
         Log.d(TAG, "Showing tutorials for: " + theTutor);
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
