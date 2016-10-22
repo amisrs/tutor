@@ -60,7 +60,7 @@
             android:editable="false"
             android:hint="@string/publicComment"
             android:scrollHorizontally="false"
-            android:inputType="textMultiLine"/>
+            android:inputType="none"/>
     </android.support.design.widget.TextInputLayout>
 
 
