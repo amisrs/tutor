@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.controller.OnDeleteListener;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.controller.TutorialListAdapter;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
@@ -23,7 +24,8 @@ import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import java.util.ArrayList;
 
 public class TutorialListActivity extends AppCompatActivity implements NewTutorialDialogFragment.OnFragmentInteractionListener,
-        NewTutorialDialogFragment.NewTutorialDialogFragmentListener {
+        NewTutorialDialogFragment.NewTutorialDialogFragmentListener,
+        OnDeleteListener {
     //TODO: update student number, better layout
     private static final String TAG = "TutorialListActivity";
     RecyclerView recycler;
@@ -71,6 +73,7 @@ public class TutorialListActivity extends AppCompatActivity implements NewTutori
 
         TutorialListAdapter adapter = new TutorialListAdapter(this);
         adapter.giveList(tutorialArrayList);
+        adapter.setOnDeleteListener(this);
         recycler.setAdapter(adapter);
 
     }
@@ -104,6 +107,11 @@ public class TutorialListActivity extends AppCompatActivity implements NewTutori
     @Override
     protected void onResume() {
         super.onResume();
+        reloadRecycler();
+    }
+
+    @Override
+    public void onDelete() {
         reloadRecycler();
     }
 }

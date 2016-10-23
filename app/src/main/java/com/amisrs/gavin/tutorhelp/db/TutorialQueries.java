@@ -142,4 +142,17 @@ public class TutorialQueries extends QueryBase {
         return tutorials;
     }
 
+    public void deleteTutorial(Tutorial tutorial) {
+        open();
+        String whereClause = DBContract.TutorialTable.COLUMN_TUTORIALID + " = ?";
+        String[] whereArgs = { String.valueOf(tutorial.getTutorialID()) };
+        db.delete(
+                DBContract.TutorialTable.TABLE_NAME,
+                whereClause,
+                whereArgs
+        );
+        close();
+        Log.d(TAG, "Deleted tutorial: " + tutorial.getName());
+    }
+
 }
