@@ -20,6 +20,7 @@ import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.view.MenuActivity;
 import com.amisrs.gavin.tutorhelp.view.StudentDetailsFragment;
+import com.amisrs.gavin.tutorhelp.view.StudentsActivity;
 
 import java.util.ArrayList;
 
@@ -95,8 +96,10 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
             int size = tutorialQueries.getStudentsForTutorial(tutorial).size();
             population.setText(String.valueOf(size));
 
-            if(context.getClass().getName().equals(StudentDetailsFragment.class.getName())) {
-                deleteButton.setVisibility(View.GONE);
+            Log.d(TAG, "This list is in class: " + context.getClass().getName() + " is this the same as " + StudentsActivity.class.getName());
+            if(context.getClass().getName().equals(StudentsActivity.class.getName())) {
+                Log.d(TAG, "Yes it is son, yes it is.");
+                deleteButton.setVisibility(View.INVISIBLE);
             } else {
                 deleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -13,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -28,6 +29,7 @@ import android.widget.ImageView;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.controller.MarkListAdapter;
+import com.amisrs.gavin.tutorhelp.controller.OnDeleteListener;
 import com.amisrs.gavin.tutorhelp.controller.OnItemClickListener;
 import com.amisrs.gavin.tutorhelp.controller.OnMarkUpdateListener;
 import com.amisrs.gavin.tutorhelp.db.PersonQueries;
@@ -45,9 +47,12 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
         NewStudentDialogFragment.OnFragmentInteractionListener,
         NewStudentDialogFragment.NewStudentDialogFragmentListener,
         StudentDetailsFragment.OnFragmentInteractionListener,
-        OnMarkUpdateListener {
+        OnMarkUpdateListener,
+        OnDeleteListener {
 
     private static final String TAG = "StudentsActivity";
+
+    private final String RIGHT_TAG = "right";
     private ImageView profilePic;
     private ImageButton captureButton;
     private String fileName;
@@ -108,14 +113,14 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
         Log.d(TAG, "Swapping details fragment to student: " + student.toString());
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.rl_right, StudentDetailsFragment.newInstance(student, tutorial));
+        fragmentTransaction.replace(R.id.rl_right, StudentDetailsFragment.newInstance(student, tutorial), RIGHT_TAG);
         fragmentTransaction.commit();
     }
 
     public void refreshStudentList() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.rl_left, StudentListFragment.newInstance(tutorial));
+        fragmentTransaction.replace(R.id.rl_left, StudentListFragment.newInstance(tutorial), RIGHT_TAG);
         fragmentTransaction.commit();
 
     }
@@ -164,5 +169,16 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
         Student student = studentQueries.getStudentById(mark.getStudentID());
         studentQueries.recalculateGradeForStudentEnrolment(student, tutorial);
         changeStudent(student);
+    }
+
+    @Override
+    public void onDelete() {
+        refreshStudentList();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = fragmentManager.findFragmentByTag(RIGHT_TAG);
+        fragmentTransaction.remove(fragment);
+        fragmentTransaction.commit();
+
     }
 }

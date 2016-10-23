@@ -1,10 +1,12 @@
 package com.amisrs.gavin.tutorhelp.view.Assessment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -88,11 +90,39 @@ public class AssessmentDetailsFragment extends Fragment {
 
         final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
         final ImageButton saveButton = (ImageButton) view.findViewById(R.id.iv_save);
+        ImageButton deleteButton = (ImageButton) view.findViewById(R.id.ib_delete);
 
         nameText.setText(assessmentParam.getName());
         descText.setText(assessmentParam.getDescription());
         weightText.setText(String.valueOf((int)assessmentParam.getWeighting()));
         markText.setText(String.valueOf((assessmentParam.getMaxMark())));
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                        .setMessage(R.string.deleteTutorialMsg)
+                        .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                StudentQueries studentQueries = new StudentQueries(getContext());
+                                studentQueries.deleteStudent(studentParam);
+                                onDeleteListener.onDelete();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .show();
+
+            }
+
+        });
+
+
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

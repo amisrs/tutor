@@ -284,4 +284,32 @@ public class StudentQueries extends QueryBase {
         close();
         return grade;
     }
+
+    public void deleteStudent(Student student) {
+        open();
+        PersonQueries personQueries = new PersonQueries(context);
+        Person toDelete = personQueries.getPersonByID(student.getPersonID());
+
+        Log.d(TAG, "Person profilepath is " + toDelete.getProfilePath());
+        //technically could just delete zID_tutor.PNG but don't be lazy
+        if(!toDelete.getProfilePath().equals("default.png") && !toDelete.getProfilePath().equals("")) {
+            int folderIndex = toDelete.getProfilePath().indexOf("files");
+            String filePathPenultimate = toDelete.getProfilePath().substring(folderIndex);
+            int fileIndex = filePathPenultimate.indexOf("/");
+            String fileName = filePathPenultimate.substring(fileIndex + 1);
+
+            context.deleteFile(fileName);
+        }
+
+        String whereClause = DBContract.PersonTable.COLUMN_PERSONID + " = ?";
+        String[] whereArgs = { String.valueOf(student.getPersonID()) };
+        db.delete(
+                DBContract.PersonTable.TABLE_NAME,
+                whereClause,
+                whereArgs
+        );
+        close();
+        Log.d(TAG, "Deleted person: " + student.getPerson().getFirstName());
+
+    }
 }

@@ -185,4 +185,8 @@ public class AssessmentQueries extends QueryBase {
         close();
         return newAssessment;
     }
+
+    public void deleteAssessment(Assessment assessment) {
+        
+    }
 }
