@@ -14,28 +14,38 @@
     <string name="timeSlot">Time Slot</string>
     <string name="location">Location</string>
 
+    <string name="description">Description</string>
+    <string name="weighting">Weighting (%)</string>
+
     <string name="hello">Hello, </string>
 
     <string name="nostudents">There are no students in this tutorial!</string>
+    <string name="noassessments">There are no assessments for this term!</string>
+    <string name="weightingError">Must be between 0 and 100!</string>
 
     <string name="grade">Grade</string>
+    <string name="attendance">Attendance</string>
+    <string name="publicComment">Public Comment</string>
+
+
+    <string name="S1">Semester 1</string>
+    <string name="S2">Semester 2</string>
+    <string name="ST">Summer</string>
+
 
     <!--
         BUTTONS
     -->
     <string name="login">Login</string>
     <string name="newTutor">New Tutor</string>
+    <string name="deleteTutor">Delete Tutor</string>
     <string name="newTutorial">New Tutorial</string>
+    <string name="newAssessment">New Assessment</string>
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
-    <string name="attendance">Attendance</string>
 
     <string name="attended">Attended</string>
-    <string name="publicComment">Public Comment</string>
 
-    <string name="S1">Semester 1</string>
-    <string name="S2">Semester 2</string>
-    <string name="ST">Summer</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

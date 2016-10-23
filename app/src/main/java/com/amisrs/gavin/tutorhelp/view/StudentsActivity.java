@@ -131,7 +131,7 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
     public void onFragmentInteraction(String name) {
         if(name.equals("save")) {
             refreshStudentList();
-            changeStudent(currentStudent);
+            //changeStudent(currentStudent);
         }
     }
 

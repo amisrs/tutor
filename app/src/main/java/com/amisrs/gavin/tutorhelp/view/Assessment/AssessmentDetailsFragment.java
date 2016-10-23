@@ -77,9 +77,17 @@ public class AssessmentDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         isEdit = false;
-        final View view = inflater.inflate(R.layout.fragment_student_details, container, false);
+        final View view = inflater.inflate(R.layout.fragment_assessment_details, container, false);
+        EditText nameText = (EditText) view.findViewById(R.id.tv_name);
+        EditText descText = (EditText) view.findViewById(R.id.tv_desc);
+        EditText weightText = (EditText) view.findViewById(R.id.et_weighting);
+
         final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
         final ImageButton saveButton = (ImageButton) view.findViewById(R.id.iv_save);
+
+        nameText.setText(assessmentParam.getName());
+        descText.setText(assessmentParam.getDescription());
+        weightText.setText(String.valueOf((int)assessmentParam.getWeighting()));
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

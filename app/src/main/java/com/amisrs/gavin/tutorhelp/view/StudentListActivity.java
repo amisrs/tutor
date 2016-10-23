@@ -40,7 +40,6 @@ public class StudentListActivity extends AppCompatActivity {
 
         recycler.setLayoutManager(layoutManager);
 
-
     }
 
     public void reloadRecycler() {

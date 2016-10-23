@@ -28,7 +28,7 @@ public class AssessmentQueries extends QueryBase {
         contentValues.put(DBContract.AssessmentTable.COLUMN_WEIGHTING, assessment.getWeighting());
 
         long newRowId = db.insert(DBContract.AssessmentTable.TABLE_NAME, null, contentValues);
-        Log.d(TAG, "Inserted new assessment: " + newRowId + " " + assessment.getName() + " " + assessment.getWeighting());
+        Log.d(TAG, "Inserted new assessment: " + newRowId + " " + assessment.getName() + " " + assessment.getWeighting() + " " + assessment.getTerm());
         close();
     }
 
@@ -64,5 +64,63 @@ public class AssessmentQueries extends QueryBase {
         close();
 
         return assessments;
+    }
+
+    public ArrayList<String> getTermsThatExist() {
+        open();
+        String[] projection = {
+                DBContract.AssessmentTable.COLUMN_TERM
+        };
+
+        Cursor c = db.query(
+                DBContract.AssessmentTable.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        c.moveToFirst();
+        ArrayList<String> terms = new ArrayList<>();
+        while(!c.isAfterLast()) {
+            Log.d(TAG, "looking at term; " + c.getString(0));
+            boolean termExists = false;
+
+            if(terms.size() > 0) {
+                for (String s : terms) {
+                    if (s.equals(c.getString(0))) {
+                        Log.d(TAG, "Term " + c.getString(0) + " already exists in the list: " + s);
+                        termExists = true;
+                    }
+                }
+            }
+
+            if (!termExists) {
+                Log.d(TAG, "Adding term: " + c.getString(0));
+                terms.add(c.getString(0));
+            }
+
+            c.moveToNext();
+        }
+
+//        for(int i=0; i<terms.size(); i++) {
+//            for(int k=i+1; k<terms.size(); k++) {
+//                if(terms.get(i).compareTo(terms.get(k)) > 0) {
+//                    String temp = terms.get(k);
+//                    terms.set(k, terms.get(i));
+//                    terms.set(i, temp);
+//                }
+//            }
+//        }
+
+
+
+        c.close();
+        close();
+
+        Log.d(TAG, "Got terms that exist: " + terms.size());
+
+        return terms;
     }
 }

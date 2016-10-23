@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.amisrs.gavin.tutorhelp.view.Assessment.AssessmentDetailsFragment">
+
+    <!--TODO: make this fit for assessments-->
+
+    <!--<TextView
+        android:id="@+id/tv_name"
+
+        android:background="@color/colorPrimaryDark"/>-->
+
+    <EditText
+        android:id="@+id/tv_name"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/tutorialListBig"
+        android:editable="false"
+        android:text="Assessment"/>
+
+
+    <ImageButton
+        android:id="@+id/iv_edit"
+        android:layout_width="@dimen/tutorialListName"
+        android:layout_height="@dimen/tutorialListName"
+        android:layout_marginTop="22dp"
+
+        android:layout_toRightOf="@id/tv_name"
+        android:src="@drawable/ic_mode_edit_black_36dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"/>
+    <ImageButton
+        android:id="@+id/iv_save"
+        android:layout_width="@dimen/tutorialListName"
+        android:layout_height="@dimen/tutorialListName"
+        android:layout_marginTop="22dp"
+        android:layout_toRightOf="@id/iv_edit"
+        android:src="@drawable/ic_done_black_24dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:textSize="@dimen/tutorialListName"
+        android:editable="false"
+        android:maxLength="@integer/zidlength"
+        android:text="5062206"/>
+
+    <EditText
+        android:id="@+id/et_weighting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/weighting"
+        android:layout_below="@id/tv_desc"/>
+
+
+</RelativeLayout>
