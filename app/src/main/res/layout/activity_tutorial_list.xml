@@ -53,7 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:text="Tutorials"/>
+            android:text="Tutorial"
+            android:textColor="@color/colorAccent"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_tutorials"

@@ -78,9 +78,20 @@
         android:maxLength="@integer/zidlength"
         android:text="5062206"/>
 
+    <TextView
+        android:id="@+id/tv_tutorial"
+        android:layout_below="@+id/iv_pic"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tutorial"
+        android:textColor="@color/colorAccent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_tutorials"
-        android:layout_below="@id/iv_pic"
+        android:layout_below="@id/tv_tutorial"
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -88,10 +99,12 @@
     <TextView
         android:id="@+id/tv_gradeLabel"
         android:layout_below="@id/rv_tutorials"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/tutorialListName"
-        android:text="@string/grade"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:text="@string/grade"
+        android:textColor="@color/colorAccent"/>
     <EditText
         android:id="@+id/et_grade"
         android:layout_toRightOf="@id/tv_gradeLabel"
