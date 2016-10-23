@@ -133,7 +133,7 @@ public class MarkListAdapter extends RecyclerView.Adapter<MarkListAdapter.MarkVi
                 @Override
                 public void onClick(View view) {
                     if (!isEdit) {
-                        markText.setInputType(InputType.TYPE_CLASS_TEXT);
+                        markText.setInputType(InputType.TYPE_CLASS_NUMBER);
                         editButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_clear_black_36dp));
                         saveButton.setVisibility(View.VISIBLE);
 
