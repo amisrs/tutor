@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.controller.MarkListAdapter;
+import com.amisrs.gavin.tutorhelp.controller.OnMarkUpdateListener;
 import com.amisrs.gavin.tutorhelp.controller.TutorialListAdapter;
 import com.amisrs.gavin.tutorhelp.db.PersonQueries;
 import com.amisrs.gavin.tutorhelp.db.StudentQueries;
@@ -44,7 +45,7 @@ import java.util.ArrayList;
  * Use the {@link StudentDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StudentDetailsFragment extends Fragment {
+public class StudentDetailsFragment extends Fragment implements OnMarkUpdateListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "StudentDetailsFragment";
@@ -134,7 +135,7 @@ public class StudentDetailsFragment extends Fragment {
 
         ArrayList<Mark> marks = studentQueries.getMarksForStudent(studentParam);
         MarkListAdapter markListAdapter = new MarkListAdapter(getContext());
-        markListAdapter.setOnMarkUpdateListener((StudentsActivity)getActivity());
+        markListAdapter.setOnMarkUpdateListener(this);
         markListAdapter.giveList(marks);
         Log.d(TAG, "Mark list has: " + marks.size());
         markView.setLayoutManager(markLayoutManager);
@@ -205,6 +206,22 @@ public class StudentDetailsFragment extends Fragment {
         }
     }
 
+    public void refreshGrade(Mark mark) {
+        Log.d(TAG, "Refreshing grade");
+        final EditText gradeText = (EditText) getView().findViewById(R.id.et_grade);
+        final StudentQueries studentQueries = new StudentQueries(getContext());
+        final Enrolment enrolment = studentQueries.getEnrolmentForStudentAndTutorial(studentParam, tutorialParam);
+
+        Student student = studentQueries.getStudentById(mark.getStudentID());
+
+        enrolment.setGrade(studentQueries.recalculateGradeForStudentEnrolment(student, tutorialParam));
+        gradeText.setText(String.valueOf(enrolment.getGrade()));
+    }
+
+    @Override
+    public void onMarkUpdate(Mark mark) {
+        refreshGrade(mark);
+    }
 
     @Override
     public void onAttach(Context context) {

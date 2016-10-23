@@ -159,6 +159,7 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
     @Override
     public void onMarkUpdate(Mark mark) {
         //recalculate student grade
+        //this is not used
         StudentQueries studentQueries = new StudentQueries(this);
         Student student = studentQueries.getStudentById(mark.getStudentID());
         studentQueries.recalculateGradeForStudentEnrolment(student, tutorial);
