@@ -41,6 +41,8 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static android.support.v4.content.PermissionChecker.checkSelfPermission;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -107,7 +109,6 @@ public class NewStudentDialogFragment extends DialogFragment {
         }
 
 
-
     }
 
     @Override
@@ -115,11 +116,10 @@ public class NewStudentDialogFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_student_dialog, container, false);
-        //loadCamera(getDialog());
+
 
         return view;
     }
-
 
 
     @NonNull
@@ -135,7 +135,11 @@ public class NewStudentDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 System.out.println("capture btn clicked");
-                getCameraPermission();
+                if (checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(permissions, CAMERA_PERMISSION_CODE);
+                } else {
+                    takePicture();
+                }
             }
         });
         profilePic = (ImageView) view.findViewById(R.id.iv_camera);
@@ -163,44 +167,27 @@ public class NewStudentDialogFragment extends DialogFragment {
     }
 
 
-    //http://stackoverflow.com/questions/32942909/provide-custom-text-for-android-m-permission-dialog
-    public void getCameraPermission() {
-        System.out.println("getCameraPermission called");
-        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.CAMERA)) {
-                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
-                alertBuilder.setTitle("Permission is required to access camera")
-                        .setMessage("Camera permission is needed to take a picture")
-                        .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(getActivity(), permissions, CAMERA_PERMISSION_CODE);
-
-                            }
-
-                        });
-                AlertDialog alert = alertBuilder.create();
-                alert.show();
-            } else {
-                //no explanation is required, permission is automatically requested
-                ActivityCompat.requestPermissions(getActivity(), permissions, CAMERA_PERMISSION_CODE);
-            }
-        } else {
-            takePicture();
-        }
-    }
-
     public void takePicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         NewStudentDialogFragment.this.startActivityForResult(intent, REQUEST_CODE);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                takePicture();
+            }
+        }
+    }
+
     //http://stackoverflow.com/questions/28450049/how-get-result-from-onactivityresult-in-fragment
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("actResult is called");
-        super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode == REQUEST_CODE){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
             switch (resultCode) {
                 case Activity.RESULT_OK:
                     photo = (Bitmap) data.getExtras().get("data");
@@ -223,29 +210,28 @@ public class NewStudentDialogFragment extends DialogFragment {
     }
 
 
-
     //http://stackoverflow.com/questions/23131768/how-to-save-an-image-to-internal-storage-and-then-show-it-on-another-activity?noredirect=1&lq=1
-    private String saveImagePath(Bitmap bitmap){
+    private String saveImagePath(Bitmap bitmap) {
         FileOutputStream fileOutputStream = null;
         String imgFilePath = getContext().getFilesDir().toString();
         //TODO : handle for case of null
-        fileName = zid.getText().toString()+"_student.PNG";
-        try{
+        fileName = zid.getText().toString() + "_student.PNG";
+        try {
             fileOutputStream = getContext().openFileOutput(fileName, Context.MODE_PRIVATE);
             fileOutputStream.write(DbBitmapUtility.getBytes(bitmap));
             fileOutputStream.flush();
-            imgPath = imgFilePath+"/" + fileName;
+            imgPath = imgFilePath + "/" + fileName;
             //TODO: delete the test line below
             System.out.println("imgPath = " + imgPath);
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try{
+            try {
                 fileOutputStream.close();
                 Log.d(TAG, "FileOutputStream is closed successfully");
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -262,10 +248,9 @@ public class NewStudentDialogFragment extends DialogFragment {
         fname = (TextInputEditText) dialog.findViewById(R.id.et_student_fname);
         lname = (TextInputEditText) dialog.findViewById(R.id.et_student_lname);
         email = (TextInputEditText) dialog.findViewById(R.id.et_student_email);
-        if(imgTaken) {
+        if (imgTaken) {
             saveImagePath(photo);
         }
-
 
         //TODO: improve validation
         String zidString = zid.getText().toString();
@@ -282,7 +267,7 @@ public class NewStudentDialogFragment extends DialogFragment {
             System.out.println("imgPath = " + imgPath);
 //TODO: add in image path for camera
             PersonQueries personQueries = new PersonQueries(getContext());
-            Person addedPerson = personQueries.addPerson(new Person(fnameString, lnameString, zidInt, profilePath , emailString));
+            Person addedPerson = personQueries.addPerson(new Person(fnameString, lnameString, zidInt, profilePath, emailString));
 
             StudentQueries studentQueries = new StudentQueries(getContext());
             studentQueries.addStudent(new Student(addedPerson.getPersonID(), addedPerson), tutorialParam);

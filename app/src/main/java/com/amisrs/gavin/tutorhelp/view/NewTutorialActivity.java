@@ -36,7 +36,6 @@ public class NewTutorialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_tutorial);
         tutor = getIntent().getParcelableExtra("tutor");
 
-        createButton = (Button)findViewById(R.id.btn_create);
         name = (EditText)findViewById(R.id.et_name);
         timeSlot = (EditText)findViewById(R.id.et_timeSlot);
         location = (EditText)findViewById(R.id.et_location);
