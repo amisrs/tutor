@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
@@ -57,6 +58,7 @@ public class NewAssessmentDialogFragment extends DialogFragment {
 
     private String termParam;
     EditText weightPicker;
+    TextInputEditText markText;
 
     private OnNewAssessmentDialogFragmentInteractionListener mListener;
     private NewAssessmentDialogFragmentListener dialogListener;
@@ -138,12 +140,26 @@ public class NewAssessmentDialogFragment extends DialogFragment {
 
 
         final AlertDialog dialog = builder.create();
+        markText = (TextInputEditText) view.findViewById(R.id.et_maxmark);
         weightPicker = (EditText)view.findViewById(R.id.et_weighting);
         weightPicker.setOnKeyListener(new TextView.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if(weightPicker.getText().toString().equals("") || Integer.parseInt(weightPicker.getText().toString()) > 100) {
                     weightPicker.setError(getString(R.string.weightingError));
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                } else {
+                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                }
+                return false;
+            }
+        });
+
+        markText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(markText.getText().toString().equals("") || Integer.parseInt(markText.getText().toString()) < 0) {
+                    markText.setError(getString(R.string.greaterThanZero));
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
                 } else {
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
@@ -164,10 +180,15 @@ public class NewAssessmentDialogFragment extends DialogFragment {
         TextInputEditText name = (TextInputEditText) dialog.findViewById(R.id.et_name);
         TextInputEditText desc = (TextInputEditText) dialog.findViewById(R.id.et_desc);
         TextInputEditText weight = (TextInputEditText) dialog.findViewById(R.id.et_weighting);
+        TextInputEditText mark = (TextInputEditText) dialog.findViewById(R.id.et_maxmark);
 
         Log.d(TAG, "creating assessment for term: " + termParam);
         AssessmentQueries assessmentQueries = new AssessmentQueries(getContext());
-        Assessment newAssessment = new Assessment(name.getText().toString(), desc.getText().toString(), termParam, Double.parseDouble(weight.getText().toString()));
+        Assessment newAssessment = new Assessment(name.getText().toString(),
+                desc.getText().toString(),
+                termParam,
+                Double.parseDouble(weight.getText().toString()),
+                Integer.parseInt(mark.getText().toString()));
         assessmentQueries.addAssessment(newAssessment);
         //loadCamera(dialog);
 

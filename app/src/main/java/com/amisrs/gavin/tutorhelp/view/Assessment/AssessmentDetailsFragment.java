@@ -2,6 +2,7 @@ package com.amisrs.gavin.tutorhelp.view.Assessment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.ImageButton;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.controller.TutorialListAdapter;
+import com.amisrs.gavin.tutorhelp.db.AssessmentQueries;
 import com.amisrs.gavin.tutorhelp.db.PersonQueries;
 import com.amisrs.gavin.tutorhelp.db.StudentQueries;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
@@ -78,9 +80,11 @@ public class AssessmentDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         isEdit = false;
         final View view = inflater.inflate(R.layout.fragment_assessment_details, container, false);
-        EditText nameText = (EditText) view.findViewById(R.id.tv_name);
-        EditText descText = (EditText) view.findViewById(R.id.tv_desc);
-        EditText weightText = (EditText) view.findViewById(R.id.et_weighting);
+        final EditText nameText = (EditText) view.findViewById(R.id.tv_name);
+        final TextInputEditText descText = (TextInputEditText) view.findViewById(R.id.tv_desc);
+        final TextInputEditText weightText = (TextInputEditText) view.findViewById(R.id.et_weighting);
+        final TextInputEditText markText = (TextInputEditText) view.findViewById(R.id.et_maxmark);
+
 
         final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
         final ImageButton saveButton = (ImageButton) view.findViewById(R.id.iv_save);
@@ -88,14 +92,28 @@ public class AssessmentDetailsFragment extends Fragment {
         nameText.setText(assessmentParam.getName());
         descText.setText(assessmentParam.getDescription());
         weightText.setText(String.valueOf((int)assessmentParam.getWeighting()));
+        markText.setText(String.valueOf((assessmentParam.getMaxMark())));
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //update details
+                AssessmentQueries assessmentQueries = new AssessmentQueries(getContext());
+                assessmentQueries.updateAssessment(new Assessment(assessmentParam.getAssessmentId(),
+                        nameText.getText().toString(),
+                        descText.getText().toString(),
+                        assessmentParam.getTerm(),
+                        Double.parseDouble(weightText.getText().toString()),
+                        Integer.parseInt(markText.getText().toString())));
 
                 editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
                 saveButton.setVisibility(View.GONE);
+
+                nameText.setInputType(InputType.TYPE_NULL);
+                descText.setInputType(InputType.TYPE_NULL);
+                weightText.setInputType(InputType.TYPE_NULL);
+                markText.setInputType(InputType.TYPE_NULL);
+
                 isEdit = false;
                 onButtonPressed("save");
             }
@@ -108,8 +126,23 @@ public class AssessmentDetailsFragment extends Fragment {
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_clear_black_36dp));
                     saveButton.setVisibility(View.VISIBLE);
 
+                    nameText.setInputType(InputType.TYPE_CLASS_TEXT);
+                    descText.setInputType(InputType.TYPE_CLASS_TEXT);
+                    weightText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    markText.setInputType(InputType.TYPE_CLASS_NUMBER);
+
                     isEdit = true;
                 } else {
+
+                    nameText.setText(assessmentParam.getName());
+                    descText.setText(assessmentParam.getDescription());
+                    weightText.setText(String.valueOf((int)assessmentParam.getWeighting()));
+                    markText.setText(String.valueOf(assessmentParam.getMaxMark()));
+
+                    nameText.setInputType(InputType.TYPE_NULL);
+                    descText.setInputType(InputType.TYPE_NULL);
+                    weightText.setInputType(InputType.TYPE_NULL);
+                    markText.setInputType(InputType.TYPE_NULL);
 
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
                     saveButton.setVisibility(View.GONE);

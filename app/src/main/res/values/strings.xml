@@ -16,12 +16,14 @@
 
     <string name="description">Description</string>
     <string name="weighting">Weighting (%)</string>
+    <string name="maxmarks">Total Marks</string>
 
     <string name="hello">Hello, </string>
 
     <string name="nostudents">There are no students in this tutorial!</string>
     <string name="noassessments">There are no assessments for this term!</string>
     <string name="weightingError">Must be between 0 and 100!</string>
+    <string name="greaterThanZero">Must be greater than 0!</string>
 
     <string name="grade">Grade</string>
     <string name="attendance">Attendance</string>

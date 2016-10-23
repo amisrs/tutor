@@ -42,22 +42,56 @@
         android:background="@android:color/transparent"
         android:visibility="gone"/>
 
-    <EditText
-        android:id="@+id/tv_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_name"
-        android:textSize="@dimen/tutorialListName"
-        android:editable="false"
-        android:maxLength="@integer/zidlength"
-        android:text="5062206"/>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_desc"
+        android:layout_below="@id/iv_edit"
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/et_weighting"
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/tv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name"
+                android:textSize="@dimen/tutorialListName"
+                android:scrollHorizontally="false"
+                android:editable="false"
+                android:hint="@string/description"
+                android:text="desc"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_weight"
+        android:paddingTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/weighting"
-        android:layout_below="@id/tv_desc"/>
+        android:layout_below="@id/til_desc">
 
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/et_weighting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/weighting"
+            android:editable="false"
+        />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_maxmark"
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/til_weight">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/et_maxmark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/maxmarks"
+            android:editable="false"
+            />
+    </android.support.design.widget.TextInputLayout>
 
 </RelativeLayout>
