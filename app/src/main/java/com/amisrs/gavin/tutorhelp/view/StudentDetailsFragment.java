@@ -145,7 +145,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
             @Override
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                        .setMessage(R.string.deleteTutorialMsg)
+                        .setMessage(R.string.deleteStudentMsg)
                         .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -265,7 +265,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
 
         Student student = studentQueries.getStudentById(mark.getStudentID());
 
-        enrolment.setGrade(studentQueries.recalculateGradeForStudentEnrolment(student, tutorialParam));
+        enrolment.setGrade(studentQueries.recalculateGradeForStudentAndTerm(student, tutorialParam.getTerm()));
         gradeText.setText(String.valueOf(enrolment.getGrade()));
     }
 

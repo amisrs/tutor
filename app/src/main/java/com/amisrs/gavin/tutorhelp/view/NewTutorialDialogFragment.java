@@ -104,6 +104,9 @@ public class NewTutorialDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_new_tutorial, null);
         builder.setView(view);
+        semSp = (Spinner) view.findViewById(R.id.sp_sem);
+        yearSp = (Spinner) view.findViewById(R.id.sp_year);
+
         ArrayList<String> years = new ArrayList<>();
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         for(int i=currentYear; i<currentYear+5; i++) {
@@ -157,9 +160,6 @@ public class NewTutorialDialogFragment extends DialogFragment {
         name = (EditText) dialog.findViewById(R.id.et_name);
         timeSlot = (EditText) dialog.findViewById(R.id.et_timeSlot);
         location = (EditText)dialog.findViewById(R.id.et_location);
-        semSp = (Spinner) dialog.findViewById(R.id.sp_sem);
-        yearSp = (Spinner) dialog.findViewById(R.id.sp_year);
-
 
         TutorialQueries tutorialQueries = new TutorialQueries(getContext());
         String termString = semSp.getSelectedItem().toString() + " " + yearSp.getSelectedItem().toString();

@@ -3,7 +3,10 @@ package com.amisrs.gavin.tutorhelp.view;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -14,23 +17,36 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.controller.LoadMoodleAsyncTask;
+import com.amisrs.gavin.tutorhelp.controller.OnLoadListener;
 import com.amisrs.gavin.tutorhelp.db.TutorQueries;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
+import com.bumptech.glide.Glide;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.http.GET;
+
 public class TutorActivity extends AppCompatActivity implements NewTutorDialogFragment.OnFragmentInteractionListener,
-        NewTutorDialogFragment.NewTutorDialogFragmentListener {
+        NewTutorDialogFragment.NewTutorDialogFragmentListener,
+        OnLoadListener {
     //TODO: handle login as null
     private static final String TAG = "TutorActivity";
     Spinner tutorSpinner;
     Button loginButton;
     Button newButton;
     Button deleteButton;
+    ImageView background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +58,11 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
         loginButton = (Button) findViewById(R.id.btn_login);
         newButton = (Button) findViewById(R.id.btn_newTutor);
         deleteButton = (Button) findViewById(R.id.btn_deleteTutor);
+        background = (ImageView) findViewById(R.id.iv_background);
+
+        LoadMoodleAsyncTask asyncTask = new LoadMoodleAsyncTask(this);
+        asyncTask.execute();
+
         if(tutorSpinner.getSelectedItem() == null) {
             deleteButton.setEnabled(false);
             loginButton.setEnabled(false);
@@ -177,4 +198,9 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
         Log.d(TAG, "Cancelled add tutor.");
     }
 
+    @Override
+    public void onLoad(String string) {
+        Log.d(TAG, "Loading with glide " + string);
+        Glide.with(this).load(string).asBitmap().into(background);
+    }
 }

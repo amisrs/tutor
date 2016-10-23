@@ -167,7 +167,7 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
         //this is not used
         StudentQueries studentQueries = new StudentQueries(this);
         Student student = studentQueries.getStudentById(mark.getStudentID());
-        studentQueries.recalculateGradeForStudentEnrolment(student, tutorial);
+        studentQueries.recalculateGradeForStudentAndTerm(student, tutorial.getTerm());
         changeStudent(student);
     }
 

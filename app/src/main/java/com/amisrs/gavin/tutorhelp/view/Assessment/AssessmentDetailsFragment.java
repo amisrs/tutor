@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.controller.OnDeleteListener;
 import com.amisrs.gavin.tutorhelp.controller.TutorialListAdapter;
 import com.amisrs.gavin.tutorhelp.db.AssessmentQueries;
 import com.amisrs.gavin.tutorhelp.db.PersonQueries;
@@ -47,6 +48,7 @@ public class AssessmentDetailsFragment extends Fragment {
     private boolean isEdit;
 
     private OnFragmentInteractionListener mListener;
+    private OnDeleteListener onDeleteListener;
 
     public AssessmentDetailsFragment() {
         // Required empty public constructor
@@ -101,12 +103,12 @@ public class AssessmentDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                        .setMessage(R.string.deleteTutorialMsg)
+                        .setMessage(R.string.deleteAssessmentMsg)
                         .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                StudentQueries studentQueries = new StudentQueries(getContext());
-                                studentQueries.deleteStudent(studentParam);
+                                AssessmentQueries assessmentQueries = new AssessmentQueries(getContext());
+                                assessmentQueries.deleteAssessment(assessmentParam);
                                 onDeleteListener.onDelete();
                             }
                         })
@@ -202,12 +204,19 @@ public class AssessmentDetailsFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        if (context instanceof OnDeleteListener) {
+            onDeleteListener = (OnDeleteListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnDeleteListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        onDeleteListener = null;
     }
 
     /**

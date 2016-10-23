@@ -89,11 +89,11 @@ public class AssessmentQueries extends QueryBase {
     public ArrayList<String> getTermsThatExist() {
         open();
         String[] projection = {
-                DBContract.AssessmentTable.COLUMN_TERM
+                DBContract.TutorialTable.COLUMN_TERM
         };
 
         Cursor c = db.query(
-                DBContract.AssessmentTable.TABLE_NAME,
+                DBContract.TutorialTable.TABLE_NAME,
                 projection,
                 null,
                 null,
@@ -187,6 +187,16 @@ public class AssessmentQueries extends QueryBase {
     }
 
     public void deleteAssessment(Assessment assessment) {
-        
+        open();
+        String whereClause = DBContract.AssessmentTable.COLUMN_ASSESSMENTID + " = ?";
+        String[] whereArgs = { String.valueOf(assessment.getAssessmentId()) };
+        db.delete(
+                DBContract.AssessmentTable.TABLE_NAME,
+                whereClause,
+                whereArgs
+        );
+        close();
+        Log.d(TAG, "Deleted assessment: " + assessment.getName());
+
     }
 }

@@ -142,6 +142,41 @@ public class TutorialQueries extends QueryBase {
         return tutorials;
     }
 
+    public ArrayList<Tutorial> getTutorialsForTerm(String term) {
+        open();
+        String[] projection = {
+                DBContract.TutorialTable.COLUMN_TUTORIALID,
+                DBContract.TutorialTable.COLUMN_TUTORID,
+                DBContract.TutorialTable.COLUMN_NAME,
+                DBContract.TutorialTable.COLUMN_TIMESLOT,
+                DBContract.TutorialTable.COLUMN_LOCATION,
+                DBContract.TutorialTable.COLUMN_TERM
+        };
+
+        String selection = DBContract.TutorialTable.COLUMN_TERM + " = ?";
+        String[] selectionArgs = { term };
+
+        Cursor c = db.query(
+                DBContract.TutorialTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        c.moveToFirst();
+        ArrayList<Tutorial> tutorials = new ArrayList<>();
+        while(!c.isAfterLast()) {
+            tutorials.add(new Tutorial(c.getInt(0), c.getInt(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5)));
+            c.moveToNext();
+        }
+        c.close();
+        close();
+
+        return tutorials;
+    }
+
     public void deleteTutorial(Tutorial tutorial) {
         open();
         String whereClause = DBContract.TutorialTable.COLUMN_TUTORIALID + " = ?";

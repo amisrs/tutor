@@ -246,7 +246,7 @@ public class StudentQueries extends QueryBase {
         close();
     }
 
-    public double recalculateGradeForStudentEnrolment(Student student, Tutorial tutorial) {
+    public double recalculateGradeForStudentAndTerm(Student student, String term) {
         double grade = 0;
         double totalWeighting = 0;
         AssessmentQueries assessmentQueries = new AssessmentQueries(context);
@@ -264,7 +264,7 @@ public class StudentQueries extends QueryBase {
         }
 
         //get total weighting (in case it doesnt add to 100
-        ArrayList<Assessment> assessmentArrayList = assessmentQueries.getAssessmentsForTerm(tutorial.getTerm());
+        ArrayList<Assessment> assessmentArrayList = assessmentQueries.getAssessmentsForTerm(term);
         for(Assessment a : assessmentArrayList) {
             totalWeighting += a.getWeighting();
         }
@@ -274,10 +274,10 @@ public class StudentQueries extends QueryBase {
 
         open();
 
+        //TODO: if you want to reuse students, change this query to identify by tutorial as well
         String query = "update " + DBContract.EnrolmentTable.TABLE_NAME + " set " +
                 DBContract.EnrolmentTable.COLUMN_GRADE + " = " + grade +
-                " where " + DBContract.EnrolmentTable.COLUMN_STUDENTID + " = " + student.getStudentID() +
-                " and " + DBContract.EnrolmentTable.COLUMN_TUTORIALID + " = " + tutorial.getTutorialID();
+                " where " + DBContract.EnrolmentTable.COLUMN_STUDENTID + " = " + student.getStudentID();
         db.execSQL(query);
 
         Log.d(TAG, "Updated grade to be " + grade);
