@@ -1,7 +1,10 @@
 package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +22,8 @@ import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
 import java.util.ArrayList;
 
-public class TutorialListActivity extends AppCompatActivity {
+public class TutorialListActivity extends AppCompatActivity implements NewTutorialDialogFragment.OnFragmentInteractionListener,
+        NewTutorialDialogFragment.NewTutorialDialogFragmentListener {
     //TODO: update student number, better layout
     private static final String TAG = "TutorialListActivity";
     RecyclerView recycler;
@@ -33,15 +37,15 @@ public class TutorialListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tutorial_list);
         layoutManager = new LinearLayoutManager(this);
 
-        recycler = (RecyclerView)findViewById(R.id.rv_tutorials);
-        fabAdd = (FloatingActionButton)findViewById(R.id.fab_add);
-        TextView helloName = (TextView)findViewById(R.id.tv_tutorName);
+        recycler = (RecyclerView) findViewById(R.id.rv_tutorials);
+        fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
+        TextView helloName = (TextView) findViewById(R.id.tv_tutorName);
 
         recycler.setLayoutManager(layoutManager);
 
         theTutor = getIntent().getParcelableExtra("tutor");
 
-        if(theTutor == null) {
+        if (theTutor == null) {
             Log.e(TAG, "No tutor was received from the Intent.");
             //stop
             finish();
@@ -72,9 +76,29 @@ public class TutorialListActivity extends AppCompatActivity {
     }
 
     public void addTutorial() {
-        Intent intent = new Intent(this,NewTutorialActivity.class);
+       /* Intent intent = new Intent(this,NewTutorialActivity.class);
         intent.putExtra("tutor", theTutor);
-        startActivity(intent);
+        startActivity(intent);*/
+
+        NewTutorialDialogFragment newTutorialDialog = NewTutorialDialogFragment.newInstance(theTutor);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        newTutorialDialog.show(fragmentManager, "dialog");
+    }
+
+
+    @Override
+    public void onFragmentInteraction(String name) {
+
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment fragment) {
+        reloadRecycler();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment fragment) {
+        Log.d(TAG, "Cancelled add tutorial.");
     }
 
     @Override

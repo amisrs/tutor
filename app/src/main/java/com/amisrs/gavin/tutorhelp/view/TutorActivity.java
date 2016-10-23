@@ -116,7 +116,7 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
 
     @Override
     public void onDialogNegativeClick(DialogFragment fragment) {
-        Log.d(TAG, "Cancelled add student.");
+        Log.d(TAG, "Cancelled add tutor.");
     }
 
 }

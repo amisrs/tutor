@@ -41,6 +41,8 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static android.support.v4.content.PermissionChecker.checkSelfPermission;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -129,7 +131,12 @@ public class NewTutorDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 System.out.println("capture btn clicked");
-                getCameraPermission();
+
+                if (checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                    requestPermissions(permissions, CAMERA_PERMISSION_CODE);
+                } else {
+                    takePicture();
+                }
             }
         });
         profilePic = (ImageView) view.findViewById(R.id.iv_camera);
@@ -156,33 +163,6 @@ public class NewTutorDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-
-    //http://stackoverflow.com/questions/32942909/provide-custom-text-for-android-m-permission-dialog
-    public void getCameraPermission() {
-        System.out.println("getCameraPermission called");
-        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), android.Manifest.permission.CAMERA)) {
-                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
-                alertBuilder.setTitle("Permission is required to access camera")
-                        .setMessage("Camera permission is needed to take a picture")
-                        .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(getActivity(), permissions, CAMERA_PERMISSION_CODE);
-
-                            }
-
-                        });
-                AlertDialog alert = alertBuilder.create();
-                alert.show();
-            } else {
-                //no explanation is required, permission is automatically requested
-                ActivityCompat.requestPermissions(getActivity(), permissions, CAMERA_PERMISSION_CODE);
-            }
-        } else {
-            takePicture();
-        }
-    }
 
     public void takePicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -212,6 +192,16 @@ public class NewTutorDialogFragment extends DialogFragment {
                     imgPath = "default.png";
                     imgTaken = false;
                     break;
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                takePicture();
             }
         }
     }

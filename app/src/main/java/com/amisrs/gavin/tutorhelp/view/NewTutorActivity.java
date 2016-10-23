@@ -66,7 +66,6 @@ public class NewTutorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_tutor);
 
-        createButton = (Button) findViewById(R.id.btn_create);
         zid = (TextInputEditText) findViewById(R.id.et_zid);
         fname = (TextInputEditText) findViewById(R.id.et_fname);
         lname = (TextInputEditText) findViewById(R.id.et_lname);
