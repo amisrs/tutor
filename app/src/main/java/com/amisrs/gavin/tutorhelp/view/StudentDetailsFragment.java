@@ -22,16 +22,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.controller.MarkListAdapter;
 import com.amisrs.gavin.tutorhelp.controller.TutorialListAdapter;
 import com.amisrs.gavin.tutorhelp.db.PersonQueries;
 import com.amisrs.gavin.tutorhelp.db.StudentQueries;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Enrolment;
+import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
 import com.bumptech.glide.Glide;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -45,6 +48,7 @@ import java.util.ArrayList;
 public class StudentDetailsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String TAG = "StudentDetailsFragment";
     private static final String ARG_STUDENT = "student";
     private static final String ARG_TUTORIAL = "tutorial";
 
@@ -115,6 +119,9 @@ public class StudentDetailsFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.rv_tutorials);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
+        RecyclerView markView = (RecyclerView) view.findViewById(R.id.rv_assessments);
+        LinearLayoutManager markLayoutManager = new LinearLayoutManager(getContext());
+
         final StudentQueries studentQueries = new StudentQueries(getContext());
         final Enrolment enrolment = studentQueries.getEnrolmentForStudentAndTutorial(studentParam, tutorialParam);
 
@@ -125,6 +132,13 @@ public class StudentDetailsFragment extends Fragment {
         adapter.giveList(tutorialArrayList);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
+
+        ArrayList<Mark> marks = studentQueries.getMarksForStudent(studentParam);
+        MarkListAdapter markListAdapter = new MarkListAdapter(getContext());
+        markListAdapter.giveList(marks);
+        Log.d(TAG, "Mark list has: " + marks.size());
+        markView.setLayoutManager(markLayoutManager);
+        markView.setAdapter(markListAdapter);
 
         fnameTextView.setText(studentParam.getPerson().getFirstName());
         lnameTextView.setText(studentParam.getPerson().getLastName());

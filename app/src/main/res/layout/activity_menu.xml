@@ -29,4 +29,11 @@
         android:text="students"
         android:layout_below="@id/btn_attendance"/>
 
+    <Button
+        android:id="@+id/btn_assessments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="assessments"
+        android:layout_below="@id/btn_students"/>
+
 </RelativeLayout>

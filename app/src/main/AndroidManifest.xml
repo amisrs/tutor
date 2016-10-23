@@ -31,6 +31,7 @@
         <activity android:name=".view.BaseActivity" />
         <activity android:name=".view.StudentsActivity" />
         <activity android:name=".view.DrawerActivity"></activity>
+        <activity android:name=".view.Assessment.AssessmentsActivity"></activity>
     </application>
 
 </manifest>

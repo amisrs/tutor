@@ -5,12 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.amisrs.gavin.tutorhelp.model.Assessment;
 import com.amisrs.gavin.tutorhelp.model.Enrolment;
+import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.model.Week;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 
 public class StudentQueries extends QueryBase {
     private static final String TAG = "StudentQueries";
+    private static final String COMMA_SEP = ", ";
 
     public StudentQueries(Context context) {
         super(context);
@@ -54,6 +58,19 @@ public class StudentQueries extends QueryBase {
             contentValues2.put(DBContract.StudentWeekTable.COLUMN_PUBLICCOMMENT, "");
             long newRowId2 = db.insert(DBContract.StudentWeekTable.TABLE_NAME, null, contentValues2);
             Log.d(TAG, "Inserted new StudentWeek for student " + student.toString() + " for week " + w.getWeekNumber());
+        }
+
+        //add mark for assessment
+        AssessmentQueries assessmentQueries = new AssessmentQueries(context);
+        ArrayList<Assessment> assessmentArrayList = assessmentQueries.getAssessmentsForTerm(tutorial.getTerm());
+
+        for(Assessment a : assessmentArrayList) {
+            ContentValues contentValues3 = new ContentValues();
+            contentValues3.put(DBContract.MarkTable.COLUMN_STUDENTID, (int) newRowId);
+            contentValues3.put(DBContract.MarkTable.COLUMN_ASSESSMENTID, a.getAssessmentId());
+            contentValues3.put(DBContract.MarkTable.COLUMN_MARK, 0);
+            long newRowId3 = db.insert(DBContract.MarkTable.TABLE_NAME, null, contentValues3);
+            Log.d(TAG, "Inserted new Mark for student " + student.toString() + " for assessment " + a.getName());
         }
         close();
     }
@@ -92,6 +109,43 @@ public class StudentQueries extends QueryBase {
         return students;
     }
 
+    public ArrayList<Student> getStudentsByTerm(String term) {
+        open();
+        ArrayList<Student> students = new ArrayList<>();
+        String query = "select s." + DBContract.StudentTable.COLUMN_PERSONID + COMMA_SEP +
+                "s." + DBContract.StudentTable.COLUMN_STUDENTID + COMMA_SEP +
+                "p." + DBContract.PersonTable.COLUMN_FIRSTNAME + COMMA_SEP +
+                "p." + DBContract.PersonTable.COLUMN_LASTNAME + COMMA_SEP +
+                "p." + DBContract.PersonTable.COLUMN_ZID + COMMA_SEP +
+                "p." + DBContract.PersonTable.COLUMN_PROFILEPIC + COMMA_SEP +
+                "p." + DBContract.PersonTable.COLUMN_EMAIL +
+                " from " + DBContract.PersonTable.TABLE_NAME + " p" +
+                " join " + DBContract.StudentTable.TABLE_NAME + " s" +
+                " on s." + DBContract.StudentTable.COLUMN_PERSONID + " = " +
+                "p." + DBContract.PersonTable.COLUMN_PERSONID +
+                " join " + DBContract.EnrolmentTable.TABLE_NAME + " e" +
+                " on s." + DBContract.StudentTable.COLUMN_STUDENTID + " = " +
+                "e." + DBContract.EnrolmentTable.COLUMN_STUDENTID +
+                " join " + DBContract.TutorialTable.TABLE_NAME + " t" +
+                " on e." + DBContract.EnrolmentTable.COLUMN_TUTORIALID + " = " +
+                "t." + DBContract.TutorialTable.COLUMN_TUTORIALID +
+                " where " + DBContract.TutorialTable.COLUMN_TERM + " = ?";
+
+        Cursor c = db.rawQuery(query, new String[] { term });
+        c.moveToFirst();
+        while(!c.isAfterLast()) {
+            Person newPerson = new Person(c.getInt(0),c.getString(2), c.getString(3), c.getInt(4), c.getString(5), c.getString(6));
+            Student newStudent = new Student(c.getInt(1), c.getInt(0), newPerson);
+            students.add(newStudent);
+            c.moveToNext();
+        }
+        c.close();
+        close();
+        return students;
+
+
+    }
+
     public Enrolment getEnrolmentForStudentAndTutorial(Student student, Tutorial tutorial) {
         open();
         String[] projection = {
@@ -122,5 +176,38 @@ public class StudentQueries extends QueryBase {
         close();
 
         return enrolment;
+    }
+
+    public ArrayList<Mark> getMarksForStudent(Student student) {
+        open();
+        ArrayList<Mark> marks = new ArrayList<>();
+        String[] projection = {
+                DBContract.MarkTable.COLUMN_STUDENTID,
+                DBContract.MarkTable.COLUMN_ASSESSMENTID,
+                DBContract.MarkTable.COLUMN_MARK
+        };
+
+        String selection = DBContract.MarkTable.COLUMN_STUDENTID + " = ?";
+        String[] selectionArgs = { String.valueOf(student.getStudentID()) };
+
+        Cursor c = db.query(
+                DBContract.MarkTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        c.moveToFirst();
+        while(!c.isAfterLast()) {
+            Mark newMark = new Mark(c.getInt(0), c.getInt(1), c.getInt(2));
+            marks.add(newMark);
+            c.moveToNext();
+        }
+        c.close();
+        close();
+
+        return marks;
     }
 }

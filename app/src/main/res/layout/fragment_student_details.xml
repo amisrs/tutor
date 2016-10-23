@@ -112,5 +112,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/rv_tutorials"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_assessments"
+        android:layout_below="@id/et_grade"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
 
 </RelativeLayout>

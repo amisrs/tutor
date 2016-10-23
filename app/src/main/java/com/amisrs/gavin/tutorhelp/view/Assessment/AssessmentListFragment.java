@@ -12,8 +12,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.controller.AssessmentListAdapter;
 import com.amisrs.gavin.tutorhelp.controller.StudentListAdapter;
+import com.amisrs.gavin.tutorhelp.db.AssessmentQueries;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
+import com.amisrs.gavin.tutorhelp.model.Assessment;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.view.BaseActivity;
@@ -80,19 +83,20 @@ public class AssessmentListFragment extends Fragment {
         noneTextView = (TextView)view.findViewById(R.id.tv_none);
         recyclerView.setLayoutManager(linearLayoutManager);
 //        TutorialQueries tutorialQueries = new TutorialQueries(getContext());
-        ArrayList<Student> studentArrayList = new ArrayList<>();
+        AssessmentQueries assessmentQueries = new AssessmentQueries(getContext());
+        ArrayList<Assessment> assessmentArrayList = new ArrayList<>();
+        assessmentArrayList = assessmentQueries.getAssessmentsForTerm(termParam);
 
-//        studentArrayList = tutorialQueries.getStudentsForTutorial(termParam);
-        if(studentArrayList.size() < 1) {
-            noneTextView.setText(getString(R.string.nostudents));
+        if(assessmentArrayList.size() < 1) {
+            noneTextView.setText(getString(R.string.noassessments));
         } else {
             noneTextView.setText("");
         }
-        StudentListAdapter adapter = new StudentListAdapter();
 
+        AssessmentListAdapter adapter = new AssessmentListAdapter();
         AssessmentsActivity assessmentsActivity = (AssessmentsActivity)getActivity();
-        adapter.setOnItemClickListener(assessmentsActivity);
-        adapter.giveList(studentArrayList);
+        adapter.setOnAssessmentClickListener(assessmentsActivity);
+        adapter.giveList(assessmentArrayList);
 
         recyclerView.setAdapter(adapter);
 

@@ -117,16 +117,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String SQL_CREATE_MARKTABLE =
             "create table " + DBContract.MarkTable.TABLE_NAME + "(" +
                     DBContract.MarkTable.COLUMN_STUDENTID + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
-                    DBContract.MarkTable.COLUMN_TUTORIALID + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                     DBContract.MarkTable.COLUMN_ASSESSMENTID + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                     DBContract.MarkTable.COLUMN_MARK + INTEGER_TYPE + NOT_NULL + COMMA_SEP +
                     "primary key(" + DBContract.MarkTable.COLUMN_STUDENTID + COMMA_SEP +
-                                     DBContract.MarkTable.COLUMN_TUTORIALID + COMMA_SEP +
                                      DBContract.MarkTable.COLUMN_ASSESSMENTID + ")" + COMMA_SEP +
                     "foreign key(" + DBContract.MarkTable.COLUMN_STUDENTID + ")" +
                         " references " + DBContract.StudentTable.TABLE_NAME + "(" + DBContract.StudentTable.COLUMN_STUDENTID + ")" + ON_DELETE_CASCADE + COMMA_SEP +
-                    "foreign key(" + DBContract.MarkTable.COLUMN_TUTORIALID + ")" +
-                        " references " + DBContract.TutorialTable.TABLE_NAME + "(" + DBContract.TutorialTable.COLUMN_TUTORIALID + ")" + ON_DELETE_CASCADE + COMMA_SEP +
                     "foreign key(" + DBContract.MarkTable.COLUMN_ASSESSMENTID + ")" +
                         " references " + DBContract.AssessmentTable.TABLE_NAME + "(" + DBContract.AssessmentTable.COLUMN_ASSESSMENTID + ")" + ON_DELETE_CASCADE +
                     "); ";

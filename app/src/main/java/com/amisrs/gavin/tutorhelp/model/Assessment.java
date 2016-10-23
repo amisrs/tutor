@@ -13,22 +13,25 @@ public class Assessment implements Parcelable{
     private String description;
     private String term;
     private double weighting;
+    private int maxMark;
 
     //add to db
-    public Assessment(String name, String description, String term, double weighting) {
+    public Assessment(String name, String description, String term, double weighting, int maxMark) {
         this.name = name;
         this.description = description;
         this.term = term;
         this.weighting = weighting;
+        this.maxMark = maxMark;
     }
 
     //from db
-    public Assessment(int assessmentId, String name, String description, String term, double weighting) {
+    public Assessment(int assessmentId, String name, String description, String term, double weighting, int maxMark) {
         this.assessmentId = assessmentId;
         this.name = name;
         this.description = description;
         this.term = term;
         this.weighting = weighting;
+        this.maxMark = maxMark;
     }
 
     //unparcel
@@ -38,6 +41,7 @@ public class Assessment implements Parcelable{
         this.description = parcel.readString();
         this.term = parcel.readString();
         this.weighting = parcel.readDouble();
+        this.maxMark = parcel.readInt();
     }
 
     public double getWeighting() {
@@ -80,6 +84,14 @@ public class Assessment implements Parcelable{
         this.term = term;
     }
 
+    public int getMaxMark() {
+        return maxMark;
+    }
+
+    public void setMaxMark(int maxMark) {
+        this.maxMark = maxMark;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -92,6 +104,7 @@ public class Assessment implements Parcelable{
         parcel.writeString(description);
         parcel.writeString(term);
         parcel.writeDouble(weighting);
+        parcel.writeInt(maxMark);
     }
 
     static class AssessmentCreator implements Parcelable.Creator<Assessment> {
