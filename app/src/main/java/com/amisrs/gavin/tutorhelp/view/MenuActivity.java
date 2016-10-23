@@ -79,7 +79,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public void goToAssessments() {
         Intent intent = new Intent(this, AssessmentsActivity.class);
-        intent.putExtra("term", tutorial.getTerm());
+        intent.putExtra("tutorial", tutorial);
         Log.d(TAG, "going to assessments for term " + tutorial.getTerm());
         startActivity(intent);
     }

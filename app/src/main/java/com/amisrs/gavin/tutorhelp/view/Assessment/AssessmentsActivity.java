@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,10 @@ import android.widget.Spinner;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.controller.OnAssessmentClickListener;
+import com.amisrs.gavin.tutorhelp.controller.OnDeleteListener;
 import com.amisrs.gavin.tutorhelp.controller.OnItemClickListener;
 import com.amisrs.gavin.tutorhelp.db.AssessmentQueries;
+import com.amisrs.gavin.tutorhelp.db.StudentQueries;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Assessment;
 import com.amisrs.gavin.tutorhelp.model.Student;
@@ -31,12 +34,14 @@ public class AssessmentsActivity extends AppCompatActivity implements Assessment
         AssessmentDetailsFragment.OnFragmentInteractionListener,
         NewAssessmentDialogFragment.NewAssessmentDialogFragmentListener,
         NewAssessmentDialogFragment.OnNewAssessmentDialogFragmentInteractionListener,
-        OnAssessmentClickListener
+        OnAssessmentClickListener,
+        OnDeleteListener
         {
     private static final String TAG = "AssessmentsActivity";
+    private final String RIGHT_TAG = "right";
     private Assessment currentAssessment;
 
-
+    Tutorial tutorial;
     String currentTerm;
     Spinner termSp;
     FloatingActionButton floatingActionButton;
@@ -46,7 +51,8 @@ public class AssessmentsActivity extends AppCompatActivity implements Assessment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessments);
 
-        currentTerm = getIntent().getStringExtra("term");
+        tutorial = getIntent().getParcelableExtra("tutorial");
+        currentTerm = tutorial.getTerm();
         Log.d(TAG, "got term: " + currentTerm);
 
         floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_add_assessment);
@@ -114,7 +120,7 @@ public class AssessmentsActivity extends AppCompatActivity implements Assessment
         //Log.d(TAG, "Swapping details fragment to student: " + student.toString());
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.rl_right, AssessmentDetailsFragment.newInstance(assessment));
+        fragmentTransaction.replace(R.id.rl_right, AssessmentDetailsFragment.newInstance(assessment), RIGHT_TAG);
         fragmentTransaction.commit();
     }
 
@@ -160,6 +166,24 @@ public class AssessmentsActivity extends AppCompatActivity implements Assessment
 
     @Override
     public void onNewAssessmentDialogFragmentInteraction(String name) {
+
+    }
+
+    @Override
+    public void onDelete() {
+        refreshAssessmentList();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = fragmentManager.findFragmentByTag(RIGHT_TAG);
+        fragmentTransaction.remove(fragment);
+        fragmentTransaction.commit();
+
+        StudentQueries studentQueries = new StudentQueries(this);
+        ArrayList<Student> students = studentQueries.getStudentsByTerm(currentTerm);
+
+        for(Student s : students) {
+            studentQueries.recalculateGradeForStudentAndTerm(s, currentTerm);
+        }
 
     }
 }

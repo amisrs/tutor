@@ -6,9 +6,9 @@ package com.amisrs.gavin.tutorhelp.model;
 public class Enrolment {
     public int studentID;
     public int tutorialID;
-    public int grade;
+    public double grade;
 
-    public Enrolment(int studentID, int tutorialID, int grade) {
+    public Enrolment(int studentID, int tutorialID, double grade) {
         this.studentID = studentID;
         this.tutorialID = tutorialID;
         this.grade = grade;
@@ -30,11 +30,11 @@ public class Enrolment {
         this.tutorialID = tutorialID;
     }
 
-    public int getGrade() {
+    public double getGrade() {
         return grade;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(double grade) {
         this.grade = grade;
     }
 }

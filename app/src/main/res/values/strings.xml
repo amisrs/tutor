@@ -25,6 +25,12 @@
     <string name="noassessments">There are no assessments for this term!</string>
     <string name="weightingError">Must be between 0 and 100!</string>
     <string name="greaterThanZero">Must be greater than 0!</string>
+    <string name="invalidValue">Invalid value!</string>
+
+    <string name="deleteTutorialMsg">Delete this tutorial?</string>
+    <string name="deleteTutorMsg">Delete this tutor? \n \n This will delete all tutorials created by this tutor! Don\'t do bad!!!!</string>
+    <string name="deleteStudentMsg">Delete this student?</string>
+    <string name="deleteAssessmentMsg">Delete this assessment?</string>
 
     <string name="grade">Grade</string>
 
@@ -52,6 +58,7 @@
     <string name="newAssessment">New Assessment</string>
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
 
     <string name="attended">Attended</string>
 

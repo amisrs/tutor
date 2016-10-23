@@ -2,13 +2,16 @@ package com.amisrs.gavin.tutorhelp.controller;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +20,8 @@ import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.view.MenuActivity;
+import com.amisrs.gavin.tutorhelp.view.StudentDetailsFragment;
+import com.amisrs.gavin.tutorhelp.view.StudentsActivity;
 
 import java.util.ArrayList;
 
@@ -27,6 +32,8 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
     private static final String TAG = "TutorialListAdapter";
     ArrayList<Tutorial> tutorials;
     Context context;
+    OnDeleteListener onDeleteListener;
+
 
 
     public TutorialListAdapter(Context context) {
@@ -35,6 +42,10 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
 
     public void giveList(ArrayList<Tutorial> list) {
         tutorials = list;
+    }
+
+    public void setOnDeleteListener(OnDeleteListener onDeleteListener) {
+        this.onDeleteListener = onDeleteListener;
     }
 
     @Override
@@ -61,6 +72,7 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
         private TextView place;
         private TextView population;
         private TextView term;
+        private ImageButton deleteButton;
 
         public TutorialViewHolder(View itemView) {
             super(itemView);
@@ -69,20 +81,51 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
             place = (TextView)itemView.findViewById(R.id.tv_tutorialLocation);
             population = (TextView)itemView.findViewById(R.id.tv_pop);
             term = (TextView)itemView.findViewById(R.id.tv_term);
+            deleteButton = (ImageButton)itemView.findViewById(R.id.ib_delete);
             relativeLayout = (RelativeLayout)itemView.findViewById(R.id.rl_item);
-
+            Log.d(TAG, "Context is " + context.getClass().getName());
         }
 
         public void bindTutorial(final Tutorial tutorial) {
+
             name.setText(tutorial.getName());
             time.setText(tutorial.getTimeSlot());
             place.setText(tutorial.getLocation());
             term.setText(tutorial.getTerm());
             System.out.println("tutorial term: " + tutorial.getTerm());
             //get count of students in this tutorial; from enrolment table
-            TutorialQueries tutorialQueries = new TutorialQueries(context);
+            final TutorialQueries tutorialQueries = new TutorialQueries(context);
             int size = tutorialQueries.getStudentsForTutorial(tutorial).size();
             population.setText(String.valueOf(size));
+
+            Log.d(TAG, "This list is in class: " + context.getClass().getName() + " is this the same as " + StudentsActivity.class.getName());
+            if(context.getClass().getName().equals(StudentsActivity.class.getName())) {
+                Log.d(TAG, "Yes it is son, yes it is.");
+                deleteButton.setVisibility(View.INVISIBLE);
+            } else {
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                                .setMessage(R.string.deleteTutorialMsg)
+                                .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                tutorialQueries.deleteTutorial(tutorial);
+                                                onDeleteListener.onDelete();
+                                            }
+                                        })
+                                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .show();
+
+                    }
+                });
+            }
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
