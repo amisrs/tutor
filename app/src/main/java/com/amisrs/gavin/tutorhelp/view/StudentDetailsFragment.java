@@ -3,6 +3,7 @@ package com.amisrs.gavin.tutorhelp.view;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -96,9 +97,10 @@ public class StudentDetailsFragment extends Fragment {
 
         isEdit = false;
         final View view = inflater.inflate(R.layout.fragment_student_details, container, false);
-        final EditText fnameTextView = (EditText) view.findViewById(R.id.tv_fname);
-        final EditText lnameTextView = (EditText) view.findViewById(R.id.tv_lname);
-        final EditText zidTextView = (EditText) view.findViewById(R.id.tv_zid);
+        final TextInputEditText fnameTextView = (TextInputEditText) view.findViewById(R.id.tv_fname);
+        final TextInputEditText lnameTextView = (TextInputEditText) view.findViewById(R.id.tv_lname);
+        final TextInputEditText zidTextView = (TextInputEditText) view.findViewById(R.id.tv_zid);
+        final TextInputEditText emailTextView = (TextInputEditText) view.findViewById(R.id.tv_email);
         ImageView profile = (ImageView) view.findViewById(R.id.iv_pic);
         Glide.with(getContext())
                 .load(studentParam.getPerson().getProfilePath())
@@ -106,7 +108,7 @@ public class StudentDetailsFragment extends Fragment {
                 .placeholder(R.drawable.ic_default_profile_pic)
                 .transform(new ProfileCircle(getContext()))
                 .into(profile);
-
+        //TODO gradeText should not be editable?
         final EditText gradeText = (EditText) view.findViewById(R.id.et_grade);
         final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
         final ImageButton saveButton = (ImageButton) view.findViewById(R.id.iv_save);
@@ -127,6 +129,7 @@ public class StudentDetailsFragment extends Fragment {
         fnameTextView.setText(studentParam.getPerson().getFirstName());
         lnameTextView.setText(studentParam.getPerson().getLastName());
         zidTextView.setText(String.valueOf(studentParam.getPerson().getzID()));
+        emailTextView.setText(studentParam.getPerson().getEmail());
         gradeText.setText(String.valueOf(enrolment.getGrade()));
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -137,13 +140,15 @@ public class StudentDetailsFragment extends Fragment {
                 personQueries.updatePerson(studentParam.getPersonID(),
                         fnameTextView.getText().toString(),
                         lnameTextView.getText().toString(),
-                        Integer.parseInt(zidTextView.getText().toString()));
+                        Integer.parseInt(zidTextView.getText().toString()),
+                        emailTextView.getText().toString());
 
                 //update grade
 
                 fnameTextView.setInputType(InputType.TYPE_NULL);
                 lnameTextView.setInputType(InputType.TYPE_NULL);
                 zidTextView.setInputType(InputType.TYPE_NULL);
+                emailTextView.setInputType(InputType.TYPE_NULL);
                 gradeText.setInputType(InputType.TYPE_NULL);
 
                 editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
@@ -169,11 +174,14 @@ public class StudentDetailsFragment extends Fragment {
                     fnameTextView.setText(studentParam.getPerson().getFirstName());
                     lnameTextView.setText(studentParam.getPerson().getLastName());
                     zidTextView.setText(String.valueOf(studentParam.getPerson().getzID()));
+                    emailTextView.setText(studentParam.getPerson().getEmail());
                     gradeText.setText(String.valueOf(enrolment.getGrade()));
                     fnameTextView.setInputType(InputType.TYPE_NULL);
                     lnameTextView.setInputType(InputType.TYPE_NULL);
                     zidTextView.setInputType(InputType.TYPE_NULL);
+                    emailTextView.setInputType(InputType.TYPE_NULL);
                     gradeText.setInputType(InputType.TYPE_NULL);
+
 
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
                     saveButton.setVisibility(View.GONE);

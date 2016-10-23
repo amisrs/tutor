@@ -1,8 +1,10 @@
 package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
@@ -10,12 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.db.PersonQueries;
@@ -46,6 +50,7 @@ public class StudentWeekDetailsFragment extends Fragment {
     private Tutorial tutorialParam;
     private StudentWeek studentWeek;
     private boolean isEdit;
+    public boolean isEmpty;
 
     private OnFragmentInteractionListener mListener;
 
@@ -84,13 +89,15 @@ public class StudentWeekDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         isEdit = false;
+        isEmpty = true;
         View view = inflater.inflate(R.layout.fragment_student_week_details, container, false);
-        TextView weekText = (TextView)view.findViewById(R.id.tv_week);
-        final TextView studentText = (TextView)view.findViewById(R.id.tv_student);
+        TextView weekText = (TextView) view.findViewById(R.id.tv_week);
+        final TextView studentText = (TextView) view.findViewById(R.id.tv_student);
         Switch aSwitch = (Switch) view.findViewById(R.id.cb_attended);
-        final EditText publicComment = (EditText)view.findViewById(R.id.et_pub);
-        final ImageButton editButton = (ImageButton)view.findViewById(R.id.iv_edit);
-        final ImageButton saveButton = (ImageButton)view.findViewById(R.id.iv_save);
+        final TextInputEditText publicComment = (TextInputEditText) view.findViewById(R.id.et_pub);
+        final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
+        final ImageButton saveButton = (ImageButton) view.findViewById(R.id.iv_save);
+        final ImageButton emailButton = (ImageButton) view.findViewById(R.id.emailBtn);
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -105,11 +112,36 @@ public class StudentWeekDetailsFragment extends Fragment {
         studentWeek = weekQueries.getStudentWeekForWeekAndStudentAndTutorial(weekParam, studentParam, tutorialParam);
         Log.d(TAG, "the current student week public comment; " + studentWeek.getPublicComment());
         publicComment.setText(studentWeek.getPublicComment());
-        if(studentWeek.getAttended() == 0) {
+
+        if (studentWeek.getAttended() == 0) {
             aSwitch.setChecked(false);
         } else {
             aSwitch.setChecked(true);
         }
+        //TODO doesn't immediately disappear?
+        if(publicComment.getText().toString().matches("")){
+            isEmpty = true;
+            emailButton.setVisibility(View.GONE);
+
+        } else {
+            isEmpty = false;
+            emailButton.setVisibility(View.VISIBLE);
+        }
+        https://code.tutsplus.com/tutorials/quick-tip-enabling-users-to-send-email-from-your-android-applications-the-easy-way--mobile-1686
+        emailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+
+                String[] emailTo = new String[]{studentParam.getPerson().getEmail()};
+                intent.putExtra(Intent.EXTRA_EMAIL, emailTo);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "INFS3634");
+                intent.setType("*/*");
+                String emailBody = studentWeek.getPublicComment();
+                intent.putExtra(Intent.EXTRA_TEXT, emailBody);
+                startActivity(intent.createChooser(intent, "Send email in: "));
+            }
+        });
         //TODO: add in ui elements to manipulate and save to this studentWeek
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +155,16 @@ public class StudentWeekDetailsFragment extends Fragment {
 
                 editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
                 saveButton.setVisibility(View.GONE);
+
+                //checks the public field. If empty, email button is disabled.
+                if(publicComment.getText().toString().matches("")){
+                    isEmpty = true;
+                    emailButton.setVisibility(View.GONE);
+
+                } else {
+                    isEmpty = false;
+                    emailButton.setVisibility(View.VISIBLE);
+                }
                 isEdit = false;
                 //onButtonPressed("save");
             }
@@ -131,7 +173,7 @@ public class StudentWeekDetailsFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isEdit) {
+                if (!isEdit) {
                     publicComment.setInputType(InputType.TYPE_CLASS_TEXT);
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_clear_black_36dp));
                     saveButton.setVisibility(View.VISIBLE);
@@ -155,7 +197,7 @@ public class StudentWeekDetailsFragment extends Fragment {
 
     public void toggleAttended(boolean b) {
         WeekQueries weekQueries = new WeekQueries(getContext());
-        if(b) {
+        if (b) {
             //now attended
             weekQueries.setAttendanceForStudentWeek(studentParam, weekParam, 1);
         } else {
@@ -169,7 +211,6 @@ public class StudentWeekDetailsFragment extends Fragment {
             mListener.onFragmentInteraction(string);
         }
     }
-
 
 
     @Override

@@ -10,12 +10,14 @@
     android:layout_height="wrap_content"
     android:clickable="true">
 
+
+
     <TextView
         android:id="@+id/tv_tutorialName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/tutorialListName"
-        android:text="name"/>
+        android:text="name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
     <TextView
         android:id="@+id/tv_tutorialTime"
@@ -23,21 +25,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/tutorialListOther"
-        android:text="time"/>
+        android:text="time"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
     <TextView
         android:id="@+id/tv_tutorialLocation"
-        android:layout_below="@id/tv_tutorialTime"
+        android:layout_toRightOf="@+id/tv_tutorialTime"
+        android:layout_below="@+id/tv_tutorialName"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/tutorialListOther"
-        android:text="place"/>
+        android:text="place"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
     <TextView
         android:id="@+id/tv_term"
         android:layout_below="@id/tv_tutorialLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/tutorialListOther"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:text="term"/>
 
     <TextView
@@ -47,7 +53,9 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:textSize="@dimen/tutorialListName"
-        android:text="12"/>
+        android:text="12"
+        android:alpha="0.5"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"/>
 
     <ImageView
         android:id="@+id/iv_pop"

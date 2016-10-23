@@ -18,7 +18,7 @@
         android:id="@+id/tv_name"
 
         android:background="@color/colorPrimaryDark"/>-->
-    <EditText
+    <android.support.design.widget.TextInputEditText
         android:id="@+id/tv_fname"
 
         android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
         android:editable="false"
         android:text="Student"/>
 
-    <EditText
+    <android.support.design.widget.TextInputEditText
         android:id="@+id/tv_lname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,12 +37,21 @@
         android:editable="false"
         android:text="Name"/>
 
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_fname"
+        android:layout_toRightOf="@id/iv_pic"
+        android:textSize="24sp"
+        android:editable="false"
+        android:text="Email"/>
+
     <ImageButton
         android:id="@+id/iv_edit"
         android:layout_width="@dimen/tutorialListName"
         android:layout_height="@dimen/tutorialListName"
         android:layout_marginTop="22dp"
-
         android:layout_toRightOf="@id/tv_lname"
         android:src="@drawable/ic_mode_edit_black_36dp"
         android:scaleType="fitXY"
@@ -58,11 +67,11 @@
         android:background="@android:color/transparent"
         android:visibility="gone"/>
 
-    <EditText
+    <android.support.design.widget.TextInputEditText
         android:id="@+id/tv_zid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_fname"
+        android:layout_below="@id/tv_email"
         android:layout_toRightOf="@id/iv_pic"
         android:textSize="@dimen/tutorialListName"
         android:editable="false"

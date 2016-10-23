@@ -57,6 +57,7 @@ public class DBContract {
         public static final String COLUMN_DESCRIPTION = "Description";
         public static final String COLUMN_TERM = "Term";
         public static final String COLUMN_WEIGHTING = "Weighting";
+        public static final String COLUMN_MAXMARK = "MaxMark";
     }
 
     public static class StudentWeekTable implements BaseColumns {

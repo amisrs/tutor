@@ -69,12 +69,13 @@ public class PersonQueries extends QueryBase {
         return person;
     }
 
-    public void updatePerson(int id, String fname, String lname, int zid) {
+    public void updatePerson(int id, String fname, String lname, int zid, String email) {
         open();
         String update = "update " + DBContract.PersonTable.TABLE_NAME +
                 " set " + DBContract.PersonTable.COLUMN_FIRSTNAME + " = \"" + fname + "\"" + COMMA_SEP +
                 DBContract.PersonTable.COLUMN_LASTNAME + " = \"" + lname + "\"" + COMMA_SEP +
-                DBContract.PersonTable.COLUMN_ZID + " = " + zid +
+                DBContract.PersonTable.COLUMN_ZID + " = " + zid + "\"" + COMMA_SEP +
+                DBContract.PersonTable.COLUMN_EMAIL + " = " + email +
                 " where " + DBContract.PersonTable.COLUMN_PERSONID + " = " + id;
 
         db.execSQL(update);

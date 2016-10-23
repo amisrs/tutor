@@ -29,7 +29,6 @@
         android:layout_width="@dimen/tutorialListName"
         android:layout_height="@dimen/tutorialListName"
         android:layout_marginTop="22dp"
-
         android:layout_below="@id/cb_attended"
         android:src="@drawable/ic_mode_edit_black_36dp"
         android:scaleType="fitXY"
@@ -63,7 +62,20 @@
             android:inputType="none"/>
     </android.support.design.widget.TextInputLayout>
 
-
+    <ImageButton
+        android:id="@+id/emailBtn"
+        android:layout_below="@+id/cb_attended"
+        android:layout_toRightOf="@+id/iv_save"
+        android:layout_width="24sp"
+        android:layout_height="24sp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="22dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:text="Email"
+        android:src="@drawable/ic_mail_outline_black_24dp"
+        android:visibility="gone"
+        android:layout_toEndOf="@+id/iv_edit" />
 
 
 

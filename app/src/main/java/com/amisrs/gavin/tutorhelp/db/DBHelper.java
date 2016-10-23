@@ -83,7 +83,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     DBContract.AssessmentTable.COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
                     DBContract.AssessmentTable.COLUMN_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
                     DBContract.AssessmentTable.COLUMN_TERM + TEXT_TYPE + COMMA_SEP +
-                    DBContract.AssessmentTable.COLUMN_WEIGHTING + REAL_TYPE +
+                    DBContract.AssessmentTable.COLUMN_WEIGHTING + REAL_TYPE + COMMA_SEP +
+                    DBContract.AssessmentTable.COLUMN_MAXMARK + INTEGER_TYPE +
                     "); ";
 
     public static final String SQL_CREATE_STUDENTWEEKTABLE =

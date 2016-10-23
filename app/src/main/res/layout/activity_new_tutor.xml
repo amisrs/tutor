@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/newTutor"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
     <RelativeLayout
         android:id="@+id/rl_fieldEntry"
@@ -35,7 +35,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/zid"
-                android:maxLength="8" />
+                android:maxLength="7"
+                android:textColorHighlight="@color/colorTextSelectHighlight"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -49,7 +50,8 @@
                 android:id="@+id/et_fname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fname" />
+                android:hint="@string/fname"
+                android:textColorHighlight="@color/colorTextSelectHighlight"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -63,7 +65,8 @@
                 android:id="@+id/et_lname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/lname" />
+                android:hint="@string/lname"
+                android:textColorHighlight="@color/colorTextSelectHighlight"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -78,7 +81,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
-                android:inputType="textEmailAddress"/>
+                android:inputType="textEmailAddress"
+                android:textColorHighlight="@color/colorTextSelectHighlight"/>
         </android.support.design.widget.TextInputLayout>
 
     </RelativeLayout>

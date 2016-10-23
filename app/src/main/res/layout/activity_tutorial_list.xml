@@ -48,8 +48,17 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin">
 
+        <TextView
+            android:id="@+id/tv_tutorialList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="Tutorials"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_tutorials"
+            android:layout_below="@+id/tv_tutorialList"
+            android:paddingTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
