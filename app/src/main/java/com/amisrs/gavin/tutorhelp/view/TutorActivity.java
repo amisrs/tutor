@@ -1,5 +1,7 @@
 package com.amisrs.gavin.tutorhelp.view;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.DialogFragment;
@@ -9,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -27,6 +30,7 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
     Spinner tutorSpinner;
     Button loginButton;
     Button newButton;
+    Button deleteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,30 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
         tutorSpinner = (Spinner) findViewById(R.id.sp_tutor);
         loginButton = (Button) findViewById(R.id.btn_login);
         newButton = (Button) findViewById(R.id.btn_newTutor);
+        deleteButton = (Button) findViewById(R.id.btn_deleteTutor);
+        if(tutorSpinner.getSelectedItem() == null) {
+            deleteButton.setEnabled(false);
+            loginButton.setEnabled(false);
+        }
+
+        tutorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if(parent.getSelectedItem() == null) {
+                    Log.d(TAG, "A null thing is selected.");
+                    deleteButton.setEnabled(false);
+                    loginButton.setEnabled(false);
+                } else {
+                    deleteButton.setEnabled(true);
+                    loginButton.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +77,13 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
             @Override
             public void onClick(View view) {
                 createNewTutor();
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteTutor((Tutor)tutorSpinner.getSelectedItem());
             }
         });
 
@@ -81,6 +116,29 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
         NewTutorDialogFragment ntdf = NewTutorDialogFragment.newInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
         ntdf.show(fragmentManager, "dialog");
+    }
+
+    public void deleteTutor(final Tutor tutor) {
+        final TutorQueries tutorQueries = new TutorQueries(this);
+        final Context context = this;
+
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
+                .setMessage(R.string.deleteTutorMsg)
+                .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        tutorQueries.deleteTutor(tutor);
+                        recreate();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+
     }
 
 
