@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
+import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.view.MenuActivity;
 
@@ -26,6 +27,7 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
     private static final String TAG = "TutorialListAdapter";
     ArrayList<Tutorial> tutorials;
     Context context;
+
 
     public TutorialListAdapter(Context context) {
         this.context = context;
@@ -88,6 +90,7 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
                     Activity activity = (Activity)view.getContext();
                     Intent intent = new Intent(activity, MenuActivity.class);
                     Log.d(TAG, "Putting intent extra tutorial: " + tutorial.getName());
+                    //TODO - need to pass tutor
                     intent.putExtra("tutorial", tutorial);
                     activity.startActivity(intent);
                 }

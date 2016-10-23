@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/activity_vertical_margin"
     tools:context="com.amisrs.gavin.tutorhelp.view.StudentWeekDetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -9,18 +10,22 @@
         android:id="@+id/tv_week"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="week" />
+        android:text="@string/week"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
     <TextView
         android:id="@+id/tv_student"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_week"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:text="student"
+        android:textColor="@color/colorAccent"
         />
     <Switch
         android:id="@+id/cb_attended"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_below="@id/tv_student"
         android:checked="true"
         android:text="@string/attended"/>

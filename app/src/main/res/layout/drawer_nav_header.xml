@@ -2,13 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <ImageView
         android:id="@+id/iv_navDrawer_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:scaleType="fitXY"
+        android:alpha="0.8"
         android:src="@mipmap/ic_launcher" />
 <!--TODO: add padding into dimens-->
     <RelativeLayout
@@ -17,10 +20,11 @@
 
         <ImageView
             android:id="@+id/iv_tutor_profile"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerInParent="true"
-            android:paddingTop="10dp"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="5dp"
             android:src="@drawable/ic_person_black_24dp_2x"/>
 
         <TextView
@@ -28,12 +32,20 @@
             android:layout_below="@id/iv_tutor_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:gravity="center_horizontal"
-            android:paddingTop="10dp"
             android:text="TEST"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
-    </RelativeLayout>
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/white"/>
 
+        <TextView
+            android:id="@+id/tv_tutorEmail"
+            android:layout_below="@+id/tv_tutorName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Email"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
 
 </RelativeLayout>

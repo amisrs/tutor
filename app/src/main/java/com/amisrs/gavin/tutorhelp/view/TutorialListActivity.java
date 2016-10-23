@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -19,10 +20,12 @@ import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.controller.TutorialListAdapter;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.amisrs.gavin.tutorhelp.view.NavDrawer.DrawerActivity;
+
 
 import java.util.ArrayList;
 
-public class TutorialListActivity extends AppCompatActivity implements NewTutorialDialogFragment.OnFragmentInteractionListener,
+public class TutorialListActivity extends DrawerActivity implements NewTutorialDialogFragment.OnFragmentInteractionListener,
         NewTutorialDialogFragment.NewTutorialDialogFragmentListener {
     //TODO: update student number, better layout
     private static final String TAG = "TutorialListActivity";
@@ -61,6 +64,8 @@ public class TutorialListActivity extends AppCompatActivity implements NewTutori
 
 
         helloName.setText(" " + theTutor.getPerson().getFirstName() + "!");
+
+
     }
 
     public void reloadRecycler() {
@@ -90,6 +95,8 @@ public class TutorialListActivity extends AppCompatActivity implements NewTutori
     public void onFragmentInteraction(String name) {
 
     }
+
+
 
     @Override
     public void onDialogPositiveClick(DialogFragment fragment) {

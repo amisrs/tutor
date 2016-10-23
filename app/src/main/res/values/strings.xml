@@ -19,6 +19,7 @@
     <string name="maxmarks">Total Marks</string>
 
     <string name="hello">Hello, </string>
+    <string name="week">Week </string>
 
     <string name="nostudents">There are no students in this tutorial!</string>
     <string name="noassessments">There are no assessments for this term!</string>
@@ -37,6 +38,9 @@
     <string name="S2">Semester 2</string>
     <string name="ST">Summer</string>
 
+    <string name="openDrawer">Drawer Open</string>
+    <string name="closeDrawer">Drawer Close</string>
+
 
     <!--
         BUTTONS
@@ -50,7 +54,6 @@
     <string name="cancel">Cancel</string>
 
     <string name="attended">Attended</string>
-
 
 
     <!-- TODO: Remove or change this placeholder text -->

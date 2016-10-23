@@ -13,8 +13,10 @@ import android.widget.Toast;
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.view.Assessment.AssessmentsActivity;
+import com.amisrs.gavin.tutorhelp.view.NavDrawer.DrawerActivity;
 
 import java.util.ArrayList;
 
@@ -26,13 +28,14 @@ public class MenuActivity extends AppCompatActivity {
     Button studentsButton;
     Button assessmentsButton;
     Tutorial tutorial;
+    Tutor tutor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         Intent fromIntent = getIntent();
         tutorial = fromIntent.getParcelableExtra("tutorial");
-
+        tutor = fromIntent.getParcelableExtra("tutor");
 
         attendanceButton = (Button)findViewById(R.id.btn_attendance);
         studentsButton = (Button)findViewById(R.id.btn_students);

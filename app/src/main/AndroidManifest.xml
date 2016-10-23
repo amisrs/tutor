@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.amisrs.gavin.tutorhelp">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +14,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
-        <!--<activity android:name=".view.AttendanceActivity" />-->
+
+        <!-- <activity android:name=".view.AttendanceActivity" /> -->
         <activity android:name=".view.TutorActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,8 +32,8 @@
             android:theme="@android:style/Theme.Holo.Dialog" />
         <activity android:name=".view.BaseActivity" />
         <activity android:name=".view.StudentsActivity" />
-        <activity android:name=".view.DrawerActivity"></activity>
-        <activity android:name=".view.Assessment.AssessmentsActivity"></activity>
+        <activity android:name=".view.NavDrawer.DrawerActivity" />
+        <activity android:name=".view.Assessment.AssessmentsActivity" />
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_vertical_margin"
     tools:context="com.amisrs.gavin.tutorhelp.view.StudentDetailsFragment">
 
 
@@ -86,7 +87,7 @@
         android:layout_height="wrap_content"
         android:text="@string/tutorial"
         android:textColor="@color/colorAccent"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_tutorials"
@@ -102,7 +103,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:text="@string/grade"
         android:textColor="@color/colorAccent"/>
     <EditText
