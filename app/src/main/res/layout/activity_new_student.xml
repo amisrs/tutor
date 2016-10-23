@@ -86,7 +86,7 @@
         android:layout_height="250dp"
 
         android:paddingRight="16dp"
-        android:paddingTop="16dp">-->
+        android:paddingTop="16dp">
 
         <ImageView
             android:id="@+id/iv_camera"
@@ -97,7 +97,7 @@
 
         <ImageButton
             android:id="@+id/btn_camera_capture"
-            android:layout_width="50dp"
+            android:layout_width="55dp"
             android:layout_height="40dp"
             android:layout_gravity="center|bottom"
             android:paddingRight="20dp"

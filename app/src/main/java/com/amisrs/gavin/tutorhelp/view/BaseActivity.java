@@ -27,7 +27,7 @@ import com.amisrs.gavin.tutorhelp.model.Week;
 
 import java.util.ArrayList;
 
-public class BaseActivity extends DrawerActivity implements StudentListFragment.OnFragmentInteractionListener,
+public class BaseActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener,
         StudentWeekDetailsFragment.OnFragmentInteractionListener,
         OnItemClickListener {
     private static final String TAG = "BaseActivity";

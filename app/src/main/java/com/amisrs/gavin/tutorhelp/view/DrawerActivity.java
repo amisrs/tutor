@@ -45,12 +45,12 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
-        tutor = getIntent().getParcelableExtra("tutor");
+        /*tutor = getIntent().getParcelableExtra("tutor");
         if (tutor == null) {
             Log.e(TAG, "No tutor was received from the Intent.");
             //stop
             finish();
-        }
+        }*/
   /*      navHeader = navigationView.inflateHeaderView(R.layout.drawer_nav_header);
         tutorName = (TextView) navHeader.findViewById(R.id.tv_tutorName);
         navHeaderBg = (ImageView) navHeader.findViewById(R.id.iv_navDrawer_bg);

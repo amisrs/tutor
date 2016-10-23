@@ -88,7 +88,8 @@ public class TutorialQueries extends QueryBase {
                 "p." + DBContract.PersonTable.COLUMN_FIRSTNAME + COMMA_SEP +
                 "p." + DBContract.PersonTable.COLUMN_LASTNAME + COMMA_SEP +
                 "p." + DBContract.PersonTable.COLUMN_ZID + COMMA_SEP +
-                "p." + DBContract.PersonTable.COLUMN_PROFILEPIC +
+                "p." + DBContract.PersonTable.COLUMN_PROFILEPIC + COMMA_SEP +
+                "p." + DBContract.PersonTable.COLUMN_EMAIL +
                 " from " + DBContract.PersonTable.TABLE_NAME + " p" +
                 " join " + DBContract.StudentTable.TABLE_NAME + " s" +
                 " on s." + DBContract.StudentTable.COLUMN_PERSONID + " = " +

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.controller.DividerItemDecoration;
 import com.amisrs.gavin.tutorhelp.controller.StudentListAdapter;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Student;
@@ -79,6 +80,8 @@ public class StudentListFragment extends Fragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.rv_students);
         noneTextView = (TextView)view.findViewById(R.id.tv_none);
         recyclerView.setLayoutManager(linearLayoutManager);
+        //DividerItemDecoration dividerItemDecoration =
+
         TutorialQueries tutorialQueries = new TutorialQueries(getContext());
         ArrayList<Student> studentArrayList = new ArrayList<>();
 

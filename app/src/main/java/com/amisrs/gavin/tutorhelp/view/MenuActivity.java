@@ -17,7 +17,7 @@ import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
 import java.util.ArrayList;
 
-public class MenuActivity extends DrawerActivity {
+public class MenuActivity extends AppCompatActivity {
     //TODO: decide what happens with this activity (get rid of it?)
     private static final String TAG = "MenuActivity";
     TextView nameTextView;

@@ -32,10 +32,10 @@ public class NewStudentActivity extends Activity {
         setContentView(R.layout.activity_new_student);
 
 
-        zid = (EditText)findViewById(R.id.student_zid);
+       /* zid = (EditText)findViewById(R.id.student_zid);
         fname = (EditText)findViewById(R.id.student_fname);
         lname = (EditText)findViewById(R.id.student_lname);
-
+*/
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
