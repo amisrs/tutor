@@ -28,11 +28,16 @@ import java.util.ArrayList;
 public class MarkListAdapter extends RecyclerView.Adapter<MarkListAdapter.MarkViewHolder> {
     private static final String TAG = "MarkListAdapter";
     ArrayList<Mark> marks;
+    OnMarkUpdateListener onMarkUpdateListener;
     Context context;
 
     public MarkListAdapter(Context context) {
         super();
         this.context = context;
+    }
+
+    public void setOnMarkUpdateListener(OnMarkUpdateListener onMarkUpdateListener) {
+        this.onMarkUpdateListener = onMarkUpdateListener;
     }
 
     public void giveList(ArrayList<Mark> marks) {
@@ -65,7 +70,7 @@ public class MarkListAdapter extends RecyclerView.Adapter<MarkListAdapter.MarkVi
         private ImageButton editButton;
         private ImageButton saveButton;
         boolean isEdit = false;
-        boolean legit = false;
+        boolean legit = true;
 
         private Assessment assessment;
 
@@ -117,6 +122,8 @@ public class MarkListAdapter extends RecyclerView.Adapter<MarkListAdapter.MarkVi
                         editButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_mode_edit_black_36dp));
                         saveButton.setVisibility(View.GONE);
                         isEdit = false;
+
+                        onMarkUpdateListener.onMarkUpdate(mark);
                         //update grade
                     }
                 }

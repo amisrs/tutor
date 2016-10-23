@@ -75,6 +75,31 @@ public class StudentQueries extends QueryBase {
         close();
     }
 
+    public Student getStudentById(int id) {
+        open();
+        String query = "select s." + DBContract.StudentTable.COLUMN_PERSONID + COMMA_SEP +
+                "s." + DBContract.StudentTable.COLUMN_STUDENTID + COMMA_SEP +
+                "p." + DBContract.PersonTable.COLUMN_FIRSTNAME + COMMA_SEP +
+                "p." + DBContract.PersonTable.COLUMN_LASTNAME + COMMA_SEP +
+                "p." + DBContract.PersonTable.COLUMN_ZID + COMMA_SEP +
+                "p." + DBContract.PersonTable.COLUMN_PROFILEPIC + COMMA_SEP +
+                "p." + DBContract.PersonTable.COLUMN_EMAIL +
+                " from " + DBContract.PersonTable.TABLE_NAME + " p" +
+                " join " + DBContract.StudentTable.TABLE_NAME + " s" +
+                " on s." + DBContract.StudentTable.COLUMN_PERSONID + " = " +
+                "p." + DBContract.PersonTable.COLUMN_PERSONID +
+                " where " + DBContract.StudentTable.COLUMN_STUDENTID + " = ?";
+
+        Cursor c = db.rawQuery(query, new String[] { String.valueOf(id) });
+        c.moveToFirst();
+        Person newPerson = new Person(c.getInt(0),c.getString(2), c.getString(3), c.getInt(4), c.getString(5), c.getString(6));
+        Student newStudent = new Student(c.getInt(1), c.getInt(0), newPerson);
+        c.close();
+        close();
+        return newStudent;
+
+    }
+
 
     public ArrayList<Student> getStudentList() {
         open();
@@ -219,5 +244,44 @@ public class StudentQueries extends QueryBase {
                 " and " + DBContract.MarkTable.COLUMN_STUDENTID + " = " + mark.getStudentID();
         db.execSQL(query);
         close();
+    }
+
+    public double recalculateGradeForStudentEnrolment(Student student, Tutorial tutorial) {
+        double grade = 0;
+        double totalWeighting = 0;
+        AssessmentQueries assessmentQueries = new AssessmentQueries(context);
+
+        ArrayList<Mark> marks = getMarksForStudent(student);
+        for(Mark m : marks) {
+            Assessment assessment = assessmentQueries.getAssessmentById(m.getAssessmentID());
+            Log.d(TAG, "Mark for assessment " + assessment.getName() + " = " + m.getMark() + "/" + assessment.getMaxMark());
+            double rawPercentage = (double)m.getMark()/(double)assessment.getMaxMark();
+            Log.d(TAG, "Percentage = " + rawPercentage);
+            double weightedMark = rawPercentage * (assessment.getWeighting()/100);
+            Log.d(TAG, "Multiply by weighting: " + assessment.getWeighting()/100 + " = " + weightedMark);
+            grade += weightedMark;
+            Log.d(TAG, "New grade: " + grade);
+        }
+
+        //get total weighting (in case it doesnt add to 100
+        ArrayList<Assessment> assessmentArrayList = assessmentQueries.getAssessmentsForTerm(tutorial.getTerm());
+        for(Assessment a : assessmentArrayList) {
+            totalWeighting += a.getWeighting();
+        }
+        Log.d(TAG, "All assessments this term combine weighting to: " + totalWeighting);
+        grade = (grade/(totalWeighting/100)) * 100;
+        Log.d(TAG, "Grade so far: " + grade);
+
+        open();
+
+        String query = "update " + DBContract.EnrolmentTable.TABLE_NAME + " set " +
+                DBContract.EnrolmentTable.COLUMN_GRADE + " = " + grade +
+                " where " + DBContract.EnrolmentTable.COLUMN_STUDENTID + " = " + student.getStudentID() +
+                " and " + DBContract.EnrolmentTable.COLUMN_TUTORIALID + " = " + tutorial.getTutorialID();
+        db.execSQL(query);
+
+        Log.d(TAG, "Updated grade to be " + grade);
+        close();
+        return grade;
     }
 }

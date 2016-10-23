@@ -122,6 +122,7 @@ public class StudentDetailsFragment extends Fragment {
 
         final StudentQueries studentQueries = new StudentQueries(getContext());
         final Enrolment enrolment = studentQueries.getEnrolmentForStudentAndTutorial(studentParam, tutorialParam);
+        Log.d(TAG, "The enrolment grade is: " + enrolment.getGrade());
 
         TutorialQueries tutorialQueries = new TutorialQueries(getContext());
         ArrayList<Tutorial> tutorialArrayList = tutorialQueries.getTutorialsForStudent(studentParam);
@@ -133,6 +134,7 @@ public class StudentDetailsFragment extends Fragment {
 
         ArrayList<Mark> marks = studentQueries.getMarksForStudent(studentParam);
         MarkListAdapter markListAdapter = new MarkListAdapter(getContext());
+        markListAdapter.setOnMarkUpdateListener((StudentsActivity)getActivity());
         markListAdapter.giveList(marks);
         Log.d(TAG, "Mark list has: " + marks.size());
         markView.setLayoutManager(markLayoutManager);

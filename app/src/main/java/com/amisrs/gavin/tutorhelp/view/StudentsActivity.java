@@ -27,9 +27,12 @@ import android.widget.ImageView;
 
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.controller.MarkListAdapter;
 import com.amisrs.gavin.tutorhelp.controller.OnItemClickListener;
+import com.amisrs.gavin.tutorhelp.controller.OnMarkUpdateListener;
 import com.amisrs.gavin.tutorhelp.db.PersonQueries;
 import com.amisrs.gavin.tutorhelp.db.StudentQueries;
+import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
@@ -41,7 +44,8 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
         OnItemClickListener,
         NewStudentDialogFragment.OnFragmentInteractionListener,
         NewStudentDialogFragment.NewStudentDialogFragmentListener,
-        StudentDetailsFragment.OnFragmentInteractionListener {
+        StudentDetailsFragment.OnFragmentInteractionListener,
+        OnMarkUpdateListener {
 
     private static final String TAG = "StudentsActivity";
     private ImageView profilePic;
@@ -150,6 +154,14 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
         currentStudent = student;
         Log.d(TAG, "currentStudent is " + currentStudent.toString());
         changeStudent(student);
+    }
 
+    @Override
+    public void onMarkUpdate(Mark mark) {
+        //recalculate student grade
+        StudentQueries studentQueries = new StudentQueries(this);
+        Student student = studentQueries.getStudentById(mark.getStudentID());
+        studentQueries.recalculateGradeForStudentEnrolment(student, tutorial);
+        changeStudent(student);
     }
 }
