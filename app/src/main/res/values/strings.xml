@@ -24,6 +24,7 @@
     <string name="noassessments">There are no assessments for this term!</string>
     <string name="weightingError">Must be between 0 and 100!</string>
     <string name="greaterThanZero">Must be greater than 0!</string>
+    <string name="invalidValue">Invalid value!</string>
 
     <string name="grade">Grade</string>
     <string name="attendance">Attendance</string>

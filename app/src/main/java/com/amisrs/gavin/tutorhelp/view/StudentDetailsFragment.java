@@ -158,7 +158,6 @@ public class StudentDetailsFragment extends Fragment {
                 fnameTextView.setInputType(InputType.TYPE_NULL);
                 lnameTextView.setInputType(InputType.TYPE_NULL);
                 zidTextView.setInputType(InputType.TYPE_NULL);
-                gradeText.setInputType(InputType.TYPE_NULL);
 
                 editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
                 saveButton.setVisibility(View.GONE);
@@ -174,7 +173,6 @@ public class StudentDetailsFragment extends Fragment {
                     fnameTextView.setInputType(InputType.TYPE_CLASS_TEXT);
                     lnameTextView.setInputType(InputType.TYPE_CLASS_TEXT);
                     zidTextView.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    gradeText.setInputType(InputType.TYPE_CLASS_NUMBER);
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_clear_black_36dp));
                     saveButton.setVisibility(View.VISIBLE);
 
@@ -187,7 +185,6 @@ public class StudentDetailsFragment extends Fragment {
                     fnameTextView.setInputType(InputType.TYPE_NULL);
                     lnameTextView.setInputType(InputType.TYPE_NULL);
                     zidTextView.setInputType(InputType.TYPE_NULL);
-                    gradeText.setInputType(InputType.TYPE_NULL);
 
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
                     saveButton.setVisibility(View.GONE);

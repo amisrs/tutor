@@ -210,4 +210,14 @@ public class StudentQueries extends QueryBase {
 
         return marks;
     }
+
+    public void updateMark(Mark mark) {
+        open();
+        String query = "update " + DBContract.MarkTable.TABLE_NAME + " set " +
+                DBContract.MarkTable.COLUMN_MARK + " = " + mark.getMark() +
+                " where " + DBContract.MarkTable.COLUMN_ASSESSMENTID + " = " + mark.getAssessmentID() +
+                " and " + DBContract.MarkTable.COLUMN_STUDENTID + " = " + mark.getStudentID();
+        db.execSQL(query);
+        close();
+    }
 }

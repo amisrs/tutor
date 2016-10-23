@@ -1,11 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="test"/>
+    <ImageButton
+        android:id="@+id/iv_edit"
+        android:layout_width="@dimen/tutorialListName"
+        android:layout_height="@dimen/tutorialListName"
 
-</LinearLayout>
+        android:layout_toRightOf="@id/tv_name"
+        android:src="@drawable/ic_mode_edit_black_36dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"/>
+    <ImageButton
+        android:id="@+id/iv_save"
+        android:layout_width="@dimen/tutorialListName"
+        android:layout_height="@dimen/tutorialListName"
+        android:layout_toRightOf="@id/iv_edit"
+        android:src="@drawable/ic_done_black_24dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:visibility="gone"/>
+
+
+    <EditText
+        android:id="@+id/et_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:editable="false"/>
+    <TextView
+        android:id="@+id/tv_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/et_mark"
+        android:layout_below="@id/tv_name"/>
+
+</RelativeLayout>
