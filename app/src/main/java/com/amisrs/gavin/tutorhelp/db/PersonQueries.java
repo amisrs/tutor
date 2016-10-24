@@ -74,8 +74,8 @@ public class PersonQueries extends QueryBase {
         String update = "update " + DBContract.PersonTable.TABLE_NAME +
                 " set " + DBContract.PersonTable.COLUMN_FIRSTNAME + " = \"" + fname + "\"" + COMMA_SEP +
                 DBContract.PersonTable.COLUMN_LASTNAME + " = \"" + lname + "\"" + COMMA_SEP +
-                DBContract.PersonTable.COLUMN_ZID + " = " + zid + "\"" + COMMA_SEP +
-                DBContract.PersonTable.COLUMN_EMAIL + " = " + email +
+                DBContract.PersonTable.COLUMN_ZID + " = " + zid + COMMA_SEP +
+                DBContract.PersonTable.COLUMN_EMAIL + " = \"" + email + "\"" +
                 " where " + DBContract.PersonTable.COLUMN_PERSONID + " = " + id;
 
         db.execSQL(update);

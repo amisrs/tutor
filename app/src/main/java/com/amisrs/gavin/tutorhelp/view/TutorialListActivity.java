@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 
 public class TutorialListActivity extends DrawerActivity implements NewTutorialDialogFragment.OnFragmentInteractionListener,
-        NewTutorialDialogFragment.NewTutorialDialogFragmentListener {
+        NewTutorialDialogFragment.NewTutorialDialogFragmentListener, OnDeleteListener {
 
     //TODO: update student number, better layout
     private static final String TAG = "TutorialListActivity";

@@ -123,7 +123,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         Glide.with(getContext())
                 .load(studentParam.getPerson().getProfilePath())
                 .asBitmap()
-                .placeholder(R.drawable.ic_default_profile_pic)
+                .placeholder(R.drawable.ic_default)
                 .transform(new ProfileCircle(getContext()))
                 .into(profile);
         //TODO gradeText should not be editable?
@@ -213,6 +213,10 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
                         Integer.parseInt(zidTextView.getText().toString()),
                         emailTextView.getText().toString());
 
+                studentParam.getPerson().setFirstName(fnameTextView.getText().toString());
+                studentParam.getPerson().setLastName(lnameTextView.getText().toString());
+                studentParam.getPerson().setEmail(emailTextView.getText().toString());
+                studentParam.getPerson().setzID(Integer.parseInt(zidTextView.getText().toString()));
                 //update grade
 
                 fnameTextView.setInputType(InputType.TYPE_NULL);

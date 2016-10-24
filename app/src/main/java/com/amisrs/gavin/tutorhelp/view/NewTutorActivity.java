@@ -85,7 +85,7 @@ public class NewTutorActivity extends AppCompatActivity {
 
         captureButton = (ImageButton) findViewById(R.id.btn_camera_capture);
         profilePic = (ImageView) findViewById(R.id.iv_camera);
-        profilePic.setImageResource(R.drawable.ic_default_profile_pic);
+        profilePic.setImageResource(R.drawable.ic_default);
 
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
