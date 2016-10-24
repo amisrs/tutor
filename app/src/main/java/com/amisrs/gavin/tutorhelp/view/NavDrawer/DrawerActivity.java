@@ -28,6 +28,7 @@ import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
 import com.amisrs.gavin.tutorhelp.view.Assessment.AssessmentsActivity;
 import com.amisrs.gavin.tutorhelp.view.BaseActivity;
+import com.amisrs.gavin.tutorhelp.view.GraphActivity;
 import com.amisrs.gavin.tutorhelp.view.StudentsActivity;
 import com.amisrs.gavin.tutorhelp.view.TutorActivity;
 import com.amisrs.gavin.tutorhelp.view.TutorialListActivity;
@@ -268,7 +269,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 startActivity(intent);
                 setTitle("Assessment");
                 return true;
-
+            case R.id.nd_graph:
+                navItemIndex = 5;
+                Intent graphIntent = new Intent(this, GraphActivity.class);
+                graphIntent.putExtra("tutorial", tutorial);
+                graphIntent.putExtra("tutor", tutor);
+                startActivity(graphIntent);
+                return true;
         }
 
         return super.onOptionsItemSelected(menuItem);

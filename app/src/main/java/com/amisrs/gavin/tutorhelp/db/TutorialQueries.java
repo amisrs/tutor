@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.amisrs.gavin.tutorhelp.model.Assessment;
 import com.amisrs.gavin.tutorhelp.model.Enrolment;
+import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
@@ -204,5 +205,35 @@ public class TutorialQueries extends QueryBase {
         close();
     }
 
+    public ArrayList<Enrolment> getEnrolmentsForTutorial(Tutorial tutorial) {
+        open();
+        String[] projection = {
+                DBContract.EnrolmentTable.COLUMN_STUDENTID,
+                DBContract.EnrolmentTable.COLUMN_TUTORIALID,
+                DBContract.EnrolmentTable.COLUMN_GRADE
+        };
+        String selection = DBContract.EnrolmentTable.COLUMN_TUTORIALID + " = ?";
+        String[] selectionArgs = { String.valueOf(tutorial.getTutorialID()) };
 
+        Cursor c = db.query(
+                DBContract.EnrolmentTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        c.moveToFirst();
+        ArrayList<Enrolment> enrolments = new ArrayList<>();
+        while(!c.isAfterLast()){
+            enrolments.add(new Enrolment(c.getInt(0), c.getInt(1), c.getDouble(2)));
+            c.moveToNext();
+        }
+
+        c.close();
+        close();
+
+        return enrolments;
+    }
 }

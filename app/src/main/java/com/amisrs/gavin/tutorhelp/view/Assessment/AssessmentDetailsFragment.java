@@ -2,6 +2,7 @@ package com.amisrs.gavin.tutorhelp.view.Assessment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
@@ -37,6 +38,7 @@ import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -276,12 +278,14 @@ public class AssessmentDetailsFragment extends Fragment {
         distTable.addView(markRow);
         distTable.addView(markCountRow);
         RelativeLayout distLayout = (RelativeLayout) view.findViewById(R.id.rl_distribution);
-        distLayout.addView(distTable);
-
+        //distLayout.addView(distTable);
+        //TODO: add this table back in when it looks good
         final RelativeLayout chartContainer = (RelativeLayout) view.findViewById(R.id.rl_chart);
 
         //Distribution Chart
         final BarChart distributionChart = new BarChart(getContext());
+        Description distrcription = new Description();
+        distrcription.setText(getString(R.string.distributionChart));
         distributionChart.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         List<BarEntry> entries = new ArrayList<BarEntry>();
@@ -294,6 +298,9 @@ public class AssessmentDetailsFragment extends Fragment {
 
         //All students chart
         final BarChart allStudentsChart = new BarChart(getContext());
+        Description description = new Description();
+        description.setText(getString(R.string.allMarksChart));
+        allStudentsChart.setDescription(description);
         allStudentsChart.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         chartContainer.addView(allStudentsChart);
         List<BarEntry> entriesForAll = new ArrayList<BarEntry>();
@@ -311,6 +318,8 @@ public class AssessmentDetailsFragment extends Fragment {
         allStudentsChart.setData(allStudentsBarData);
 
         Spinner chartSpinner = (Spinner) view.findViewById(R.id.sp_chart);
+        chartSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+
         ArrayList<String> chartNames = new ArrayList<>();
         chartNames.add(getString(R.string.distributionChart));
         chartNames.add(getString(R.string.allMarksChart));

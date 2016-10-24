@@ -1,5 +1,6 @@
 package com.amisrs.gavin.tutorhelp.view.Assessment;
 
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -59,6 +60,8 @@ public class AssessmentsActivity extends DrawerActivity implements AssessmentLis
 
         floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_add_assessment);
         termSp = (Spinner)findViewById(R.id.sp_term);
+        termSp.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+
         termSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -99,6 +102,10 @@ public class AssessmentsActivity extends DrawerActivity implements AssessmentLis
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.rl_left, AssessmentListFragment.newInstance(currentTerm));
+        Fragment fragment = fragmentManager.findFragmentByTag(RIGHT_TAG);
+        if(fragment != null) {
+            fragmentTransaction.remove(fragment);
+        }
         fragmentTransaction.commit();
 
 

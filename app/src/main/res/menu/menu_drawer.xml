@@ -32,5 +32,11 @@
             android:icon="@android:drawable/btn_star_big_on"
             android:title="@string/assessment"/>
     </group>
+    <group android:id="@+id/menuGrp6">
+        <item
+            android:id="@+id/nd_graph"
+            android:icon="@android:drawable/ic_btn_speak_now"
+            android:title="@string/grade"/>
+    </group>
 
 </menu>

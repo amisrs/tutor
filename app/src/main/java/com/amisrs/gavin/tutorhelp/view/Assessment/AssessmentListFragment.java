@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.controller.AssessmentListAdapter;
+import com.amisrs.gavin.tutorhelp.controller.DividerItemDecoration;
 import com.amisrs.gavin.tutorhelp.controller.StudentListAdapter;
 import com.amisrs.gavin.tutorhelp.db.AssessmentQueries;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
@@ -82,6 +83,7 @@ public class AssessmentListFragment extends Fragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.rv_students);
         noneTextView = (TextView)view.findViewById(R.id.tv_none);
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
 //        TutorialQueries tutorialQueries = new TutorialQueries(getContext());
         AssessmentQueries assessmentQueries = new AssessmentQueries(getContext());
         ArrayList<Assessment> assessmentArrayList = new ArrayList<>();

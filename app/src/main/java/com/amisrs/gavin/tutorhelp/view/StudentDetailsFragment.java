@@ -54,13 +54,18 @@ import com.amisrs.gavin.tutorhelp.other.DbBitmapUtility;
 import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
 import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -187,7 +192,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
 
         }
         //TODO gradeText should not be editable?
-        final EditText gradeText = (EditText) view.findViewById(R.id.et_grade);
+        final TextView gradeText = (TextView) view.findViewById(R.id.et_grade);
         final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
         final ImageButton saveButton = (ImageButton) view.findViewById(R.id.iv_save);
         ImageButton deleteButton = (ImageButton) view.findViewById(R.id.ib_delete);
@@ -341,15 +346,19 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
 
         RelativeLayout chartContainer = (RelativeLayout) view.findViewById(R.id.rl_chart);
         PieChart attendancePie = new PieChart(getContext());
+        attendancePie.setDescription(null);
         attendancePie.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         //get StudentWeeks for student
         ArrayList<StudentWeek> studentWeeks = studentQueries.getStudentWeekForStudent(studentParam);
         int attendedCount = 0;
-        for (StudentWeek sw : studentWeeks) {
-            if (sw.getAttended() == 1) {
+
+        for(StudentWeek sw : studentWeeks) {
+            if(sw.getAttended() == 1) {
+
                 attendedCount++;
             }
         }
+
         List<PieEntry> pieEntries = new ArrayList<PieEntry>();
         pieEntries.add(new PieEntry(attendedCount));
         pieEntries.add(new PieEntry(studentWeeks.size() - attendedCount));
@@ -463,7 +472,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
 
     public void refreshGrade(Mark mark) {
         Log.d(TAG, "Refreshing grade");
-        final EditText gradeText = (EditText) getView().findViewById(R.id.et_grade);
+        final TextView gradeText = (TextView) getView().findViewById(R.id.et_grade);
         final StudentQueries studentQueries = new StudentQueries(getContext());
         final Enrolment enrolment = studentQueries.getEnrolmentForStudentAndTutorial(studentParam, tutorialParam);
 

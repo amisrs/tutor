@@ -4,10 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
-
 
     <application
         android:allowBackup="true"
@@ -32,10 +32,13 @@
             android:name=".view.NewStudentActivity"
             android:theme="@android:style/Theme.Holo.Dialog" />
         <activity android:name=".view.BaseActivity" />
-        <!--windowSoftInputMode fixes issue where keyboard instantly disappears when it slides over the edittext-->
-        <activity android:name=".view.StudentsActivity" android:windowSoftInputMode="adjustPan"/>
+        <!-- windowSoftInputMode fixes issue where keyboard instantly disappears when it slides over the edittext -->
+        <activity
+            android:name=".view.StudentsActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.NavDrawer.DrawerActivity" />
         <activity android:name=".view.Assessment.AssessmentsActivity" />
+        <activity android:name=".view.GraphActivity"></activity>
     </application>
 
 </manifest>
