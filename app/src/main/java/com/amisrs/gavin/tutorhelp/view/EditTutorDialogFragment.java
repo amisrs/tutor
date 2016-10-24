@@ -58,7 +58,6 @@ public class EditTutorDialogFragment extends DialogFragment {
     private Tutor tutorParam;
 
 
-
     private ImageView profilePic;
     private ImageButton captureButton;
     // private Button btn;
@@ -111,7 +110,6 @@ public class EditTutorDialogFragment extends DialogFragment {
         }
 
 
-
     }
 
     @Override
@@ -122,7 +120,6 @@ public class EditTutorDialogFragment extends DialogFragment {
 
         return view;
     }
-
 
 
     @NonNull
@@ -151,7 +148,7 @@ public class EditTutorDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 System.out.println("capture btn clicked");
 
-                if (checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                if (checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(permissions, CAMERA_PERMISSION_CODE);
                 } else {
                     takePicture();
@@ -159,13 +156,17 @@ public class EditTutorDialogFragment extends DialogFragment {
             }
         });
         profilePic = (ImageView) view.findViewById(R.id.iv_camera);
-        Glide.with(getContext())
-                .load(tutorParam.getPerson().getProfilePath())
-                .asBitmap()
-                .placeholder(R.drawable.ic_default)
-                .transform(new ProfileCircle(getContext()))
-                .into(profilePic);
 
+        if (tutorParam.getPerson().getProfilePath().equals("default.png")) {
+            profilePic.setImageResource(R.drawable.ic_default);
+        } else {
+            Glide.with(getContext())
+                    .load(tutorParam.getPerson().getProfilePath())
+                    .asBitmap()
+                    .placeholder(R.drawable.ic_default)
+                    .transform(new ProfileCircle(getContext()))
+                    .into(profilePic);
+        }
 
         builder
                 .setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
@@ -196,10 +197,10 @@ public class EditTutorDialogFragment extends DialogFragment {
 
     //http://stackoverflow.com/questions/28450049/how-get-result-from-onactivityresult-in-fragment
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("actResult is called");
-        super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode == REQUEST_CODE){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
             switch (resultCode) {
                 case Activity.RESULT_OK:
                     photo = (Bitmap) data.getExtras().get("data");
@@ -219,7 +220,7 @@ public class EditTutorDialogFragment extends DialogFragment {
                     break;
             }
 
-            if(imgTaken) {
+            if (imgTaken) {
                 getImagePath(photo);
             }
         }
@@ -335,7 +336,7 @@ public class EditTutorDialogFragment extends DialogFragment {
                     + " must implement OnFragmentInteractionListener");
         }
 
-        if(context instanceof EditTutorDialogFragmentListener) {
+        if (context instanceof EditTutorDialogFragmentListener) {
             dialogListener = (EditTutorDialogFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
