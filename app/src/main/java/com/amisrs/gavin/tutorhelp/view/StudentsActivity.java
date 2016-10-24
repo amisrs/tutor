@@ -125,7 +125,7 @@ public class StudentsActivity extends DrawerActivity implements StudentListFragm
     public void refreshStudentList() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.rl_left, StudentListFragment.newInstance(tutorial), RIGHT_TAG);
+        fragmentTransaction.replace(R.id.rl_left, StudentListFragment.newInstance(tutorial));
         fragmentTransaction.commit();
 
     }

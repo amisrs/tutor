@@ -51,6 +51,8 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +145,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
                 .transform(new ProfileCircle(getContext()))
                 .into(profile);
         //TODO gradeText should not be editable?
-        final EditText gradeText = (EditText) view.findViewById(R.id.et_grade);
+        final TextView gradeText = (TextView) view.findViewById(R.id.et_grade);
         final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
         final ImageButton saveButton = (ImageButton) view.findViewById(R.id.iv_save);
         ImageButton deleteButton = (ImageButton) view.findViewById(R.id.ib_delete);
@@ -295,11 +297,13 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         //get StudentWeeks for student
         ArrayList<StudentWeek> studentWeeks = studentQueries.getStudentWeekForStudent(studentParam);
         int attendedCount = 0;
+
         for(StudentWeek sw : studentWeeks) {
             if(sw.getAttended() == 1) {
                 attendedCount++;
             }
         }
+
         List<PieEntry> pieEntries = new ArrayList<PieEntry>();
         pieEntries.add(new PieEntry(attendedCount));
         pieEntries.add(new PieEntry(studentWeeks.size()-attendedCount));
@@ -323,7 +327,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
 
     public void refreshGrade(Mark mark) {
         Log.d(TAG, "Refreshing grade");
-        final EditText gradeText = (EditText) getView().findViewById(R.id.et_grade);
+        final TextView gradeText = (TextView) getView().findViewById(R.id.et_grade);
         final StudentQueries studentQueries = new StudentQueries(getContext());
         final Enrolment enrolment = studentQueries.getEnrolmentForStudentAndTutorial(studentParam, tutorialParam);
 

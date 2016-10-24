@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.controller.DividerItemDecoration;
 import com.amisrs.gavin.tutorhelp.controller.OnDeleteListener;
 import com.amisrs.gavin.tutorhelp.controller.OnTutorialUpdateListener;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
@@ -85,6 +86,7 @@ public class TutorialListActivity extends DrawerActivity implements NewTutorialD
         adapter.setOnTutorialUpdateListener(this);
         adapter.giveList(tutorialArrayList);
         adapter.setOnDeleteListener(this);
+        recycler.addItemDecoration(new DividerItemDecoration(this));
         recycler.setAdapter(adapter);
 
     }

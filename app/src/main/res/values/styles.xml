@@ -5,6 +5,7 @@
       <item name="colorControlActivated">#2962ff</item>
       <item name="colorControlHighlight">#D1EEFC</item>
       <item name="android:editTextColor">#2962ff</item>
+      <item name="colorAccent">@color/colorAccent</item>
    </style>
 
 

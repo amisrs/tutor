@@ -277,8 +277,8 @@ public class AssessmentDetailsFragment extends Fragment {
         distTable.addView(markRow);
         distTable.addView(markCountRow);
         RelativeLayout distLayout = (RelativeLayout) view.findViewById(R.id.rl_distribution);
-        distLayout.addView(distTable);
-
+        //distLayout.addView(distTable);
+        //TODO: add this table back in when it looks good
         final RelativeLayout chartContainer = (RelativeLayout) view.findViewById(R.id.rl_chart);
 
         //Distribution Chart

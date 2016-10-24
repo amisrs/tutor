@@ -99,6 +99,10 @@ public class AssessmentsActivity extends DrawerActivity implements AssessmentLis
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.rl_left, AssessmentListFragment.newInstance(currentTerm));
+        Fragment fragment = fragmentManager.findFragmentByTag(RIGHT_TAG);
+        if(fragment != null) {
+            fragmentTransaction.remove(fragment);
+        }
         fragmentTransaction.commit();
 
 

@@ -109,7 +109,12 @@
         android:layout_below="@+id/rl_top">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin"
+
+            >
             <TextView
                 android:id="@+id/tv_tutorial"
                 android:paddingTop="@dimen/activity_vertical_margin"
@@ -136,17 +141,26 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:text="@string/grade"
                 android:textColor="@color/colorAccent"/>
-            <EditText
+            <TextView
                 android:id="@+id/et_grade"
-                android:layout_toRightOf="@id/tv_gradeLabel"
+                android:layout_below="@id/tv_gradeLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:editable="false"
-                android:layout_below="@id/rv_tutorials"/>
+                android:layout_marginBottom="12dp"
+                android:editable="false"/>
+
+            <TextView
+                android:id="@+id/tv_assessment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_grade"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/colorAccent"
+                android:text="@string/assessements"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_assessments"
-                android:layout_below="@id/et_grade"
+                android:layout_below="@id/tv_assessment"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
