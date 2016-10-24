@@ -10,6 +10,7 @@ import com.amisrs.gavin.tutorhelp.model.Enrolment;
 import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.StudentWeek;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.model.Week;
 
@@ -310,6 +311,39 @@ public class StudentQueries extends QueryBase {
         );
         close();
         Log.d(TAG, "Deleted person: " + student.getPerson().getFirstName());
+    }
 
+    public ArrayList<StudentWeek> getStudentWeekForStudent(Student student) {
+        open();
+        String[] projection = {
+                DBContract.StudentWeekTable.COLUMN_STUDENTID,
+                DBContract.StudentWeekTable.COLUMN_WEEKID,
+                DBContract.StudentWeekTable.COLUMN_ATTENDED,
+                DBContract.StudentWeekTable.COLUMN_PRIVATECOMMENT,
+                DBContract.StudentWeekTable.COLUMN_PUBLICCOMMENT
+        };
+
+        String selection = DBContract.StudentWeekTable.COLUMN_STUDENTID + " = ?";
+        String[] selectionArgs = { String.valueOf(student.getStudentID()) };
+
+        Cursor c = db.query(
+                DBContract.StudentWeekTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        c.moveToFirst();
+        ArrayList<StudentWeek> studentWeeks = new ArrayList<>();
+        while(!c.isAfterLast()) {
+            studentWeeks.add(new StudentWeek(c.getInt(0), c.getInt(1), c.getInt(2), c.getString(3), c.getString(4)));
+            c.moveToNext();
+        }
+        c.close();
+        close();
+
+        return studentWeeks;
     }
 }

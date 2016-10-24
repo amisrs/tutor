@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,12 +39,18 @@ import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Enrolment;
 import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.StudentWeek;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
 import com.bumptech.glide.Glide;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -206,33 +213,34 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), R.string.editSave, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.editSave, Toast.LENGTH_SHORT).show();
 
-                //update details
-                PersonQueries personQueries = new PersonQueries(getContext());
-                personQueries.updatePerson(studentParam.getPersonID(),
-                        fnameTextView.getText().toString(),
-                        lnameTextView.getText().toString(),
-                        Integer.parseInt(zidTextView.getText().toString()),
-                        emailTextView.getText().toString());
+            //update details
+            PersonQueries personQueries = new PersonQueries(getContext());
+            personQueries.updatePerson(studentParam.getPersonID(),
+                    fnameTextView.getText().toString(),
+                    lnameTextView.getText().toString(),
+                    Integer.parseInt(zidTextView.getText().toString()),
+                    emailTextView.getText().toString());
 
-                studentParam.getPerson().setFirstName(fnameTextView.getText().toString());
-                studentParam.getPerson().setLastName(lnameTextView.getText().toString());
-                studentParam.getPerson().setEmail(emailTextView.getText().toString());
-                studentParam.getPerson().setzID(Integer.parseInt(zidTextView.getText().toString()));
-                //update grade
+            studentParam.getPerson().setFirstName(fnameTextView.getText().toString());
+            studentParam.getPerson().setLastName(lnameTextView.getText().toString());
+            studentParam.getPerson().setEmail(emailTextView.getText().toString());
+            studentParam.getPerson().setzID(Integer.parseInt(zidTextView.getText().toString()));
+            //update grade
 
-                fnameTextView.setInputType(InputType.TYPE_NULL);
-                lnameTextView.setInputType(InputType.TYPE_NULL);
-                zidTextView.setInputType(InputType.TYPE_NULL);
-                emailTextView.setInputType(InputType.TYPE_NULL);
-                gradeText.setInputType(InputType.TYPE_NULL);
+            fnameTextView.setInputType(InputType.TYPE_NULL);
+            lnameTextView.setInputType(InputType.TYPE_NULL);
+            zidTextView.setInputType(InputType.TYPE_NULL);
+            emailTextView.setInputType(InputType.TYPE_NULL);
+            gradeText.setInputType(InputType.TYPE_NULL);
 
 
-                editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
-                saveButton.setVisibility(View.INVISIBLE);
-                isEdit = false;
-                onButtonPressed("save");
+            editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
+            saveButton.setVisibility(View.INVISIBLE);
+            isEdit = false;
+            onButtonPressed("save");
+
             }
         });
 
@@ -271,6 +279,28 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
                 }
             }
         });
+
+        RelativeLayout chartContainer = (RelativeLayout) view.findViewById(R.id.rl_chart);
+        PieChart attendancePie = new PieChart(getContext());
+        attendancePie.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        //get StudentWeeks for student
+        ArrayList<StudentWeek> studentWeeks = studentQueries.getStudentWeekForStudent(studentParam);
+        int attendedCount = 0;
+        for(StudentWeek sw : studentWeeks) {
+            if(sw.getAttended() == 1) {
+                attendedCount++;
+            }
+        }
+        List<PieEntry> pieEntries = new ArrayList<PieEntry>();
+        pieEntries.add(new PieEntry(attendedCount));
+        pieEntries.add(new PieEntry(studentWeeks.size()-attendedCount));
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, getString(R.string.attendance));
+        PieData pieData = new PieData(pieDataSet);
+        attendancePie.setData(pieData);
+        chartContainer.addView(attendancePie);
+        attendancePie.invalidate();
+
+
 
         return view;
     }
