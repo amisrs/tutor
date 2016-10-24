@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TutorHelp</string>
+    <string name="app_name">Tuteon</string>
 
     <string name="studentLabel">Student</string>
     <string name="tutorLabel">Tutor</string>
