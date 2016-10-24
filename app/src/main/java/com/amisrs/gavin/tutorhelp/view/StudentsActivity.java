@@ -63,17 +63,18 @@ public class StudentsActivity extends DrawerActivity implements StudentListFragm
     private static final int REQUEST_CODE = 100;
     private String imgPath = "default.png";
 
-    TextInputEditText zid;
-    TextInputEditText fname;
-    TextInputEditText lname;
-    TextInputEditText email;
+    private TextInputEditText zid;
+    private TextInputEditText fname;
+    private TextInputEditText lname;
+    private TextInputEditText email;
 
     //private static final String TAG = "AssessmentsActivity";
     private Student currentStudent;
 
-    Tutor tutor;
-    Tutorial tutorial;
-    FloatingActionButton floatingActionButton;
+    private Tutor tutor;
+    private Tutorial tutorial;
+    private FloatingActionButton floatingActionButton;
+    private String overrideBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +83,9 @@ public class StudentsActivity extends DrawerActivity implements StudentListFragm
 
         tutor = getIntent().getParcelableExtra("tutor");
         tutorial = getIntent().getParcelableExtra("tutorial");
-
-        floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_add_student);
+        overrideBack = getIntent().getExtras().getString("fromAttendance");
+        System.out.println(TAG + " " + overrideBack);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add_student);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,7 +143,7 @@ public class StudentsActivity extends DrawerActivity implements StudentListFragm
 
     @Override
     public void onFragmentInteraction(String name) {
-        if(name.equals("save")) {
+        if (name.equals("save")) {
             refreshStudentList();
             //changeStudent(currentStudent);
         }
@@ -183,5 +185,18 @@ public class StudentsActivity extends DrawerActivity implements StudentListFragm
         fragmentTransaction.remove(fragment);
         fragmentTransaction.commit();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //override back button press if activity is started from BaseActivity
+
+        if (overrideBack != null) {
+            Intent intent = new Intent(this, TutorialListActivity.class);
+            intent.putExtra("tutor", tutor);
+            startActivity(intent);
+            finish();
+        }
+        super.onBackPressed();
     }
 }

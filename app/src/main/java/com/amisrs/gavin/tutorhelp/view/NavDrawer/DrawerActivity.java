@@ -26,8 +26,8 @@ import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
+import com.amisrs.gavin.tutorhelp.view.Assessment.AssessmentsActivity;
 import com.amisrs.gavin.tutorhelp.view.BaseActivity;
-import com.amisrs.gavin.tutorhelp.view.MenuActivity;
 import com.amisrs.gavin.tutorhelp.view.StudentsActivity;
 import com.amisrs.gavin.tutorhelp.view.TutorActivity;
 import com.amisrs.gavin.tutorhelp.view.TutorialListActivity;
@@ -87,11 +87,26 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         navigationView = (NavigationView) findViewById(R.id.navigationView);
 
 
+        /*
+        * Check for which activity the user is currently on and inflate the correct navDrawer menu
+        * http://stackoverflow.com/questions/30695038/how-to-programmatically-add-a-submenu-item-to-the-new-material-design-android-su?noredirect=1&lq=1
+        */
+        if(this.getClass().getName().equals(TutorialListActivity.class.getName())){
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.menu_drawer_main);
+        } else {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.menu_drawer);
+        }
+
+
 
 
         /*
-        * Get the current tutor
-        * */
+        * Get the tutorial and tutor parcelable extras
+        */
+
+        tutorial = getIntent().getParcelableExtra("tutorial");
         tutor = getIntent().getParcelableExtra("tutor");
         if (tutor == null) {
             Log.e(TAG, "No tutor was received from the Intent.");
@@ -103,7 +118,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         /*
         * Retrieve, initialise and set the values for the navigation header layout
-        * */
+        */
         View header = navigationView.getHeaderView(0);
         tutorName = (TextView) header.findViewById(R.id.tv_tutorName);
         tutorEmail = (TextView) header.findViewById(R.id.tv_tutorEmail);
@@ -126,7 +141,9 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 .placeholder(R.drawable.ic_default)
                 .into(tutorProfile);
 
-
+        /*
+        * Set the tool bar
+        */
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //TODO: change the APP NAME!!! otherwise we will get rekt
@@ -144,6 +161,10 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         return true;
     }
 
+    /*
+    * This method prepares the navigation drawer to handle open, close and item selections.
+    */
+
     protected void prepareNavView() {
         navigationView.setNavigationItemSelectedListener(this);
         // use the hamburger menu
@@ -160,7 +181,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
     // Use home/back button instead
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_add_white_24dp);
+
 
 
 }
@@ -189,38 +210,49 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         switch (menuItem.getItemId()) {
 
             //TODO: Remove nd_home or set to something else as this should be handled by the Home/Up button
-            //TODO: same problem as getting the nav header image
-            case R.id.nd_tutorial:
+
+            case R.id.nd_home:
 
                 navItemIndex = 0;
                 Intent homeIntent = new Intent(this, TutorActivity.class);
                 homeIntent.putExtra("tutor", tutor);
                 startActivity(homeIntent);
                 return true;
-            //code below breaks because user has not selected a tutorial
-            case R.id.nd_attendance:
-                navItemIndex = 1;
 
-                Intent attendanceIntent = new Intent(this, TutorialListActivity.class);
+            case R.id.nd_tutorial:
+                navItemIndex = 1;
+                Intent tutorialIntent = new Intent(this, TutorialListActivity.class);
+                tutorialIntent.putExtra("tutor", tutor);
+                startActivity(tutorialIntent);
+                return true;
+
+            case R.id.nd_attendance:
+                navItemIndex = 2;
+                Intent attendanceIntent = new Intent(this, BaseActivity.class);
+                attendanceIntent.putExtra("tutorial", tutorial);
                 attendanceIntent.putExtra("tutor", tutor);
+                Log.d(TAG, "going to attendance for tutorial " + tutorial.getName());
                 startActivity(attendanceIntent);
                 return true;
 
-
             case R.id.nd_student:
-                navItemIndex = 2;
-               /* MenuActivity menuAct = new MenuActivity();
-                menuAct.goToStudents();*/
+                navItemIndex = 3;
                 Intent studentIntent = new Intent(this, StudentsActivity.class);
-
+                studentIntent.putExtra("tutor", tutor);
+                studentIntent.putExtra("tutorial", tutorial);
+                Log.d(TAG, "going to student for tutorial " + tutorial.getName());
                 startActivity(studentIntent);
                 return true;
 
-            case R.id.nd_tutor:
-                navItemIndex = 3;
-                Intent tutorIntent = new Intent(this, TutorialListActivity.class);
-                startActivity(tutorIntent);
+            case R.id.nd_assessment:
+                navItemIndex = 4;
+                Intent intent = new Intent(this, AssessmentsActivity.class);
+                intent.putExtra("tutorial", tutorial);
+                intent.putExtra("tutor", tutor);
+                Log.d(TAG, "going to assessments for term " + tutorial.getTerm());
+                startActivity(intent);
                 return true;
+
         }
 
         return super.onOptionsItemSelected(menuItem);

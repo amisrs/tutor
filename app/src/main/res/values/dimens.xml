@@ -8,4 +8,10 @@
     <dimen name="tableRowHeight">36dp</dimen>
     <dimen name="tableColumnWidth">120dp</dimen>
 
+
+    <dimen name="fabElevation">6dp</dimen>
+    <dimen name="pressTranslationZ">12dp</dimen>
+
+
+
 </resources>

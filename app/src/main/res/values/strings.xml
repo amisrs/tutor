@@ -18,7 +18,7 @@
     <string name="weighting">Weighting (%)</string>
     <string name="maxmarks">Total Marks</string>
 
-    <string name="hello">Hello, </string>
+    <string name="hello">Hello </string>
     <string name="week">Week </string>
 
     <string name="nostudents">There are no students in this tutorial!</string>
@@ -34,9 +34,11 @@
 
     <string name="grade">Grade</string>
 
-    <string name="tutorial">Tutorial</string>
-
+    <string name="student">Students</string>
+    <string name="tutorial">Tutorials</string>
     <string name="attendance">Attendance</string>
+    <string name="assessment">Assessments</string>
+
     <string name="publicComment">Public Comment</string>
 
 

@@ -19,7 +19,8 @@ import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
-import com.amisrs.gavin.tutorhelp.view.MenuActivity;
+import com.amisrs.gavin.tutorhelp.view.BaseActivity;
+
 import com.amisrs.gavin.tutorhelp.view.StudentDetailsFragment;
 import com.amisrs.gavin.tutorhelp.view.StudentsActivity;
 
@@ -132,7 +133,7 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
                 @Override
                 public void onClick(View view) {
                     Activity activity = (Activity)view.getContext();
-                    Intent intent = new Intent(activity, MenuActivity.class);
+                    Intent intent = new Intent(activity, BaseActivity.class);
                     Log.d(TAG, "Putting intent extra tutorial: " + tutorial.getName());
                     intent.putExtra("tutor", tutor);
                     intent.putExtra("tutorial", tutorial);

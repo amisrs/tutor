@@ -1,3 +1,4 @@
+/*
 package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Intent;
@@ -91,3 +92,4 @@ public class MenuActivity extends DrawerActivity{
         startActivity(intent);
     }
 }
+*/

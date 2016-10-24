@@ -33,6 +33,7 @@ public class BaseActivity extends DrawerActivity implements StudentListFragment.
         StudentWeekDetailsFragment.OnFragmentInteractionListener,
         OnItemClickListener {
     private static final String TAG = "BaseActivity";
+    private static final String overrideKey = "override";
     Tutor tutor;
     Tutorial tutorial;
     Spinner spinner;
@@ -50,8 +51,11 @@ public class BaseActivity extends DrawerActivity implements StudentListFragment.
         TutorialQueries tutorialQueries = new TutorialQueries(this);
         ArrayList<Student> students = tutorialQueries.getStudentsForTutorial(tutorial);
         if(students.size() < 1) {
-            Toast.makeText(BaseActivity.this, getString(R.string.nostudents), Toast.LENGTH_SHORT).show();
+            Toast.makeText(BaseActivity.this, getString(R.string.nostudents), Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, StudentsActivity.class);
+            //savedInstanceState.putString("fromAttendance");
+            intent.putExtra("fromAttendance", overrideKey);
+            intent.putExtra("tutor", tutor);
             intent.putExtra("tutorial", tutorial);
             startActivity(intent);
         } else {
