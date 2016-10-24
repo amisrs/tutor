@@ -16,6 +16,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,6 +126,7 @@ public class NewStudentDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_new_student, null);
         builder.setView(view);
+        final PersonQueries personQueries = new PersonQueries(getContext());
 
         captureButton = (ImageButton) view.findViewById(R.id.btn_camera_capture);
         captureButton.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +162,25 @@ public class NewStudentDialogFragment extends DialogFragment {
                     }
                 });
 
-        return builder.create();
+        final AlertDialog alertDialog = builder.create();
+        zid = (TextInputEditText) view.findViewById(R.id.et_zid);
+        zid.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(personQueries.getIfZidExists(zid.getText().toString()) == 1) {
+                    zid.setError(getString(R.string.zidExists));
+                    alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+
+                } else {
+                    zid.setError(null);
+                    alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
+
+                }
+                return false;
+            }
+        });
+
+        return alertDialog;
     }
 
 

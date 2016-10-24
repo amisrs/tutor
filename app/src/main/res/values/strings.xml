@@ -67,6 +67,7 @@
     <string name="editSave">Changes saved!</string>
     <string name="editTutor">Edit Tutor</string>
 
+    <string name="zidExists">This ID already exists!</string>
 
 
     <!--

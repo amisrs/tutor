@@ -92,5 +92,18 @@ public class PersonQueries extends QueryBase {
         close();
     }
 
+    public int getIfZidExists(String id) {
+        int ret = 0;
+        open();
+        String query = "select exists(select 1 from " + DBContract.PersonTable.TABLE_NAME + " where " + DBContract.PersonTable.COLUMN_ZID + " = ? limit 1)";
+        String[] selectionArgs = { id };
+        Cursor c = db.rawQuery(query, selectionArgs);
+        c.moveToFirst();
+        ret = c.getInt(0);
+        c.close();
+        close();
+        return ret;
+    }
+
 
 }

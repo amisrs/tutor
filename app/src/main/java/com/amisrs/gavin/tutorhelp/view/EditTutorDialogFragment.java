@@ -16,6 +16,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,6 +137,7 @@ public class EditTutorDialogFragment extends DialogFragment {
         email = (TextInputEditText) view.findViewById(R.id.et_email);
 
         builder.setView(view);
+        final PersonQueries personQueries = new PersonQueries(getContext());
 
         fname.setText(tutorParam.getPerson().getFirstName());
         lname.setText(tutorParam.getPerson().getLastName());
@@ -186,7 +188,25 @@ public class EditTutorDialogFragment extends DialogFragment {
                     }
                 });
 
-        return builder.create();
+        final AlertDialog alertDialog = builder.create();
+        zid = (TextInputEditText) view.findViewById(R.id.et_zid);
+        zid.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(personQueries.getIfZidExists(zid.getText().toString()) == 1) {
+                    zid.setError(getString(R.string.zidExists));
+                    alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+
+                } else {
+                    zid.setError(null);
+                    alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
+
+                }
+                return false;
+            }
+        });
+
+        return alertDialog;
     }
 
 
