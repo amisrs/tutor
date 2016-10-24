@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
@@ -9,23 +9,23 @@
         android:layout_height="wrap_content"
         android:text="test"/>
     <ImageButton
-        android:id="@+id/iv_edit"
-        android:layout_width="@dimen/tutorialListName"
-        android:layout_height="@dimen/tutorialListName"
-
-        android:layout_toRightOf="@id/tv_name"
-        android:src="@drawable/ic_mode_edit_black_36dp"
-        android:scaleType="fitXY"
-        android:background="@android:color/transparent"/>
-    <ImageButton
         android:id="@+id/iv_save"
-        android:layout_width="@dimen/tutorialListName"
-        android:layout_height="@dimen/tutorialListName"
-        android:layout_toRightOf="@id/iv_edit"
+        android:layout_width="@dimen/smallButtonSize"
+        android:layout_height="@dimen/smallButtonSize"
+        android:layout_alignParentEnd="true"
         android:src="@drawable/ic_done_black_24dp"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
-        android:visibility="gone"/>
+        android:visibility="invisible"/>
+    <ImageButton
+        android:id="@+id/iv_edit"
+        android:layout_width="@dimen/smallButtonSize"
+        android:layout_height="@dimen/smallButtonSize"
+
+        android:layout_toLeftOf="@id/iv_save"
+        android:src="@drawable/ic_mode_edit_black_36dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"/>
 
 
     <EditText

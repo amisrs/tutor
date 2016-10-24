@@ -33,9 +33,24 @@
     <string name="deleteAssessmentMsg">Delete this assessment?</string>
 
     <string name="grade">Grade</string>
+<<<<<<< HEAD
 
     <string name="student">Students</string>
     <string name="tutorial">Tutorials</string>
+=======
+    <string name="tutorial">Tutorial</string>
+
+    <string name="stats">Statistics</string>
+    <string name="mean">Mean</string>
+    <string name="distribution">Distribution</string>
+
+    <string name="mark">Mark</string>
+    <string name="count">Count</string>
+
+    <string name="distributionChart">Distribution</string>
+    <string name="allMarksChart">All Students</string>
+
+>>>>>>> a7ef165f92399f95e3f49289bb2e13249a081b90
     <string name="attendance">Attendance</string>
     <string name="assessment">Assessments</string>
 
@@ -48,6 +63,10 @@
 
     <string name="openDrawer">Drawer Open</string>
     <string name="closeDrawer">Drawer Close</string>
+
+    <string name="editStart">Editing enabled!</string>
+    <string name="editCancel">Changes discarded!</string>
+    <string name="editSave">Changes saved!</string>
 
 
     <!--

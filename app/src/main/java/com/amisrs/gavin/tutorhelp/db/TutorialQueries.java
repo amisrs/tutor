@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.amisrs.gavin.tutorhelp.model.Assessment;
 import com.amisrs.gavin.tutorhelp.model.Enrolment;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
@@ -189,5 +190,19 @@ public class TutorialQueries extends QueryBase {
         close();
         Log.d(TAG, "Deleted tutorial: " + tutorial.getName());
     }
+
+
+    public void updateTutorial(Tutorial tutorial) {
+        open();
+        String update = "update " + DBContract.TutorialTable.TABLE_NAME + " set " +
+                DBContract.TutorialTable.COLUMN_NAME + " = \"" + tutorial.getName() + "\"" + COMMA_SEP +
+                DBContract.TutorialTable.COLUMN_TIMESLOT + " = \"" + tutorial.getTimeSlot() + "\"" + COMMA_SEP +
+                DBContract.TutorialTable.COLUMN_LOCATION + " = \"" + tutorial.getLocation() + "\"" +
+                " where " + DBContract.TutorialTable.COLUMN_TUTORIALID + " = " + tutorial.getTutorialID();
+        db.execSQL(update);
+        Log.d(TAG, "Updated tutorial, new: " + tutorial.getName());
+        close();
+    }
+
 
 }

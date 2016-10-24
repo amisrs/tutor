@@ -126,6 +126,7 @@ public class NewTutorialDialogFragment extends DialogFragment {
 
 /*
 
+<<<<<<< HEAD
         semSp = (Spinner) view.findViewById(R.id.sp_sem);
         yearSp = (Spinner) view.findViewById(R.id.sp_year);
 
@@ -146,6 +147,8 @@ public class NewTutorialDialogFragment extends DialogFragment {
 */
 
 
+=======
+>>>>>>> a7ef165f92399f95e3f49289bb2e13249a081b90
      /*   createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

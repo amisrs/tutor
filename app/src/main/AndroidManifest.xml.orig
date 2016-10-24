@@ -2,12 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.amisrs.gavin.tutorhelp">
 
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
+=======
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
+
+>>>>>>> e2f65ac8e824cba3b0fc3af2777aa80163dd94e6
 
     <application
         android:allowBackup="true"
@@ -32,8 +39,7 @@
             android:name=".view.NewStudentActivity"
             android:theme="@android:style/Theme.Holo.Dialog" />
         <activity android:name=".view.BaseActivity" />
-        <!--windowSoftInputMode fixes issue where keyboard instantly disappears when it slides over the edittext-->
-        <activity android:name=".view.StudentsActivity" android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".view.StudentsActivity" />
         <activity android:name=".view.NavDrawer.DrawerActivity" />
         <activity android:name=".view.Assessment.AssessmentsActivity" />
     </application>

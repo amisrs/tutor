@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.db.AssessmentQueries;
@@ -111,6 +112,8 @@ public class MarkListAdapter extends RecyclerView.Adapter<MarkListAdapter.MarkVi
                 @Override
                 public void onClick(View view) {
                     if(legit) {
+                        Toast.makeText(context, R.string.editSave, Toast.LENGTH_SHORT).show();
+
                         //update details
                         mark.setMark(Integer.parseInt(markText.getText().toString()));
                         markText.setInputType(InputType.TYPE_NULL);
@@ -120,7 +123,7 @@ public class MarkListAdapter extends RecyclerView.Adapter<MarkListAdapter.MarkVi
                         studentQueries.updateMark(mark);
 
                         editButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_mode_edit_black_36dp));
-                        saveButton.setVisibility(View.GONE);
+                        saveButton.setVisibility(View.INVISIBLE);
                         isEdit = false;
 
                         onMarkUpdateListener.onMarkUpdate(mark);
@@ -133,18 +136,22 @@ public class MarkListAdapter extends RecyclerView.Adapter<MarkListAdapter.MarkVi
                 @Override
                 public void onClick(View view) {
                     if (!isEdit) {
+                        Toast.makeText(context, R.string.editStart, Toast.LENGTH_SHORT).show();
+
                         markText.setInputType(InputType.TYPE_CLASS_NUMBER);
                         editButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_clear_black_36dp));
                         saveButton.setVisibility(View.VISIBLE);
 
                         isEdit = true;
                     } else {
+                        Toast.makeText(context, R.string.editCancel, Toast.LENGTH_SHORT).show();
+
                         markText.setText(String.valueOf(mark.getMark()));
                         markText.setInputType(InputType.TYPE_NULL);
                         markText.setError(null);
 
                         editButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_mode_edit_black_36dp));
-                        saveButton.setVisibility(View.GONE);
+                        saveButton.setVisibility(View.INVISIBLE);
                         isEdit = false;
                     }
                 }

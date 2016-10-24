@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.controller.MarkListAdapter;
@@ -211,6 +212,8 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getContext(), R.string.editSave, Toast.LENGTH_SHORT).show();
+
                 //update details
                 PersonQueries personQueries = new PersonQueries(getContext());
                 personQueries.updatePerson(studentParam.getPersonID(),
@@ -219,6 +222,10 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
                         Integer.parseInt(zidTextView.getText().toString()),
                         emailTextView.getText().toString());
 
+                studentParam.getPerson().setFirstName(fnameTextView.getText().toString());
+                studentParam.getPerson().setLastName(lnameTextView.getText().toString());
+                studentParam.getPerson().setEmail(emailTextView.getText().toString());
+                studentParam.getPerson().setzID(Integer.parseInt(zidTextView.getText().toString()));
                 //update grade
 
                 fnameTextView.setInputType(InputType.TYPE_NULL);
@@ -229,7 +236,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
 
 
                 editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
-                saveButton.setVisibility(View.GONE);
+                saveButton.setVisibility(View.INVISIBLE);
                 isEdit = false;
                 onButtonPressed("save");
             }
@@ -239,6 +246,8 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
             @Override
             public void onClick(View view) {
                 if (!isEdit) {
+                    Toast.makeText(getContext(), R.string.editStart, Toast.LENGTH_SHORT).show();
+
                     fnameTextView.setInputType(InputType.TYPE_CLASS_TEXT);
                     lnameTextView.setInputType(InputType.TYPE_CLASS_TEXT);
                     zidTextView.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -247,6 +256,8 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
 
                     isEdit = true;
                 } else {
+                    Toast.makeText(getContext(), R.string.editCancel, Toast.LENGTH_SHORT).show();
+
                     fnameTextView.setText(studentParam.getPerson().getFirstName());
                     lnameTextView.setText(studentParam.getPerson().getLastName());
                     zidTextView.setText(String.valueOf(studentParam.getPerson().getzID()));
@@ -261,7 +272,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
 
 
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
-                    saveButton.setVisibility(View.GONE);
+                    saveButton.setVisibility(View.INVISIBLE);
                     isEdit = false;
                 }
             }
