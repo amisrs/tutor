@@ -95,6 +95,7 @@ public class StudentWeekDetailsFragment extends Fragment {
         final TextView studentText = (TextView) view.findViewById(R.id.tv_student);
         Switch aSwitch = (Switch) view.findViewById(R.id.cb_attended);
         final TextInputEditText publicComment = (TextInputEditText) view.findViewById(R.id.et_pub);
+        final TextInputEditText privateComment = (TextInputEditText) view.findViewById(R.id.et_priv);
         final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
         final ImageButton saveButton = (ImageButton) view.findViewById(R.id.iv_save);
         final ImageButton emailButton = (ImageButton) view.findViewById(R.id.emailBtn);
@@ -112,13 +113,13 @@ public class StudentWeekDetailsFragment extends Fragment {
         studentWeek = weekQueries.getStudentWeekForWeekAndStudentAndTutorial(weekParam, studentParam, tutorialParam);
         Log.d(TAG, "the current student week public comment; " + studentWeek.getPublicComment());
         publicComment.setText(studentWeek.getPublicComment());
+        privateComment.setText(studentWeek.getPrivateComment());
 
         if (studentWeek.getAttended() == 0) {
             aSwitch.setChecked(false);
         } else {
             aSwitch.setChecked(true);
         }
-        //TODO doesn't immediately disappear?
         if(publicComment.getText().toString().matches("")){
             isEmpty = true;
             emailButton.setVisibility(View.GONE);
@@ -148,10 +149,12 @@ public class StudentWeekDetailsFragment extends Fragment {
             public void onClick(View view) {
                 //update details
                 studentWeek.setPublicComment(publicComment.getText().toString());
+                studentWeek.setPrivateComment(privateComment.getText().toString());
                 weekQueries.updateStudentWeek(studentWeek);
                 //update grade
 
                 publicComment.setInputType(InputType.TYPE_NULL);
+                privateComment.setInputType(InputType.TYPE_NULL);
 
                 editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
                 saveButton.setVisibility(View.GONE);
@@ -175,13 +178,16 @@ public class StudentWeekDetailsFragment extends Fragment {
             public void onClick(View view) {
                 if (!isEdit) {
                     publicComment.setInputType(InputType.TYPE_CLASS_TEXT);
+                    privateComment.setInputType(InputType.TYPE_CLASS_TEXT);
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_clear_black_36dp));
                     saveButton.setVisibility(View.VISIBLE);
 
                     isEdit = true;
                 } else {
                     publicComment.setText(studentWeek.getPublicComment());
+                    privateComment.setText(studentWeek.getPrivateComment());
                     publicComment.setInputType(InputType.TYPE_NULL);
+                    privateComment.setInputType(InputType.TYPE_NULL);
 
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
                     saveButton.setVisibility(View.GONE);

@@ -52,6 +52,7 @@
     <string name="assessment">Assessments</string>
 
     <string name="publicComment">Public Comment</string>
+    <string name="privateComment">Private Comment</string>
 
 
     <string name="S1">Semester 1</string>
@@ -80,6 +81,7 @@
 
     <string name="attended">Attended</string>
     <string name="notAttended">Not Attended</string>
+    <string name="graph">Grades</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
