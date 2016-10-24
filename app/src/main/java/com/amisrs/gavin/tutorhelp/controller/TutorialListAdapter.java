@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +17,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.db.PersonQueries;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
@@ -33,6 +38,7 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
     ArrayList<Tutorial> tutorials;
     Context context;
     OnDeleteListener onDeleteListener;
+    OnTutorialUpdateListener onTutorialUpdateListener;
 
 
 
@@ -46,6 +52,10 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
 
     public void setOnDeleteListener(OnDeleteListener onDeleteListener) {
         this.onDeleteListener = onDeleteListener;
+    }
+
+    public void setOnTutorialUpdateListener(OnTutorialUpdateListener onTutorialUpdateListener) {
+        this.onTutorialUpdateListener = onTutorialUpdateListener;
     }
 
     @Override
@@ -73,6 +83,9 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
         private TextView population;
         private TextView term;
         private ImageButton deleteButton;
+        private ImageButton editButton;
+        private ImageButton saveButton;
+        boolean isEdit;
 
         public TutorialViewHolder(View itemView) {
             super(itemView);
@@ -83,6 +96,9 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
             term = (TextView)itemView.findViewById(R.id.tv_term);
             deleteButton = (ImageButton)itemView.findViewById(R.id.ib_delete);
             relativeLayout = (RelativeLayout)itemView.findViewById(R.id.rl_item);
+            editButton = (ImageButton)itemView.findViewById(R.id.iv_edit);
+            saveButton = (ImageButton)itemView.findViewById(R.id.iv_save);
+            isEdit = false;
             Log.d(TAG, "Context is " + context.getClass().getName());
         }
 
@@ -102,6 +118,7 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
             if(context.getClass().getName().equals(StudentsActivity.class.getName())) {
                 Log.d(TAG, "Yes it is son, yes it is.");
                 deleteButton.setVisibility(View.INVISIBLE);
+                editButton.setVisibility(View.INVISIBLE);
             } else {
                 deleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -125,7 +142,65 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
 
                     }
                 });
+
+                saveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(context, R.string.editSave, Toast.LENGTH_SHORT).show();
+
+                        //update details
+                        tutorial.setName(name.getText().toString());
+                        tutorial.setTimeSlot(time.getText().toString());
+                        tutorial.setLocation(place.getText().toString());
+                        tutorialQueries.updateTutorial(tutorial);
+
+                        name.setInputType(InputType.TYPE_NULL);
+                        time.setInputType(InputType.TYPE_NULL);
+                        place.setInputType(InputType.TYPE_NULL);
+
+
+                        editButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_mode_edit_black_36dp));
+                        saveButton.setVisibility(View.INVISIBLE);
+                        isEdit = false;
+                        onTutorialUpdateListener.onTutorialUpdate(tutorial);
+                    }
+                });
+
+                editButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!isEdit) {
+                            Toast.makeText(context, R.string.editStart, Toast.LENGTH_SHORT).show();
+
+                            name.setInputType(InputType.TYPE_CLASS_TEXT);
+                            time.setInputType(InputType.TYPE_CLASS_TEXT);
+                            place.setInputType(InputType.TYPE_CLASS_TEXT);
+                            editButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_clear_black_36dp));
+                            saveButton.setVisibility(View.VISIBLE);
+
+                            isEdit = true;
+                        } else {
+                            Toast.makeText(context, R.string.editCancel, Toast.LENGTH_SHORT).show();
+
+                            name.setText(tutorial.getName());
+                            time.setText(tutorial.getTimeSlot());
+                            place.setText(tutorial.getLocation());
+                            name.setInputType(InputType.TYPE_NULL);
+                            time.setInputType(InputType.TYPE_NULL);
+                            place.setInputType(InputType.TYPE_NULL);
+
+
+
+                            editButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_mode_edit_black_36dp));
+                            saveButton.setVisibility(View.INVISIBLE);
+                            isEdit = false;
+                        }
+                    }
+                });
+
             }
+
+
 
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override

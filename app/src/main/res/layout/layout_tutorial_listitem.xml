@@ -12,70 +12,123 @@
 
 
 
-    <TextView
-        android:id="@+id/tv_tutorialName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
-
-    <TextView
-        android:id="@+id/tv_tutorialTime"
-        android:layout_below="@id/tv_tutorialName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/tutorialListOther"
-        android:text="time"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-
-    <TextView
-        android:id="@+id/tv_tutorialLocation"
-        android:layout_toRightOf="@+id/tv_tutorialTime"
-        android:layout_below="@+id/tv_tutorialName"
-        android:layout_marginLeft="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/tutorialListOther"
-        android:text="place"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-    <TextView
-        android:id="@+id/tv_term"
-        android:layout_below="@id/tv_tutorialLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        android:text="term"/>
-
-    <ImageButton
-        android:id="@+id/ib_delete"
+    <ImageView
+        android:id="@+id/iv_pop"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_alignParentRight="true"
+        android:layout_marginRight="6dp"
         android:layout_centerVertical="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_delete_forever_black_24dp"
-        android:background="@android:color/transparent"/>
+        android:src="@drawable/ic_person_black_24dp_2x"/>
 
     <TextView
         android:id="@+id/tv_pop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/ib_delete"
+        android:layout_marginRight="12dp"
+        android:layout_toRightOf="@id/iv_pop"
         android:layout_centerVertical="true"
         android:textSize="@dimen/tutorialListName"
         android:text="12"
         android:alpha="0.5"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"/>
 
-    <ImageView
-        android:id="@+id/iv_pop"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_name"
+        android:layout_below="@id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_pop">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tv_tutorialName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_pop"
+            android:text="name"
+            android:editable="false"
+            android:hint="@string/name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/til_name"
+        android:layout_toRightOf="@id/tv_pop">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/tv_tutorialTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/tutorialListOther"
+                android:text="time"
+                android:editable="false"
+                android:hint="@string/timeSlot"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/til_time"
+        android:layout_below="@+id/til_name"
+        android:layout_marginLeft="20dp"
+        >
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/tv_tutorialLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/tutorialListOther"
+                android:text="place"
+                android:editable="false"
+                android:hint="@string/location"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_term"
+        android:layout_below="@id/til_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_pop"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:text="term"/>
+
+    <ImageButton
+        android:id="@+id/iv_edit"
+        android:layout_width="@dimen/smallButtonSize"
+        android:layout_height="@dimen/smallButtonSize"
+        android:layout_toLeftOf="@id/iv_save"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_mode_edit_black_36dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"/>
+    <ImageButton
+        android:id="@+id/iv_save"
+        android:layout_width="@dimen/smallButtonSize"
+        android:layout_height="@dimen/smallButtonSize"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_done_black_24dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:visibility="invisible"/>
+
+
+    <ImageButton
+        android:id="@+id/ib_delete"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_marginRight="6dp"
-        android:layout_toLeftOf="@id/tv_pop"
+        android:layout_marginRight="36dp"
+        android:layout_toLeftOf="@id/iv_edit"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_person_black_24dp_2x"/>
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_delete_forever_black_24dp"
+        android:background="@android:color/transparent"/>
+
+
 
 
 </RelativeLayout>

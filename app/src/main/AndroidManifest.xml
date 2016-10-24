@@ -32,7 +32,8 @@
             android:name=".view.NewStudentActivity"
             android:theme="@android:style/Theme.Holo.Dialog" />
         <activity android:name=".view.BaseActivity" />
-        <activity android:name=".view.StudentsActivity" />
+        <!--windowSoftInputMode fixes issue where keyboard instantly disappears when it slides over the edittext-->
+        <activity android:name=".view.StudentsActivity" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".view.NavDrawer.DrawerActivity" />
         <activity android:name=".view.Assessment.AssessmentsActivity" />
     </application>

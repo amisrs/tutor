@@ -7,5 +7,6 @@
 
     <dimen name="tableRowHeight">36dp</dimen>
     <dimen name="tableColumnWidth">120dp</dimen>
+    <dimen name="smallButtonSize">36dp</dimen>
 
 </resources>

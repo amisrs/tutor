@@ -47,6 +47,10 @@
     <string name="openDrawer">Drawer Open</string>
     <string name="closeDrawer">Drawer Close</string>
 
+    <string name="editStart">Editing enabled!</string>
+    <string name="editCancel">Changes discarded!</string>
+    <string name="editSave">Changes saved!</string>
+
 
     <!--
         BUTTONS

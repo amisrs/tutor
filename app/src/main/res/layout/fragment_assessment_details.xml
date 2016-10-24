@@ -25,8 +25,8 @@
         android:id="@+id/ib_delete"
         android:layout_marginTop="22dp"
 
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/smallButtonSize"
+        android:layout_height="@dimen/smallButtonSize"
         android:layout_marginRight="24dp"
         android:layout_alignParentRight="true"
         android:scaleType="fitXY"
@@ -47,8 +47,8 @@
         android:background="@android:color/transparent"/>
     <ImageButton
         android:id="@+id/iv_save"
-        android:layout_width="@dimen/tutorialListName"
-        android:layout_height="@dimen/tutorialListName"
+        android:layout_width="@dimen/smallButtonSize"
+        android:layout_height="@dimen/smallButtonSize"
         android:layout_marginTop="22dp"
         android:layout_toRightOf="@id/iv_edit"
         android:src="@drawable/ic_done_black_24dp"
