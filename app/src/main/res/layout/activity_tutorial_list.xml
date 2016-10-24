@@ -71,7 +71,6 @@
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
         android:layout_gravity="bottom|right"
         android:clickable="true"
         android:src="@drawable/ic_add_white_24dp"
@@ -80,14 +79,7 @@
         app:pressedTranslationZ="@dimen/pressTranslationZ"
         app:fabSize="normal"/>
     </FrameLayout>
-=======
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:clickable="true"
-        android:src="@drawable/ic_add_white_24dp"
-        app:layout_anchor="@id/rl_bottom"
-        app:layout_anchorGravity="bottom|right|end" />
->>>>>>> a7ef165f92399f95e3f49289bb2e13249a081b90
+
 
 </RelativeLayout>
 

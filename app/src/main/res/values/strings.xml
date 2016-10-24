@@ -33,12 +33,10 @@
     <string name="deleteAssessmentMsg">Delete this assessment?</string>
 
     <string name="grade">Grade</string>
-<<<<<<< HEAD
+
 
     <string name="student">Students</string>
     <string name="tutorial">Tutorials</string>
-=======
-    <string name="tutorial">Tutorial</string>
 
     <string name="stats">Statistics</string>
     <string name="mean">Mean</string>
@@ -50,7 +48,6 @@
     <string name="distributionChart">Distribution</string>
     <string name="allMarksChart">All Students</string>
 
->>>>>>> a7ef165f92399f95e3f49289bb2e13249a081b90
     <string name="attendance">Attendance</string>
     <string name="assessment">Assessments</string>
 
