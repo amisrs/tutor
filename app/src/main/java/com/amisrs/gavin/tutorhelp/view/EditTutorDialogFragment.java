@@ -257,8 +257,6 @@ public class EditTutorDialogFragment extends DialogFragment {
             fileOutputStream.write(DbBitmapUtility.getBytes(bitmap));
             fileOutputStream.flush();
             imgPath = imgFilePath + "/" + fileName;
-            //TODO: delete the test line below
-            System.out.println("imgPath = " + imgPath);
 
             PersonQueries personQueries = new PersonQueries(getContext());
             personQueries.addImageFilePathForPerson(tutorParam.getPersonID(), imgPath);
@@ -275,7 +273,6 @@ public class EditTutorDialogFragment extends DialogFragment {
             }
         }
         Log.d(TAG, "File path is saved to DB");
-        System.out.println(tutorParam.getPerson().getProfilePath());
         return imgFilePath;
 
     }

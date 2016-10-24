@@ -1,13 +1,9 @@
 package com.amisrs.gavin.tutorhelp.view;
 
-import android.content.Intent;
-import android.net.Uri;
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,8 +28,6 @@ import java.util.ArrayList;
 public class TutorialListActivity extends DrawerActivity implements NewTutorialDialogFragment.OnFragmentInteractionListener,
         NewTutorialDialogFragment.NewTutorialDialogFragmentListener, OnDeleteListener, OnTutorialUpdateListener {
 
-
-    //TODO: update student number, better layout
     private static final String TAG = "TutorialListActivity";
     RecyclerView recycler;
     LinearLayoutManager layoutManager;
@@ -92,10 +86,6 @@ public class TutorialListActivity extends DrawerActivity implements NewTutorialD
     }
 
     public void addTutorial() {
-       /* Intent intent = new Intent(this,NewTutorialActivity.class);
-        intent.putExtra("tutor", theTutor);
-        startActivity(intent);*/
-
         NewTutorialDialogFragment newTutorialDialog = NewTutorialDialogFragment.newInstance(theTutor);
         FragmentManager fragmentManager = getSupportFragmentManager();
         newTutorialDialog.show(fragmentManager, "dialog");

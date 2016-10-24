@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">Tuteon</string>
 
-    <string name="studentLabel">Student</string>
-    <string name="tutorLabel">Tutor</string>
-
     <string name="zid">zID</string>
     <string name="fname">First Name</string>
     <string name="lname">Last Name</string>
@@ -44,7 +41,6 @@
 
     <string name="stats">Statistics</string>
     <string name="mean">Mean</string>
-    <string name="distribution">Distribution</string>
 
     <string name="mark">Mark</string>
     <string name="count">Count</string>
@@ -87,10 +83,7 @@
     <string name="update">Update</string>
 
     <string name="attended">Attended</string>
-    <string name="notAttended">Not Attended</string>
-    <string name="graph">Grades</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 
 import android.provider.MediaStore;
@@ -27,8 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
-
-import android.widget.EditText;
 import android.widget.ImageButton;
 
 import android.widget.RelativeLayout;
@@ -51,10 +48,8 @@ import com.amisrs.gavin.tutorhelp.model.StudentWeek;
 
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.other.DbBitmapUtility;
-import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
 import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -264,7 +259,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         emailTextView.setText(studentParam.getPerson().getEmail());
         gradeText.setText(String.valueOf(enrolment.getGrade()));
 
-        //zid = String.valueOf(studentParam.getPerson().getzID());
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -386,7 +381,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         }
     }
 
-    //http://stackoverflow.com/questions/28450049/how-get-result-from-onactivityresult-in-fragment
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("actResult is called");
@@ -422,11 +417,10 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
     }
 
 
-    //http://stackoverflow.com/questions/23131768/how-to-save-an-image-to-internal-storage-and-then-show-it-on-another-activity?noredirect=1&lq=1
+
     private String getImagePath(Bitmap bitmap) {
         FileOutputStream fileOutputStream = null;
         String imgFilePath = getContext().getFilesDir().toString();
-        //TODO : handle for case of null
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmss");
         Date now = new Date();
         String strDate = sdfDate.format(now);
@@ -438,8 +432,6 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
             fileOutputStream.write(DbBitmapUtility.getBytes(bitmap));
             fileOutputStream.flush();
             imgPath = imgFilePath + "/" + fileName;
-            //TODO: delete the test line below
-            System.out.println("imgPath = " + imgPath);
 
             PersonQueries personQueries = new PersonQueries(getContext());
             personQueries.addImageFilePathForPerson(studentParam.getPersonID(), imgPath);
@@ -456,7 +448,6 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
             }
         }
         Log.d(TAG, "File path is saved to DB");
-        System.out.println(studentParam.getPerson().getProfilePath());
         return imgFilePath;
 
     }

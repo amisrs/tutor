@@ -2,8 +2,6 @@ package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
@@ -13,18 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amisrs.gavin.tutorhelp.R;
-import com.amisrs.gavin.tutorhelp.db.PersonQueries;
 import com.amisrs.gavin.tutorhelp.db.WeekQueries;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.StudentWeek;
@@ -142,7 +135,11 @@ public class StudentWeekDetailsFragment extends Fragment {
             isEmpty = false;
             emailButton.setVisibility(View.VISIBLE);
         }
-        https://code.tutsplus.com/tutorials/quick-tip-enabling-users-to-send-email-from-your-android-applications-the-easy-way--mobile-1686
+
+        /*
+        * The following resource was referenced -
+        * https://code.tutsplus.com/tutorials/quick-tip-enabling-users-to-send-email-from-your-android-applications-the-easy-way--mobile-1686
+        */
         emailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,6 +154,8 @@ public class StudentWeekDetailsFragment extends Fragment {
                 startActivity(intent.createChooser(intent, "Send email in: "));
             }
         });
+
+
         //TODO: add in ui elements to manipulate and save to this studentWeek
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

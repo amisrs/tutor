@@ -18,8 +18,6 @@ import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 /**
@@ -80,8 +78,11 @@ public class StudentListFragment extends Fragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.rv_students);
         noneTextView = (TextView)view.findViewById(R.id.tv_none);
         recyclerView.setLayoutManager(linearLayoutManager);
+        /*
+        * The following resource was referenced -
+        * http://stackoverflow.com/questions/31242812/how-can-a-divider-line-be-added-in-an-android-recyclerview
+        */
 
-        //http://stackoverflow.com/questions/31242812/how-can-a-divider-line-be-added-in-an-android-recyclerview
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
 
         TutorialQueries tutorialQueries = new TutorialQueries(getContext());

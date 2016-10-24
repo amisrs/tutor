@@ -8,15 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,12 +24,9 @@ import android.widget.ImageView;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.db.PersonQueries;
-import com.amisrs.gavin.tutorhelp.db.StudentQueries;
 import com.amisrs.gavin.tutorhelp.db.TutorQueries;
 import com.amisrs.gavin.tutorhelp.model.Person;
-import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
-import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.other.DbBitmapUtility;
 
 import java.io.FileNotFoundException;
@@ -57,7 +51,6 @@ public class NewTutorDialogFragment extends DialogFragment {
     private static final String TAG = "NewTutorDialogFragment";
     private ImageView profilePic;
     private ImageButton captureButton;
-    // private Button btn;
     private String fileName;
     private String[] permissions = new String[]{Manifest.permission.CAMERA};
     private static final int CAMERA_PERMISSION_CODE = 1;
@@ -106,7 +99,6 @@ public class NewTutorDialogFragment extends DialogFragment {
         }
 
 
-
     }
 
     @Override
@@ -117,7 +109,6 @@ public class NewTutorDialogFragment extends DialogFragment {
 
         return view;
     }
-
 
 
     @NonNull
@@ -134,7 +125,7 @@ public class NewTutorDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 System.out.println("capture btn clicked");
 
-                if (checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                if (checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(permissions, CAMERA_PERMISSION_CODE);
                 } else {
                     takePicture();
@@ -173,10 +164,10 @@ public class NewTutorDialogFragment extends DialogFragment {
 
     //http://stackoverflow.com/questions/28450049/how-get-result-from-onactivityresult-in-fragment
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("actResult is called");
-        super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode == REQUEST_CODE){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
             switch (resultCode) {
                 case Activity.RESULT_OK:
                     photo = (Bitmap) data.getExtras().get("data");
@@ -208,32 +199,33 @@ public class NewTutorDialogFragment extends DialogFragment {
         }
     }
 
-
-
-    //http://stackoverflow.com/questions/23131768/how-to-save-an-image-to-internal-storage-and-then-show-it-on-another-activity?noredirect=1&lq=1
-    private String saveImagePath(Bitmap bitmap){
+/*
+* The following resources was used for this method
+* http://stackoverflow.com/questions/23131768/how-to-save-an-image-to-internal-storage-and-then-show-it-on-another-activity?noredirect=1&lq=1
+*/
+    private String saveImagePath(Bitmap bitmap) {
         FileOutputStream fileOutputStream = null;
         String imgFilePath = getContext().getFilesDir().toString();
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmss");
         Date now = new Date();
         String strDate = sdfDate.format(now);
-        fileName = strDate +"_tutor.PNG";
-        try{
+        fileName = strDate + "_tutor.PNG";
+        try {
             fileOutputStream = getContext().openFileOutput(fileName, Context.MODE_PRIVATE);
             fileOutputStream.write(DbBitmapUtility.getBytes(bitmap));
             fileOutputStream.flush();
-            imgPath = imgFilePath+"/" + fileName;
+            imgPath = imgFilePath + "/" + fileName;
             //TODO: delete the test line below
             System.out.println("imgPath = " + imgPath);
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try{
+            try {
                 fileOutputStream.close();
                 Log.d(TAG, "FileOutputStream is closed successfully");
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -249,7 +241,7 @@ public class NewTutorDialogFragment extends DialogFragment {
         fname = (TextInputEditText) dialog.findViewById(R.id.et_fname);
         lname = (TextInputEditText) dialog.findViewById(R.id.et_lname);
         email = (TextInputEditText) dialog.findViewById(R.id.et_email);
-        if(imgTaken) {
+        if (imgTaken) {
             saveImagePath(photo);
         }
 
@@ -270,7 +262,7 @@ public class NewTutorDialogFragment extends DialogFragment {
 
             //add to database
             PersonQueries personQueries = new PersonQueries(getContext());
-            Person addedPerson = personQueries.addPerson(new Person(fnameString, lnameString, zidInt, profilePath , emailString));
+            Person addedPerson = personQueries.addPerson(new Person(fnameString, lnameString, zidInt, profilePath, emailString));
 
             TutorQueries tutorQueries = new TutorQueries(getContext());
             tutorQueries.addTutor(new Tutor(addedPerson.getPersonID(), addedPerson));

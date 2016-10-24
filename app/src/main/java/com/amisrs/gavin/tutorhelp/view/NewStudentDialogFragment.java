@@ -8,23 +8,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -62,7 +56,6 @@ public class NewStudentDialogFragment extends DialogFragment {
 
     private ImageView profilePic;
     private ImageButton captureButton;
-    // private Button btn;
     private String fileName;
     private String[] permissions = new String[]{Manifest.permission.CAMERA};
     private static final int CAMERA_PERMISSION_CODE = 1;
@@ -70,7 +63,6 @@ public class NewStudentDialogFragment extends DialogFragment {
     private String imgPath = "default.png";
     Bitmap photo;
     Boolean imgTaken = false;
-    Boolean isInt = true;
 
     TextInputEditText zid;
     TextInputEditText fname;
@@ -139,6 +131,7 @@ public class NewStudentDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 System.out.println("capture btn clicked");
+                //request for permission
                 if (checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(permissions, CAMERA_PERMISSION_CODE);
                 } else {
@@ -214,11 +207,14 @@ public class NewStudentDialogFragment extends DialogFragment {
     }
 
 
-    //http://stackoverflow.com/questions/23131768/how-to-save-an-image-to-internal-storage-and-then-show-it-on-another-activity?noredirect=1&lq=1
+    /*
+    * The following resources was used for this method
+    *  http://stackoverflow.com/questions/23131768/how-to-save-an-image-to-internal-storage-and-then-show-it-on-another-activity?noredirect=1&lq=1
+    */
     private String saveImagePath(Bitmap bitmap) {
         FileOutputStream fileOutputStream = null;
         String imgFilePath = getContext().getFilesDir().toString();
-        //TODO : handle for case of null
+
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmss");
         Date now = new Date();
         String strDate = sdfDate.format(now);
@@ -228,8 +224,6 @@ public class NewStudentDialogFragment extends DialogFragment {
             fileOutputStream.write(DbBitmapUtility.getBytes(bitmap));
             fileOutputStream.flush();
             imgPath = imgFilePath + "/" + fileName;
-            //TODO: delete the test line below
-            System.out.println("imgPath = " + imgPath);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -250,7 +244,6 @@ public class NewStudentDialogFragment extends DialogFragment {
 
     public void positivePress() {
         Dialog dialog = getDialog();
-        //loadCamera(dialog);
         zid = (TextInputEditText) dialog.findViewById(R.id.et_student_zid);
         fname = (TextInputEditText) dialog.findViewById(R.id.et_student_fname);
         lname = (TextInputEditText) dialog.findViewById(R.id.et_student_lname);
@@ -272,8 +265,7 @@ public class NewStudentDialogFragment extends DialogFragment {
             final int zidInt = Integer.parseInt(zid.getText().toString());
             String emailString = email.getText().toString();
             String profilePath = imgPath;
-            System.out.println("imgPath = " + imgPath);
-//TODO: add in image path for camera
+
             PersonQueries personQueries = new PersonQueries(getContext());
             Person addedPerson = personQueries.addPerson(new Person(fnameString, lnameString, zidInt, profilePath, emailString));
 

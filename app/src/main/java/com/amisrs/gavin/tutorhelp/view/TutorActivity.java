@@ -3,11 +3,7 @@ package com.amisrs.gavin.tutorhelp.view;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
-import android.media.Image;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -25,18 +21,11 @@ import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.controller.LoadMoodleAsyncTask;
 import com.amisrs.gavin.tutorhelp.controller.OnLoadListener;
 import com.amisrs.gavin.tutorhelp.db.TutorQueries;
-import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.bumptech.glide.Glide;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.http.GET;
 
 public class TutorActivity extends AppCompatActivity implements NewTutorDialogFragment.OnFragmentInteractionListener,
         NewTutorDialogFragment.NewTutorDialogFragmentListener,
@@ -111,14 +100,6 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
             }
         });
 
-        //might use EditText + password
-
-        //get arraylist of tutors from db
-
-        //test tutor
-//        Person testperson = new Person("Gavin", "Chiem", 5062206);
-//        Tutor test = new Tutor(5,testperson);
-//        tutorList.add(test);
         refreshTutorSpinner();
     }
 
