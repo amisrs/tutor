@@ -167,9 +167,6 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         final TextInputEditText emailTextView = (TextInputEditText) view.findViewById(R.id.tv_email);
         profile = (ImageView) view.findViewById(R.id.iv_pic);
         captureButton = (ImageButton) view.findViewById(R.id.btn_camera_capture);
-
-
-        captureButton = (ImageButton) view.findViewById(R.id.btn_camera_capture);
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -301,6 +298,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
 
                 editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
                 saveButton.setVisibility(View.INVISIBLE);
+                captureButton.setVisibility(View.INVISIBLE);
                 isEdit = false;
                 onButtonPressed("student details saved");
                 onButtonPressed("save");

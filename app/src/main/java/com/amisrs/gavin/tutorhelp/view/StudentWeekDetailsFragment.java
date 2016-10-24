@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,8 @@ import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.StudentWeek;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.model.Week;
+import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
+import com.bumptech.glide.Glide;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,6 +103,14 @@ public class StudentWeekDetailsFragment extends Fragment {
         final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
         final ImageButton saveButton = (ImageButton) view.findViewById(R.id.iv_save);
         final ImageButton emailButton = (ImageButton) view.findViewById(R.id.emailBtn);
+        final ImageView profile = (ImageView) view.findViewById(R.id.iv_profile);
+        final TextView idText = (TextView) view.findViewById(R.id.tv_zid);
+
+        Glide.with(getContext())
+                .load(studentParam.getPerson().getProfilePath())
+                .asBitmap()
+                .transform(new ProfileCircle(getContext()))
+                .into(profile);
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -109,7 +120,8 @@ public class StudentWeekDetailsFragment extends Fragment {
         });
 
         weekText.setText(weekParam.toString());
-        studentText.setText(studentParam.toString());
+        studentText.setText(studentParam.getPerson().getFirstName() + " " + studentParam.getPerson().getLastName());
+        idText.setText("z" + String.valueOf(studentParam.getPerson().getzID()));
         final WeekQueries weekQueries = new WeekQueries(getContext());
         studentWeek = weekQueries.getStudentWeekForWeekAndStudentAndTutorial(weekParam, studentParam, tutorialParam);
         Log.d(TAG, "the current student week public comment; " + studentWeek.getPublicComment());
