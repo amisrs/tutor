@@ -134,9 +134,6 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
     }
 
     public void createNewTutor() {
-        /*Intent intent = new Intent(this, NewTutorActivity.class);
-        startActivity(intent);*/
-//TODO: currently working on this
         NewTutorDialogFragment ntdf = NewTutorDialogFragment.newInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
         ntdf.show(fragmentManager, "dialog");

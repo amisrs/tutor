@@ -110,6 +110,7 @@ public class StudentWeekDetailsFragment extends Fragment {
                 .load(studentParam.getPerson().getProfilePath())
                 .asBitmap()
                 .transform(new ProfileCircle(getContext()))
+                .placeholder(R.drawable.ic_default)
                 .into(profile);
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

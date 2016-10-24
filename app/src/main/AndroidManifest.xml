@@ -25,11 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.TutorialListActivity" />
-        <activity android:name=".view.NewTutorActivity" />
         <activity android:name=".view.NewTutorialActivity" />
-        <activity
-            android:name=".view.NewStudentActivity"
-            android:theme="@android:style/Theme.Holo.Dialog" />
         <activity android:name=".view.BaseActivity" />
         <!-- windowSoftInputMode fixes issue where keyboard instantly disappears when it slides over the edittext -->
         <activity

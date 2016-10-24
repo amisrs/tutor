@@ -178,12 +178,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
     }
 
-    //TODO method below to be deleted if not used
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_options, menu);
-        return true;
-    }
 
     /*
     * This method prepares the navigation drawer to handle open, close and item selections.

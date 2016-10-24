@@ -1,5 +1,0 @@
-<resources>
-    <declare-styleable name="StudentWeekSquare">
-        <attr name="drawable" format="color|reference" />
-    </declare-styleable>
-</resources>

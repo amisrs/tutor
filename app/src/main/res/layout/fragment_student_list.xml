@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.amisrs.gavin.tutorhelp.view.StudentListFragment">
-
+<!--TODO is this even used??-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_students"
         android:layout_width="match_parent"
