@@ -124,6 +124,27 @@ public class NewTutorialDialogFragment extends DialogFragment {
         semSp.setAdapter(semAdapter);
 
 
+/*
+
+
+        semSp = (Spinner) view.findViewById(R.id.sp_sem);
+        yearSp = (Spinner) view.findViewById(R.id.sp_year);
+
+        ArrayList<String> years = new ArrayList<>();
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+        for(int i=currentYear; i<currentYear+5; i++) {
+            years.add(String.valueOf(i));
+        }
+        ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, years);
+        yearSp.setAdapter(yearAdapter);
+
+        ArrayList<String> sems = new ArrayList<>();
+        sems.add(getString(R.string.S1));
+        sems.add(getString(R.string.S2));
+        sems.add(getString(R.string.ST));
+        ArrayAdapter<String> semAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, sems);
+        semSp.setAdapter(semAdapter);
+*/
 
      /*   createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,8 +153,7 @@ public class NewTutorialDialogFragment extends DialogFragment {
             }
         });*/
 
-        builder
-                .setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.d("aa", "create");

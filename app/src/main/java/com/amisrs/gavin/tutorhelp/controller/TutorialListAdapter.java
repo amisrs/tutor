@@ -24,7 +24,8 @@ import com.amisrs.gavin.tutorhelp.db.PersonQueries;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
-import com.amisrs.gavin.tutorhelp.view.MenuActivity;
+import com.amisrs.gavin.tutorhelp.view.BaseActivity;
+
 import com.amisrs.gavin.tutorhelp.view.StudentDetailsFragment;
 import com.amisrs.gavin.tutorhelp.view.StudentsActivity;
 
@@ -38,12 +39,16 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
     ArrayList<Tutorial> tutorials;
     Context context;
     OnDeleteListener onDeleteListener;
+
+    Tutor tutor;
+
     OnTutorialUpdateListener onTutorialUpdateListener;
 
 
 
-    public TutorialListAdapter(Context context) {
+    public TutorialListAdapter(Context context, Tutor tutor) {
         this.context = context;
+        this.tutor = tutor;
     }
 
     public void giveList(ArrayList<Tutorial> list) {
@@ -61,7 +66,7 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
     @Override
     public void onBindViewHolder(TutorialViewHolder holder, int position) {
         Tutorial currentTutorial = tutorials.get(position);
-        holder.bindTutorial(currentTutorial);
+        holder.bindTutorial(currentTutorial, tutor);
     }
 
     @Override
@@ -102,7 +107,7 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
             Log.d(TAG, "Context is " + context.getClass().getName());
         }
 
-        public void bindTutorial(final Tutorial tutorial) {
+        public void bindTutorial(final Tutorial tutorial, final Tutor tutor) {
 
             name.setText(tutorial.getName());
             time.setText(tutorial.getTimeSlot());
@@ -206,9 +211,9 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
                 @Override
                 public void onClick(View view) {
                     Activity activity = (Activity)view.getContext();
-                    Intent intent = new Intent(activity, MenuActivity.class);
+                    Intent intent = new Intent(activity, BaseActivity.class);
                     Log.d(TAG, "Putting intent extra tutorial: " + tutorial.getName());
-                    //TODO - need to pass tutor
+                    intent.putExtra("tutor", tutor);
                     intent.putExtra("tutorial", tutorial);
                     activity.startActivity(intent);
                 }

@@ -25,8 +25,9 @@ public class AttendanceFragment extends Fragment {
     // TODO: delete?
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_TUTORIAL = "tutorial";
-
+    private static final String ARG_TUTOR = "tutpr";
     private Tutorial tutorialParam;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -45,6 +46,7 @@ public class AttendanceFragment extends Fragment {
         AttendanceFragment fragment = new AttendanceFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_TUTORIAL, tutorial);
+        /*args.putParcelable(ARG_TUTOR, tutor);*/
         fragment.setArguments(args);
         return fragment;
     }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.amisrs.gavin.tutorhelp">
+
+<<<<<<< HEAD
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+=======
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+
+>>>>>>> e2f65ac8e824cba3b0fc3af2777aa80163dd94e6
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat">
+
+        <!-- <activity android:name=".view.AttendanceActivity" /> -->
+        <activity android:name=".view.TutorActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.TutorialListActivity" />
+        <activity android:name=".view.NewTutorActivity" />
+        <activity android:name=".view.MenuActivity" />
+        <activity android:name=".view.NewTutorialActivity" />
+        <activity
+            android:name=".view.NewStudentActivity"
+            android:theme="@android:style/Theme.Holo.Dialog" />
+        <activity android:name=".view.BaseActivity" />
+        <activity android:name=".view.StudentsActivity" />
+        <activity android:name=".view.NavDrawer.DrawerActivity" />
+        <activity android:name=".view.Assessment.AssessmentsActivity" />
+    </application>
+
+</manifest>

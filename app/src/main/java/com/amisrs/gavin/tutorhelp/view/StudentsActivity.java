@@ -37,12 +37,14 @@ import com.amisrs.gavin.tutorhelp.db.StudentQueries;
 import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.amisrs.gavin.tutorhelp.view.NavDrawer.DrawerActivity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StudentsActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener,
+public class StudentsActivity extends DrawerActivity implements StudentListFragment.OnFragmentInteractionListener,
         OnItemClickListener,
         NewStudentDialogFragment.OnFragmentInteractionListener,
         NewStudentDialogFragment.NewStudentDialogFragmentListener,
@@ -61,26 +63,29 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
     private static final int REQUEST_CODE = 100;
     private String imgPath = "default.png";
 
-    TextInputEditText zid;
-    TextInputEditText fname;
-    TextInputEditText lname;
-    TextInputEditText email;
+    private TextInputEditText zid;
+    private TextInputEditText fname;
+    private TextInputEditText lname;
+    private TextInputEditText email;
 
     //private static final String TAG = "AssessmentsActivity";
     private Student currentStudent;
 
-
-    Tutorial tutorial;
-    FloatingActionButton floatingActionButton;
+    private Tutor tutor;
+    private Tutorial tutorial;
+    private FloatingActionButton floatingActionButton;
+    private String overrideBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students);
 
+        tutor = getIntent().getParcelableExtra("tutor");
         tutorial = getIntent().getParcelableExtra("tutorial");
-
-        floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_add_student);
+        overrideBack = getIntent().getExtras().getString("fromAttendance");
+        System.out.println(TAG + " " + overrideBack);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab_add_student);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,7 +118,7 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
         Log.d(TAG, "Swapping details fragment to student: " + student.toString());
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.rl_right, StudentDetailsFragment.newInstance(student, tutorial), RIGHT_TAG);
+        fragmentTransaction.replace(R.id.rl_right, StudentDetailsFragment.newInstance(student, tutorial, tutor), RIGHT_TAG);
         fragmentTransaction.commit();
     }
 
@@ -138,7 +143,7 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
 
     @Override
     public void onFragmentInteraction(String name) {
-        if(name.equals("save")) {
+        if (name.equals("save")) {
             refreshStudentList();
             //changeStudent(currentStudent);
         }
@@ -180,5 +185,18 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
         fragmentTransaction.remove(fragment);
         fragmentTransaction.commit();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //override back button press if activity is started from BaseActivity
+
+        if (overrideBack != null) {
+            Intent intent = new Intent(this, TutorialListActivity.class);
+            intent.putExtra("tutor", tutor);
+            startActivity(intent);
+            finish();
+        }
+        super.onBackPressed();
     }
 }
