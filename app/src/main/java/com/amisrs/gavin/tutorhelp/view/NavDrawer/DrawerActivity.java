@@ -3,6 +3,8 @@ package com.amisrs.gavin.tutorhelp.view.NavDrawer;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
@@ -28,6 +30,7 @@ import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
 import com.amisrs.gavin.tutorhelp.view.Assessment.AssessmentsActivity;
 import com.amisrs.gavin.tutorhelp.view.BaseActivity;
+import com.amisrs.gavin.tutorhelp.view.EditTutorDialogFragment;
 import com.amisrs.gavin.tutorhelp.view.GraphActivity;
 import com.amisrs.gavin.tutorhelp.view.StudentsActivity;
 import com.amisrs.gavin.tutorhelp.view.TutorActivity;
@@ -37,7 +40,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 
 //http://stackoverflow.com/questions/36095691/android-navigationdrawer-multiple-activities-same-menu
-public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EditTutorDialogFragment.OnFragmentInteractionListener {
     private static final String TAG = "DrawerActivity";
     DrawerLayout drawerLayout;
     FrameLayout activityContainer;
@@ -260,6 +263,12 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 graphIntent.putExtra("tutor", tutor);
                 startActivity(graphIntent);
                 return true;
+
+            case R.id.nd_editTutor:
+                navItemIndex = 6;
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                EditTutorDialogFragment etdf = EditTutorDialogFragment.newInstance(tutor);
+                etdf.show(fragmentManager, "dialog");
         }
 
         return super.onOptionsItemSelected(menuItem);
@@ -271,5 +280,10 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
     public void setTutorName(TextView tutorName) {
         this.tutorName = tutorName;
+    }
+
+    @Override
+    public void onFragmentInteraction(String name) {
+
     }
 }

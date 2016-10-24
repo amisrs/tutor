@@ -15,6 +15,13 @@
             android:icon="@android:drawable/ic_btn_speak_now"
             android:title="Tutorial" />
     </group>
+
+    <group android:id="@+id/menuGrp3">
+        <item
+            android:id="@+id/nd_editTutor"
+            android:icon="@android:drawable/ic_btn_speak_now"
+            android:title="Edit Tutor"/>
+    </group>
    <!-- <group android:id="@+id/menuGrp3">
         <item
             android:id="@+id/nd_tutor"
