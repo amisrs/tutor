@@ -33,8 +33,17 @@
     <string name="deleteAssessmentMsg">Delete this assessment?</string>
 
     <string name="grade">Grade</string>
-
     <string name="tutorial">Tutorial</string>
+
+    <string name="stats">Statistics</string>
+    <string name="mean">Mean</string>
+    <string name="distribution">Distribution</string>
+
+    <string name="mark">Mark</string>
+    <string name="count">Count</string>
+
+    <string name="distributionChart">Distribution</string>
+    <string name="allMarksChart">All Students</string>
 
     <string name="attendance">Attendance</string>
     <string name="publicComment">Public Comment</string>

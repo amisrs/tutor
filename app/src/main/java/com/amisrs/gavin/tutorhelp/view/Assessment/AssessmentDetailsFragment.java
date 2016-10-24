@@ -10,11 +10,19 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.controller.OnDeleteListener;
@@ -25,10 +33,20 @@ import com.amisrs.gavin.tutorhelp.db.StudentQueries;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Assessment;
 import com.amisrs.gavin.tutorhelp.model.Enrolment;
+import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +59,7 @@ import java.util.ArrayList;
 public class AssessmentDetailsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String TAG = "AssessmentDetailsFrag";
     private static final String ARG_ASSESSMENT = "assessment";
 
     // TODO: Rename and change types of parameters
@@ -89,6 +108,7 @@ public class AssessmentDetailsFragment extends Fragment {
         final TextInputEditText weightText = (TextInputEditText) view.findViewById(R.id.et_weighting);
         final TextInputEditText markText = (TextInputEditText) view.findViewById(R.id.et_maxmark);
 
+        TextView meanText = (TextView) view.findViewById(R.id.tv_mean);
 
         final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
         final ImageButton saveButton = (ImageButton) view.findViewById(R.id.iv_save);
@@ -139,7 +159,7 @@ public class AssessmentDetailsFragment extends Fragment {
                         Integer.parseInt(markText.getText().toString())));
 
                 editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
-                saveButton.setVisibility(View.GONE);
+                saveButton.setVisibility(View.INVISIBLE);
 
                 nameText.setInputType(InputType.TYPE_NULL);
                 descText.setInputType(InputType.TYPE_NULL);
@@ -177,11 +197,146 @@ public class AssessmentDetailsFragment extends Fragment {
                     markText.setInputType(InputType.TYPE_NULL);
 
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
-                    saveButton.setVisibility(View.GONE);
+                    saveButton.setVisibility(View.INVISIBLE);
                     isEdit = false;
                 }
             }
         });
+
+        //calculate
+        AssessmentQueries assessmentQueries = new AssessmentQueries(getContext());
+        ArrayList<Mark> marks = assessmentQueries.getAllMarksForAssessment(assessmentParam);
+        Collections.sort(marks);
+        Log.d(TAG, "Mark list length: " + marks.size());
+        //sum
+        double sum = 0;
+        int[][] markCount = new int[2][marks.size()];
+        int uniqueMarks = 0;
+
+        for(Mark m : marks) {
+            sum += (double)m.getMark();
+            boolean exists = false;
+            int i = 0;
+            for(i=0; i<markCount[0].length && !exists; i++) {
+                if(m.getMark() == markCount[0][i]) {
+                    exists = true;
+                }
+            }
+
+            if(exists) {
+                //add to count
+                Log.d(TAG, "Mark value of " + markCount[0][i-1] + " already exists; incrementing count");
+                markCount[1][i-1]++;
+                Log.d(TAG, "Count for this mark is now " + markCount[1][i-1]);
+            } else {
+                Log.d(TAG, "This mark does not exist yet " + m.getMark() + " so add it to list.");
+                markCount[0][uniqueMarks] = m.getMark();
+                markCount[1][uniqueMarks]++;
+                uniqueMarks++;
+            }
+        }
+
+        Log.d(TAG, "Sum of marks for assessment " + assessmentParam.getName() + " is " + sum);
+
+        double average = sum / (double)marks.size();
+        Log.d(TAG, "Average = " + average);
+        meanText.setText(String.valueOf(average));
+
+        TableLayout distTable = new TableLayout(getContext());
+
+        TableRow markRow = new TableRow(getContext());
+        TextView markRowLab = new TextView(getContext());
+        markRowLab.setText(getString(R.string.mark));
+        markRowLab.setPadding(0,0,6,0);
+        markRow.addView(markRowLab);
+
+        TableRow markCountRow = new TableRow(getContext());
+        TextView markCountLab = new TextView(getContext());
+        markCountLab.setText(getString(R.string.count));
+        markCountLab.setPadding(0,0,6,0);
+        markCountRow.addView(markCountLab);
+
+        for(int i=0; i<markCount[0].length; i++) {
+            if(markCount[1][i] != 0) {
+                TextView mark = new TextView(getContext());
+                mark.setText(String.valueOf(markCount[0][i]));
+                mark.setPadding(0,0,6,0);
+                markRow.addView(mark);
+            }
+        }
+
+        for(int i=0; i<markCount[1].length; i++) {
+            if(markCount[1][i] != 0) {
+                TextView mark = new TextView(getContext());
+                mark.setText(String.valueOf(markCount[1][i]));
+                mark.setPadding(0,0,6,0);
+                markCountRow.addView(mark);
+            }
+        }
+        distTable.addView(markRow);
+        distTable.addView(markCountRow);
+        RelativeLayout distLayout = (RelativeLayout) view.findViewById(R.id.rl_distribution);
+        distLayout.addView(distTable);
+
+        final RelativeLayout chartContainer = (RelativeLayout) view.findViewById(R.id.rl_chart);
+
+        //Distribution Chart
+        final BarChart distributionChart = new BarChart(getContext());
+        distributionChart.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        List<BarEntry> entries = new ArrayList<BarEntry>();
+        for(int i=0; i<markCount[0].length; i++) {
+            entries.add(new BarEntry(markCount[0][i], markCount[1][i]));
+        }
+        BarDataSet barDataSet = new BarDataSet(entries, getString(R.string.count));
+        BarData barData = new BarData(barDataSet);
+        distributionChart.setData(barData);
+
+        //All students chart
+        final BarChart allStudentsChart = new BarChart(getContext());
+        allStudentsChart.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        chartContainer.addView(allStudentsChart);
+        List<BarEntry> entriesForAll = new ArrayList<BarEntry>();
+        StudentQueries studentQueries = new StudentQueries(getContext());
+        for(Mark m : marks) {
+            Student student = studentQueries.getStudentById(m.getStudentID());
+            entriesForAll.add(new BarEntry(m.getStudentID(), m.getMark()));
+            Log.d(TAG, "Add new BarEntry for student " + m.getStudentID() + " and mark " + m.getMark());
+        }
+        LimitLine avg =  new LimitLine((float)average, getString(R.string.mean));
+        allStudentsChart.getAxisLeft().addLimitLine(avg);
+        BarDataSet allStudentsBarDataSet = new BarDataSet(entriesForAll, getString(R.string.mark));
+        BarData allStudentsBarData = new BarData(allStudentsBarDataSet);
+
+        allStudentsChart.setData(allStudentsBarData);
+
+        Spinner chartSpinner = (Spinner) view.findViewById(R.id.sp_chart);
+        ArrayList<String> chartNames = new ArrayList<>();
+        chartNames.add(getString(R.string.distributionChart));
+        chartNames.add(getString(R.string.allMarksChart));
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, chartNames);
+        chartSpinner.setAdapter(arrayAdapter);
+
+        chartSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(adapterView.getSelectedItem().equals(getString(R.string.distributionChart))) {
+                    chartContainer.removeAllViewsInLayout();
+                    chartContainer.addView(distributionChart);
+                    distributionChart.invalidate();
+                } else if (adapterView.getSelectedItem().equals(getString(R.string.allMarksChart))) {
+                    chartContainer.removeAllViewsInLayout();
+                    chartContainer.addView(allStudentsChart);
+                    allStudentsChart.invalidate();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
         return view;
     }

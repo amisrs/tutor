@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.amisrs.gavin.tutorhelp.model.Assessment;
+import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Student;
 
 import java.lang.reflect.Array;
@@ -198,5 +199,34 @@ public class AssessmentQueries extends QueryBase {
         close();
         Log.d(TAG, "Deleted assessment: " + assessment.getName());
 
+    }
+
+    public ArrayList<Mark> getAllMarksForAssessment(Assessment assessment) {
+        open();
+        String[] projection = {
+                DBContract.MarkTable.COLUMN_STUDENTID,
+                DBContract.MarkTable.COLUMN_ASSESSMENTID,
+                DBContract.MarkTable.COLUMN_MARK
+        };
+        String selection = DBContract.MarkTable.COLUMN_ASSESSMENTID + " = ?";
+        String[] selectionArgs = { String.valueOf(assessment.getAssessmentId())};
+
+        Cursor c = db.query(
+                DBContract.MarkTable.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        c.moveToFirst();
+        ArrayList<Mark> marks = new ArrayList<>();
+        while(!c.isAfterLast()) {
+            marks.add(new Mark(c.getInt(0), c.getInt(1), c.getInt(2)));
+            c.moveToNext();
+        }
+
+        return marks;
     }
 }

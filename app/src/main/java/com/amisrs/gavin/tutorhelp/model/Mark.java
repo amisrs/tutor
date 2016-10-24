@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by Gavin on 23/10/2016.
  */
 
-public class Mark implements Parcelable{
+public class Mark implements Parcelable, Comparable<Mark> {
     private static final Parcelable.Creator CREATOR = new MarkCreator();
     private int studentID;
     private int assessmentID;
@@ -60,6 +60,12 @@ public class Mark implements Parcelable{
         dest.writeInt(studentID);
         dest.writeInt(assessmentID);
         dest.writeInt(mark);
+    }
+
+    @Override
+    public int compareTo(Mark m) {
+        int compareMark = m.getMark();
+        return getMark() - compareMark;
     }
 
     static class MarkCreator implements Parcelable.Creator<Mark> {
