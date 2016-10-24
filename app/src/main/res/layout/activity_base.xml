@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:shrinkColumns=""
-    android:background="@android:color/transparent"
     tools:context="com.amisrs.gavin.tutorhelp.view.BaseActivity">
 
     <Spinner

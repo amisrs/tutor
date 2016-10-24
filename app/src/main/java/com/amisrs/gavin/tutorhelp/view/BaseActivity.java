@@ -1,6 +1,7 @@
 package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -47,7 +48,6 @@ public class BaseActivity extends DrawerActivity implements StudentListFragment.
         tutor = getIntent().getParcelableExtra("tutor");
         tutorial = getIntent().getParcelableExtra("tutorial");
 
-
             TutorialQueries tutorialQueries = new TutorialQueries(this);
         ArrayList<Student> students = tutorialQueries.getStudentsForTutorial(tutorial);
         if(students.size() < 1) {
@@ -66,6 +66,8 @@ public class BaseActivity extends DrawerActivity implements StudentListFragment.
             weeks = weekQueries.getAllWeeksForTutorial(tutorial);
 
             spinner = (Spinner) findViewById(R.id.sp_week);
+            spinner.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+
             ArrayAdapter<Week> arrayAdapter = new ArrayAdapter<Week>(this, android.R.layout.simple_spinner_item, weeks);
             spinner.setAdapter(arrayAdapter);
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

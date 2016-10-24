@@ -70,7 +70,7 @@
 
     <Spinner
         android:id="@+id/sp_year"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/til_location"
         android:layout_toRightOf="@id/sp_sem"

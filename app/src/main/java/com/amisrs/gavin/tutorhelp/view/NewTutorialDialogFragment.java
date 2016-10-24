@@ -3,6 +3,7 @@ package com.amisrs.gavin.tutorhelp.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -114,6 +115,8 @@ public class NewTutorialDialogFragment extends DialogFragment {
             years.add(String.valueOf(i));
         }
         ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, years);
+        yearSp.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+
         yearSp.setAdapter(yearAdapter);
 
         ArrayList<String> sems = new ArrayList<>();
@@ -121,6 +124,8 @@ public class NewTutorialDialogFragment extends DialogFragment {
         sems.add(getString(R.string.S2));
         sems.add(getString(R.string.ST));
         ArrayAdapter<String> semAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, sems);
+        semSp.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+
         semSp.setAdapter(semAdapter);
 
 

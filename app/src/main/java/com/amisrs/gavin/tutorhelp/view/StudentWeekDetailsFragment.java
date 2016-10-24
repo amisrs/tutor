@@ -2,6 +2,7 @@ package com.amisrs.gavin.tutorhelp.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -195,7 +196,6 @@ public class StudentWeekDetailsFragment extends Fragment {
                 }
             }
         });
-
 
         // Inflate the layout for this fragment
         return view;

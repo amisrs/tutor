@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -59,6 +60,8 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
         newButton = (Button) findViewById(R.id.btn_newTutor);
         deleteButton = (Button) findViewById(R.id.btn_deleteTutor);
         background = (ImageView) findViewById(R.id.iv_background);
+
+        tutorSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
 
         LoadMoodleAsyncTask asyncTask = new LoadMoodleAsyncTask(this);
         asyncTask.execute();
@@ -166,7 +169,7 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
     public void refreshTutorSpinner() {
         TutorQueries tutorQueries = new TutorQueries(this);
         ArrayList<Tutor> tutorList = tutorQueries.getTutorList();
-        ArrayAdapter<Tutor> tutorSpinnerAdapter = new ArrayAdapter<Tutor>(this, android.R.layout.simple_spinner_item, tutorList);
+        ArrayAdapter<Tutor> tutorSpinnerAdapter = new ArrayAdapter<Tutor>(this, android.R.layout.simple_list_item_1, tutorList);
         tutorSpinner.setAdapter(tutorSpinnerAdapter);
     }
 

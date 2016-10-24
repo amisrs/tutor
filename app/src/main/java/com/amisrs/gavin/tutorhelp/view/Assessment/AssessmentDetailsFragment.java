@@ -2,6 +2,7 @@ package com.amisrs.gavin.tutorhelp.view.Assessment;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
@@ -317,6 +318,8 @@ public class AssessmentDetailsFragment extends Fragment {
         allStudentsChart.setData(allStudentsBarData);
 
         Spinner chartSpinner = (Spinner) view.findViewById(R.id.sp_chart);
+        chartSpinner.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+
         ArrayList<String> chartNames = new ArrayList<>();
         chartNames.add(getString(R.string.distributionChart));
         chartNames.add(getString(R.string.allMarksChart));

@@ -8,5 +8,9 @@
       <item name="colorAccent">@color/colorAccent</item>
    </style>
 
+   <style name="coolspinneritem" parent="Base.TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
+      <item name="textColor">#FFFFFF</item>
+   </style>
+
 
 </resources>
