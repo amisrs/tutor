@@ -81,7 +81,7 @@ public class StudentListFragment extends Fragment {
         noneTextView = (TextView)view.findViewById(R.id.tv_none);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        http://stackoverflow.com/questions/31242812/how-can-a-divider-line-be-added-in-an-android-recyclerview
+        //http://stackoverflow.com/questions/31242812/how-can-a-divider-line-be-added-in-an-android-recyclerview
        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
 
         TutorialQueries tutorialQueries = new TutorialQueries(getContext());

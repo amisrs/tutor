@@ -1,10 +1,17 @@
 package com.amisrs.gavin.tutorhelp.view;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 
 import android.speech.tts.TextToSpeech;
@@ -43,6 +50,7 @@ import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.StudentWeek;
 
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.amisrs.gavin.tutorhelp.other.DbBitmapUtility;
 import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
 import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.PieChart;
@@ -51,12 +59,21 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static android.support.v4.content.PermissionChecker.checkSelfPermission;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,6 +100,17 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
     private OnFragmentInteractionListener mListener;
     private OnDeleteListener onDeleteListener;
 
+    private String zid;
+    private String fileName;
+    private String[] permissions = new String[]{Manifest.permission.CAMERA};
+    private static final int CAMERA_PERMISSION_CODE = 1;
+    private static final int REQUEST_CODE = 100;
+    private String imgPath = "default.png";
+    Bitmap photo;
+    Boolean imgTaken = false;
+    ImageView profile;
+    ImageButton captureButton;
+
     //http://www.androidhive.info/2012/01/android-text-to-speech-tutorial/
     private TextToSpeech textToSpeech;
 
@@ -96,7 +124,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
      *
      * @param student  Parameter 1.
      * @param tutorial Parameter 2.
-     * @param tutor Parameter 3.
+     * @param tutor    Parameter 3.
      * @return A new instance of fragment StudentDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -137,13 +165,29 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         final TextInputEditText lnameTextView = (TextInputEditText) view.findViewById(R.id.tv_lname);
         final TextInputEditText zidTextView = (TextInputEditText) view.findViewById(R.id.tv_zid);
         final TextInputEditText emailTextView = (TextInputEditText) view.findViewById(R.id.tv_email);
-        ImageView profile = (ImageView) view.findViewById(R.id.iv_pic);
-        Glide.with(getContext())
-                .load(studentParam.getPerson().getProfilePath())
-                .asBitmap()
-                .placeholder(R.drawable.ic_default)
-                .transform(new ProfileCircle(getContext()))
-                .into(profile);
+        profile = (ImageView) view.findViewById(R.id.iv_pic);
+        captureButton = (ImageButton) view.findViewById(R.id.btn_camera_capture);
+        captureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("capture btn clicked");
+                if (checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(permissions, CAMERA_PERMISSION_CODE);
+                } else {
+                    takePicture();
+                }
+            }
+        });
+        if(studentParam.getPerson().getProfilePath().equals("default.png")){
+            profile.setImageResource(R.drawable.ic_default);
+        } else {
+            Glide.with(getContext())
+                    .load(studentParam.getPerson().getProfilePath())
+                    .asBitmap()
+                    .placeholder(R.drawable.ic_default)
+                    .into(profile);
+
+        }
         //TODO gradeText should not be editable?
         final TextView gradeText = (TextView) view.findViewById(R.id.et_grade);
         final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
@@ -220,36 +264,45 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         emailTextView.setText(studentParam.getPerson().getEmail());
         gradeText.setText(String.valueOf(enrolment.getGrade()));
 
+        //zid = String.valueOf(studentParam.getPerson().getzID());
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Toast.makeText(getContext(), R.string.editSave, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.editSave, Toast.LENGTH_SHORT).show();
 
-            //update details
-            PersonQueries personQueries = new PersonQueries(getContext());
-            personQueries.updatePerson(studentParam.getPersonID(),
-                    fnameTextView.getText().toString(),
-                    lnameTextView.getText().toString(),
-                    Integer.parseInt(zidTextView.getText().toString()),
-                    emailTextView.getText().toString());
-
-            studentParam.getPerson().setFirstName(fnameTextView.getText().toString());
-            studentParam.getPerson().setLastName(lnameTextView.getText().toString());
-            studentParam.getPerson().setEmail(emailTextView.getText().toString());
-            studentParam.getPerson().setzID(Integer.parseInt(zidTextView.getText().toString()));
-            //update grade
-
-            fnameTextView.setInputType(InputType.TYPE_NULL);
-            lnameTextView.setInputType(InputType.TYPE_NULL);
-            zidTextView.setInputType(InputType.TYPE_NULL);
-            emailTextView.setInputType(InputType.TYPE_NULL);
-            gradeText.setInputType(InputType.TYPE_NULL);
+                //update details
+                PersonQueries personQueries = new PersonQueries(getContext());
+                personQueries.updatePerson(studentParam.getPersonID(),
+                        fnameTextView.getText().toString(),
+                        lnameTextView.getText().toString(),
+                        Integer.parseInt(zidTextView.getText().toString()),
+                        emailTextView.getText().toString());
+                //personQueries.addImageFilePathForPerson(studentParam.getPersonID(), imgPath);
+                studentParam.getPerson().setFirstName(fnameTextView.getText().toString());
+                studentParam.getPerson().setLastName(lnameTextView.getText().toString());
+                studentParam.getPerson().setEmail(emailTextView.getText().toString());
+                studentParam.getPerson().setzID(Integer.parseInt(zidTextView.getText().toString()));
+                studentParam.getPerson().setProfilePath(imgPath);
+                //TODO delete the line below
+                System.out.println("IMGPATH: " + imgPath);
 
 
-            editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
-            saveButton.setVisibility(View.INVISIBLE);
-            isEdit = false;
-            onButtonPressed("save");
+                //update grade
+
+
+                fnameTextView.setInputType(InputType.TYPE_NULL);
+                lnameTextView.setInputType(InputType.TYPE_NULL);
+                zidTextView.setInputType(InputType.TYPE_NULL);
+                emailTextView.setInputType(InputType.TYPE_NULL);
+                gradeText.setInputType(InputType.TYPE_NULL);
+
+                editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
+                saveButton.setVisibility(View.INVISIBLE);
+                captureButton.setVisibility(View.INVISIBLE);
+                isEdit = false;
+                onButtonPressed("student details saved");
+                onButtonPressed("save");
+
 
             }
         });
@@ -265,7 +318,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
                     zidTextView.setInputType(InputType.TYPE_CLASS_NUMBER);
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_clear_black_36dp));
                     saveButton.setVisibility(View.VISIBLE);
-
+                    captureButton.setVisibility(View.VISIBLE);
                     isEdit = true;
                 } else {
                     Toast.makeText(getContext(), R.string.editCancel, Toast.LENGTH_SHORT).show();
@@ -280,7 +333,6 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
                     zidTextView.setInputType(InputType.TYPE_NULL);
                     emailTextView.setInputType(InputType.TYPE_NULL);
                     gradeText.setInputType(InputType.TYPE_NULL);
-
 
 
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
@@ -300,13 +352,14 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
 
         for(StudentWeek sw : studentWeeks) {
             if(sw.getAttended() == 1) {
+
                 attendedCount++;
             }
         }
 
         List<PieEntry> pieEntries = new ArrayList<PieEntry>();
         pieEntries.add(new PieEntry(attendedCount));
-        pieEntries.add(new PieEntry(studentWeeks.size()-attendedCount));
+        pieEntries.add(new PieEntry(studentWeeks.size() - attendedCount));
         PieDataSet pieDataSet = new PieDataSet(pieEntries, getString(R.string.attendance));
         PieData pieData = new PieData(pieDataSet);
         attendancePie.setData(pieData);
@@ -314,9 +367,99 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         attendancePie.invalidate();
 
 
-
         return view;
     }
+
+    public void takePicture() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        StudentDetailsFragment.this.startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                takePicture();
+            }
+        }
+    }
+
+    //http://stackoverflow.com/questions/28450049/how-get-result-from-onactivityresult-in-fragment
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("actResult is called");
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            switch (resultCode) {
+                case Activity.RESULT_OK:
+                    photo = (Bitmap) data.getExtras().get("data");
+                    profile.setImageBitmap(photo);
+                    imgTaken = true;
+
+
+
+                    Log.d(TAG, "User successfully took image");
+                    break;
+                case Activity.RESULT_CANCELED:
+                    //if user decides not to take a picture
+                    imgPath = "default.png";
+                    imgTaken = false;
+                    Log.d(TAG, "User cancelled request to take image");
+                    break;
+                default:
+                    imgPath = "default.png";
+                    imgTaken = false;
+                    break;
+            }
+            if (imgTaken) {
+                getImagePath(photo);
+
+            }
+
+        }
+    }
+
+
+    //http://stackoverflow.com/questions/23131768/how-to-save-an-image-to-internal-storage-and-then-show-it-on-another-activity?noredirect=1&lq=1
+    private String getImagePath(Bitmap bitmap) {
+        FileOutputStream fileOutputStream = null;
+        String imgFilePath = getContext().getFilesDir().toString();
+        //TODO : handle for case of null
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+
+        fileName = strDate + "_student.PNG";
+
+        try {
+            fileOutputStream = getContext().openFileOutput(fileName, Context.MODE_PRIVATE);
+            fileOutputStream.write(DbBitmapUtility.getBytes(bitmap));
+            fileOutputStream.flush();
+            imgPath = imgFilePath + "/" + fileName;
+            //TODO: delete the test line below
+            System.out.println("imgPath = " + imgPath);
+
+            PersonQueries personQueries = new PersonQueries(getContext());
+            personQueries.addImageFilePathForPerson(studentParam.getPersonID(), imgPath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fileOutputStream.close();
+                Log.d(TAG, "FileOutputStream is closed successfully");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.d(TAG, "File path is saved to DB");
+        System.out.println(studentParam.getPerson().getProfilePath());
+        return imgFilePath;
+
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI eventx
     public void onButtonPressed(String string) {
@@ -352,7 +495,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
                     + " must implement OnFragmentInteractionListener");
         }
 
-        if (context instanceof  OnDeleteListener) {
+        if (context instanceof OnDeleteListener) {
             onDeleteListener = (OnDeleteListener) context;
         } else {
             throw new RuntimeException(context.toString()

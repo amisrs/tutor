@@ -8,12 +8,11 @@
             android:icon="@android:drawable/ic_btn_speak_now"
             android:title="Home" />
     </group>
-    <!--TODO: change attendance and student as they should not be accessed here, they should always go through tutorialList-->
     <group android:id="@+id/menuGrp2">
     <item
         android:id="@+id/nd_tutorial"
         android:icon="@android:drawable/ic_btn_speak_now"
-        android:title="@string/tutorial" />
+        android:title="@string/tutorials" />
     </group>
     <group android:id="@+id/menuGrp3">
     <item

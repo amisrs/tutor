@@ -13,6 +13,7 @@
 
     <dimen name="fabElevation">6dp</dimen>
     <dimen name="pressTranslationZ">12dp</dimen>
+    <dimen name="padding5">5dp</dimen>
 
 
 </resources>
