@@ -37,6 +37,7 @@ import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -282,6 +283,8 @@ public class AssessmentDetailsFragment extends Fragment {
 
         //Distribution Chart
         final BarChart distributionChart = new BarChart(getContext());
+        Description distrcription = new Description();
+        distrcription.setText(getString(R.string.distributionChart));
         distributionChart.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         List<BarEntry> entries = new ArrayList<BarEntry>();
@@ -294,6 +297,9 @@ public class AssessmentDetailsFragment extends Fragment {
 
         //All students chart
         final BarChart allStudentsChart = new BarChart(getContext());
+        Description description = new Description();
+        description.setText(getString(R.string.allMarksChart));
+        allStudentsChart.setDescription(description);
         allStudentsChart.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         chartContainer.addView(allStudentsChart);
         List<BarEntry> entriesForAll = new ArrayList<BarEntry>();

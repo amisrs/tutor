@@ -46,6 +46,7 @@ import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
 import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -289,6 +290,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
 
         RelativeLayout chartContainer = (RelativeLayout) view.findViewById(R.id.rl_chart);
         PieChart attendancePie = new PieChart(getContext());
+        attendancePie.setDescription(null);
         attendancePie.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         //get StudentWeeks for student
         ArrayList<StudentWeek> studentWeeks = studentQueries.getStudentWeekForStudent(studentParam);
