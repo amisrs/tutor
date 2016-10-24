@@ -7,23 +7,32 @@
     android:shrinkColumns=""
     tools:context="com.amisrs.gavin.tutorhelp.view.BaseActivity">
 
-    <Spinner
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/sp_week">
-    </Spinner>
     <LinearLayout
-        android:layout_below="@id/sp_week"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/rl_left"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:layout_weight="4">
+            android:layout_height="match_parent"
+            android:elevation="2dp"
+            android:background="@color/white"
 
+            android:layout_weight="3">
+            <Spinner
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/sp_week">
+            </Spinner>
+
+            <RelativeLayout
+                android:id="@+id/rl_left"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_below="@id/sp_week"
+                >
+
+            </RelativeLayout>
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/rl_right"

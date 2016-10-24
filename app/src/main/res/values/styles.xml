@@ -1,15 +1,11 @@
 <resources>
 
    <style name="Theme.AppCompat" parent="Theme.AppCompat.Light.NoActionBar">
-      <item name="colorControlNormal">#FFFFFF</item>
+      <item name="colorControlNormal">#EEEEEE</item>
       <item name="colorControlActivated">#2962ff</item>
       <item name="colorControlHighlight">#D1EEFC</item>
       <item name="android:editTextColor">#2962ff</item>
       <item name="colorAccent">@color/colorAccent</item>
-   </style>
-
-   <style name="coolspinneritem" parent="Base.TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
-      <item name="textColor">#FFFFFF</item>
    </style>
 
 
