@@ -105,13 +105,14 @@
 
         <ImageButton
             android:id="@+id/btn_camera_capture"
-            android:layout_width="55dp"
-            android:layout_height="40dp"
             android:layout_gravity="center|bottom"
             android:background="@android:color/transparent"
-            android:paddingBottom="15dp"
             android:src="@drawable/ic_add_a_photo_black_24dp"
-            android:tint="@color/colorGrey"
+            android:layout_width="65dp"
+            android:layout_height="50dp"
+            android:paddingBottom="15dp"
+            android:scaleType="fitCenter"
+            android:tint="@color/colorControlNormal"
             />
 
 
