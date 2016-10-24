@@ -82,6 +82,10 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
     }
 
+    public void setToolbarTitle(String title) {
+        toolbar.setTitle(title);
+    }
+
 
     @Override
     public void setContentView(int layoutResID) {
@@ -109,6 +113,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.menu_drawer);
         }
+
 
 
 
@@ -166,7 +171,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //TODO: change the APP NAME!!! otherwise we will get rekt
-        setTitle("Morgan's Replacement");
+        setTitle("Tuteon");
         toolbar.setTitleTextColor(Color.WHITE);
 
         prepareNavView();
@@ -236,6 +241,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 Intent homeIntent = new Intent(this, TutorActivity.class);
                 homeIntent.putExtra("tutor", tutor);
                 startActivity(homeIntent);
+                setTitle("Home");
                 return true;
 
             case R.id.nd_tutorial:

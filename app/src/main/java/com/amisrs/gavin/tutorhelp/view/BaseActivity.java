@@ -47,6 +47,7 @@ public class BaseActivity extends DrawerActivity implements StudentListFragment.
         setContentView(R.layout.activity_base);
         tutor = getIntent().getParcelableExtra("tutor");
         tutorial = getIntent().getParcelableExtra("tutorial");
+        setToolbarTitle(getString(R.string.attendance));
 
             TutorialQueries tutorialQueries = new TutorialQueries(this);
         ArrayList<Student> students = tutorialQueries.getStudentsForTutorial(tutorial);
@@ -68,7 +69,7 @@ public class BaseActivity extends DrawerActivity implements StudentListFragment.
             spinner = (Spinner) findViewById(R.id.sp_week);
             spinner.getBackground().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
 
-            ArrayAdapter<Week> arrayAdapter = new ArrayAdapter<Week>(this, android.R.layout.simple_spinner_item, weeks);
+            ArrayAdapter<Week> arrayAdapter = new ArrayAdapter<Week>(this, R.layout.coolspinner, weeks);
             spinner.setAdapter(arrayAdapter);
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override

@@ -92,7 +92,7 @@ public class AssessmentsActivity extends DrawerActivity implements AssessmentLis
     public void refreshSpinner() {
         AssessmentQueries assessmentQueries = new AssessmentQueries(this);
         ArrayList<String> terms = assessmentQueries.getTermsThatExist();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, terms);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.coolspinner, terms);
         termSp.setAdapter(arrayAdapter);
 
     }

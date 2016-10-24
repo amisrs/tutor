@@ -169,7 +169,7 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
     public void refreshTutorSpinner() {
         TutorQueries tutorQueries = new TutorQueries(this);
         ArrayList<Tutor> tutorList = tutorQueries.getTutorList();
-        ArrayAdapter<Tutor> tutorSpinnerAdapter = new ArrayAdapter<Tutor>(this, android.R.layout.simple_list_item_1, tutorList);
+        ArrayAdapter<Tutor> tutorSpinnerAdapter = new ArrayAdapter<Tutor>(this, R.layout.coolspinner, tutorList);
         tutorSpinner.setAdapter(tutorSpinnerAdapter);
     }
 

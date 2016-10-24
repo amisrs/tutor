@@ -5,13 +5,13 @@
     <group android:id="@+id/menuGrp1">
         <item
             android:id="@+id/nd_home"
-            android:icon="@android:drawable/ic_btn_speak_now"
+            android:icon="@android:drawable/ic_menu_myplaces"
             android:title="Home" />
     </group>
     <group android:id="@+id/menuGrp2">
     <item
         android:id="@+id/nd_tutorial"
-        android:icon="@android:drawable/ic_btn_speak_now"
+        android:icon="@android:drawable/ic_menu_manage"
         android:title="@string/tutorials" />
     </group>
     <group android:id="@+id/menuGrp3">
