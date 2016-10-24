@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.db.PersonQueries;
@@ -310,6 +311,7 @@ public class EditTutorDialogFragment extends DialogFragment {
             dialogListener.onDialogPositiveClick(this);
             Intent intent = new Intent(getContext(), TutorActivity.class);
             startActivity(intent);
+            Toast.makeText(getContext(), "Changes saved, please login again!", Toast.LENGTH_LONG).show();
         } else {
             //the zid has non-digits in it
             zid.setError("zID must only contain numbers.");

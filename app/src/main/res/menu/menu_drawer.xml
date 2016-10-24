@@ -2,28 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--TODO: change the icons-->
-    <group android:id="@+id/menuGrp1">
-        <item
-            android:id="@+id/nd_home"
-            android:icon="@android:drawable/ic_menu_myplaces"
-            android:title="Home" />
-    </group>
     <group android:id="@+id/menuGrp2">
     <item
         android:id="@+id/nd_tutorial"
-        android:icon="@android:drawable/ic_menu_manage"
+        android:icon="@android:drawable/sym_action_chat"
         android:title="@string/tutorials" />
     </group>
     <group android:id="@+id/menuGrp3">
     <item
         android:id="@+id/nd_attendance"
-        android:icon="@android:drawable/ic_btn_speak_now"
+        android:icon="@android:drawable/ic_menu_my_calendar"
         android:title="@string/attendance" />
     </group>
     <group android:id="@+id/menuGrp4">
     <item
         android:id="@+id/nd_student"
-        android:icon="@android:drawable/ic_btn_speak_now"
+        android:icon="@drawable/ic_person_black_24dp_2x"
         android:title="@string/student"/>
     </group>
     <group android:id="@+id/menuGrp5">
@@ -35,8 +29,15 @@
     <group android:id="@+id/menuGrp6">
         <item
             android:id="@+id/nd_graph"
-            android:icon="@android:drawable/ic_btn_speak_now"
+            android:icon="@android:drawable/ic_menu_agenda"
             android:title="@string/grade"/>
     </group>
+    <group android:id="@+id/menuGrp1">
+        <item
+            android:id="@+id/nd_home"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="Logout" />
+    </group>
+
 
 </menu>

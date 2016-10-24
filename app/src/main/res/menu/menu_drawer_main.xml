@@ -2,37 +2,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--TODO: change the icons-->
-    <group android:id="@+id/menuGrp1">
-        <item
-            android:id="@+id/nd_home"
-            android:icon="@android:drawable/ic_btn_speak_now"
-            android:title="Home" />
-    </group>
     <!--TODO: change attendance and student as they should not be accessed here, they should always go through tutorialList-->
     <group android:id="@+id/menuGrp2">
         <item
             android:id="@+id/nd_tutorial"
-            android:icon="@android:drawable/ic_btn_speak_now"
-            android:title="Tutorial" />
+            android:icon="@android:drawable/sym_action_chat"
+            android:title="Tutorials" />
     </group>
 
     <group android:id="@+id/menuGrp3">
         <item
             android:id="@+id/nd_editTutor"
-            android:icon="@android:drawable/ic_btn_speak_now"
+            android:icon="@android:drawable/ic_menu_manage"
             android:title="Edit Tutor"/>
     </group>
-   <!-- <group android:id="@+id/menuGrp3">
+    <group android:id="@+id/menuGrp1">
         <item
-            android:id="@+id/nd_tutor"
-            android:icon="@android:drawable/ic_btn_speak_now"
-            android:title="do not click - Assignments" />
+            android:id="@+id/nd_home"
+            android:icon="@android:drawable/ic_menu_myplaces"
+            android:title="Logout" />
     </group>
-    <group android:id="@+id/menuGrp4">
-        <item
-            android:id="@+id/nd_student"
-            android:icon="@android:drawable/ic_btn_speak_now"
-            android:title="do not click - Student" />
-    </group>-->
+
+    <!-- <group android:id="@+id/menuGrp3">
+         <item
+             android:id="@+id/nd_tutor"
+             android:icon="@android:drawable/ic_btn_speak_now"
+             android:title="do not click - Assignments" />
+     </group>
+     <group android:id="@+id/menuGrp4">
+         <item
+             android:id="@+id/nd_student"
+             android:icon="@android:drawable/ic_btn_speak_now"
+             android:title="do not click - Student" />
+     </group>-->
 
 </menu>
