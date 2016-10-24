@@ -37,12 +37,14 @@ import com.amisrs.gavin.tutorhelp.db.StudentQueries;
 import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.amisrs.gavin.tutorhelp.view.NavDrawer.DrawerActivity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StudentsActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener,
+public class StudentsActivity extends DrawerActivity implements StudentListFragment.OnFragmentInteractionListener,
         OnItemClickListener,
         NewStudentDialogFragment.OnFragmentInteractionListener,
         NewStudentDialogFragment.NewStudentDialogFragmentListener,
@@ -69,7 +71,7 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
     //private static final String TAG = "AssessmentsActivity";
     private Student currentStudent;
 
-
+    Tutor tutor;
     Tutorial tutorial;
     FloatingActionButton floatingActionButton;
 
@@ -78,6 +80,7 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students);
 
+        tutor = getIntent().getParcelableExtra("tutor");
         tutorial = getIntent().getParcelableExtra("tutorial");
 
         floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_add_student);
@@ -113,7 +116,7 @@ public class StudentsActivity extends AppCompatActivity implements StudentListFr
         Log.d(TAG, "Swapping details fragment to student: " + student.toString());
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.rl_right, StudentDetailsFragment.newInstance(student, tutorial), RIGHT_TAG);
+        fragmentTransaction.replace(R.id.rl_right, StudentDetailsFragment.newInstance(student, tutorial, tutor), RIGHT_TAG);
         fragmentTransaction.commit();
     }
 

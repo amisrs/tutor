@@ -124,6 +124,7 @@ public class NewTutorialDialogFragment extends DialogFragment {
         semSp.setAdapter(semAdapter);
 
 
+/*
 
         semSp = (Spinner) view.findViewById(R.id.sp_sem);
         yearSp = (Spinner) view.findViewById(R.id.sp_year);
@@ -142,6 +143,7 @@ public class NewTutorialDialogFragment extends DialogFragment {
         sems.add(getString(R.string.ST));
         ArrayAdapter<String> semAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, sems);
         semSp.setAdapter(semAdapter);
+*/
 
 
      /*   createButton.setOnClickListener(new View.OnClickListener() {

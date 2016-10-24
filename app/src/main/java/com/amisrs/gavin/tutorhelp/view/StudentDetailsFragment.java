@@ -37,6 +37,7 @@ import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Enrolment;
 import com.amisrs.gavin.tutorhelp.model.Mark;
 import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.other.ProfileCircle;
 import com.bumptech.glide.Glide;
@@ -59,10 +60,12 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
     private static final String TAG = "StudentDetailsFragment";
     private static final String ARG_STUDENT = "student";
     private static final String ARG_TUTORIAL = "tutorial";
-
+    private static final String ARG_TUTOR = "tutor";
     // TODO: Rename and change types of parameters
     private Student studentParam;
     private Tutorial tutorialParam;
+    private Tutor tutorParam;
+
     private boolean isEdit;
 
     private OnFragmentInteractionListener mListener;
@@ -81,14 +84,16 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
      *
      * @param student  Parameter 1.
      * @param tutorial Parameter 2.
+     * @param tutor Parameter 3.
      * @return A new instance of fragment StudentDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StudentDetailsFragment newInstance(Student student, Tutorial tutorial) {
+    public static StudentDetailsFragment newInstance(Student student, Tutorial tutorial, Tutor tutor) {
         StudentDetailsFragment fragment = new StudentDetailsFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_STUDENT, student);
         args.putParcelable(ARG_TUTORIAL, tutorial);
+        args.putParcelable(ARG_TUTOR, tutor);
         fragment.setArguments(args);
         return fragment;
     }
@@ -99,6 +104,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         if (getArguments() != null) {
             studentParam = getArguments().getParcelable(ARG_STUDENT);
             tutorialParam = getArguments().getParcelable(ARG_TUTORIAL);
+            tutorParam = getArguments().getParcelable(ARG_TUTOR);
         }
     }
 
@@ -123,7 +129,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         Glide.with(getContext())
                 .load(studentParam.getPerson().getProfilePath())
                 .asBitmap()
-                .placeholder(R.drawable.ic_default_profile_pic)
+                .placeholder(R.drawable.ic_default)
                 .transform(new ProfileCircle(getContext()))
                 .into(profile);
         //TODO gradeText should not be editable?
@@ -183,7 +189,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         TutorialQueries tutorialQueries = new TutorialQueries(getContext());
         ArrayList<Tutorial> tutorialArrayList = tutorialQueries.getTutorialsForStudent(studentParam);
         //get tutorials for student
-        TutorialListAdapter adapter = new TutorialListAdapter(getContext());
+        TutorialListAdapter adapter = new TutorialListAdapter(getContext(), tutorParam);
         adapter.giveList(tutorialArrayList);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);

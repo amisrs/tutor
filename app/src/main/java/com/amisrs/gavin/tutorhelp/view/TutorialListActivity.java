@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 
 public class TutorialListActivity extends DrawerActivity implements NewTutorialDialogFragment.OnFragmentInteractionListener,
-        NewTutorialDialogFragment.NewTutorialDialogFragmentListener {
+        NewTutorialDialogFragment.NewTutorialDialogFragmentListener, OnDeleteListener {
 
     //TODO: update student number, better layout
     private static final String TAG = "TutorialListActivity";
@@ -77,7 +77,7 @@ public class TutorialListActivity extends DrawerActivity implements NewTutorialD
         TutorialQueries tutorialQueries = new TutorialQueries(this);
         ArrayList<Tutorial> tutorialArrayList = tutorialQueries.getTutorialListForTutor(theTutor);
 
-        TutorialListAdapter adapter = new TutorialListAdapter(this);
+        TutorialListAdapter adapter = new TutorialListAdapter(this, theTutor);
         adapter.giveList(tutorialArrayList);
         adapter.setOnDeleteListener(this);
         recycler.setAdapter(adapter);

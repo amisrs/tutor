@@ -22,15 +22,18 @@ import com.amisrs.gavin.tutorhelp.db.WeekQueries;
 import com.amisrs.gavin.tutorhelp.model.Person;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.StudentWeek;
+import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
 import com.amisrs.gavin.tutorhelp.model.Week;
+import com.amisrs.gavin.tutorhelp.view.NavDrawer.DrawerActivity;
 
 import java.util.ArrayList;
 
-public class BaseActivity extends AppCompatActivity implements StudentListFragment.OnFragmentInteractionListener,
+public class BaseActivity extends DrawerActivity implements StudentListFragment.OnFragmentInteractionListener,
         StudentWeekDetailsFragment.OnFragmentInteractionListener,
         OnItemClickListener {
     private static final String TAG = "BaseActivity";
+    Tutor tutor;
     Tutorial tutorial;
     Spinner spinner;
     Student currentStudent;
@@ -40,6 +43,7 @@ public class BaseActivity extends AppCompatActivity implements StudentListFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+        tutor = getIntent().getParcelableExtra("tutor");
         tutorial = getIntent().getParcelableExtra("tutorial");
 
 

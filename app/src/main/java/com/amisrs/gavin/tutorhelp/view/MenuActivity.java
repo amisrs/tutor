@@ -20,7 +20,7 @@ import com.amisrs.gavin.tutorhelp.view.NavDrawer.DrawerActivity;
 
 import java.util.ArrayList;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends DrawerActivity{
     //TODO: decide what happens with this activity (get rid of it?)
     private static final String TAG = "MenuActivity";
     TextView nameTextView;
@@ -34,6 +34,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         Intent fromIntent = getIntent();
+
         tutorial = fromIntent.getParcelableExtra("tutorial");
         tutor = fromIntent.getParcelableExtra("tutor");
 
@@ -42,8 +43,9 @@ public class MenuActivity extends AppCompatActivity {
         assessmentsButton = (Button)findViewById(R.id.btn_assessments);
 
         nameTextView = (TextView)findViewById(R.id.tv_name);
+        nameTextView.setText(tutorial.getName());
 
-        //nameTextView.setText(tutorial.getName());
+
         attendanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,17 +64,21 @@ public class MenuActivity extends AppCompatActivity {
                 goToAssessments();
             }
         });
+
+
     }
 
     public void goToAttendance() {
         Intent intent = new Intent(this, BaseActivity.class);
         intent.putExtra("tutorial", tutorial);
+        intent.putExtra("tutor", tutor);
         Log.d(TAG, "Put extra tutorial: " + tutorial.getName());
         startActivity(intent);
     }
 
     public void goToStudents() {
         Intent intent = new Intent(this, StudentsActivity.class);
+        intent.putExtra("tutor", tutor);
         intent.putExtra("tutorial", tutorial);
         startActivity(intent);
     }
@@ -80,6 +86,7 @@ public class MenuActivity extends AppCompatActivity {
     public void goToAssessments() {
         Intent intent = new Intent(this, AssessmentsActivity.class);
         intent.putExtra("tutorial", tutorial);
+        intent.putExtra("tutor", tutor);
         Log.d(TAG, "going to assessments for term " + tutorial.getTerm());
         startActivity(intent);
     }

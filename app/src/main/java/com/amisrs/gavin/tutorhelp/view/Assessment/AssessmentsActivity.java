@@ -23,14 +23,16 @@ import com.amisrs.gavin.tutorhelp.db.StudentQueries;
 import com.amisrs.gavin.tutorhelp.db.TutorialQueries;
 import com.amisrs.gavin.tutorhelp.model.Assessment;
 import com.amisrs.gavin.tutorhelp.model.Student;
+import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
+import com.amisrs.gavin.tutorhelp.view.NavDrawer.DrawerActivity;
 import com.amisrs.gavin.tutorhelp.view.NewStudentDialogFragment;
 import com.amisrs.gavin.tutorhelp.view.StudentDetailsFragment;
 import com.amisrs.gavin.tutorhelp.view.StudentListFragment;
 
 import java.util.ArrayList;
 
-public class AssessmentsActivity extends AppCompatActivity implements AssessmentListFragment.OnFragmentInteractionListener,
+public class AssessmentsActivity extends DrawerActivity implements AssessmentListFragment.OnFragmentInteractionListener,
         AssessmentDetailsFragment.OnFragmentInteractionListener,
         NewAssessmentDialogFragment.NewAssessmentDialogFragmentListener,
         NewAssessmentDialogFragment.OnNewAssessmentDialogFragmentInteractionListener,
@@ -40,7 +42,7 @@ public class AssessmentsActivity extends AppCompatActivity implements Assessment
     private static final String TAG = "AssessmentsActivity";
     private final String RIGHT_TAG = "right";
     private Assessment currentAssessment;
-
+    Tutor tutor;
     Tutorial tutorial;
     String currentTerm;
     Spinner termSp;
@@ -50,7 +52,7 @@ public class AssessmentsActivity extends AppCompatActivity implements Assessment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessments);
-
+        tutor = getIntent().getParcelableExtra("tutor");
         tutorial = getIntent().getParcelableExtra("tutorial");
         currentTerm = tutorial.getTerm();
         Log.d(TAG, "got term: " + currentTerm);
