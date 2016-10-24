@@ -71,7 +71,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
         public void bindStudent(final Student student) {
             String name = student.getPerson().getFirstName() + "  " +  student.getPerson().getLastName();
             studentName.setText(name);
-           // lname.setText(student.getPerson().getLastName());
+            // lname.setText(student.getPerson().getLastName());
             zid.setText(String.valueOf(student.getPerson().getzID()));
 
             itemView.setOnClickListener(new View.OnClickListener() {

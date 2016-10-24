@@ -102,7 +102,7 @@ public class NewTutorDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-           // tutorialParam = getArguments().getParcelable(ARG_TUTORIAL);
+            // tutorialParam = getArguments().getParcelable(ARG_TUTORIAL);
         }
 
 

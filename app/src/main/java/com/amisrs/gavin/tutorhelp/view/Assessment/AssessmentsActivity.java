@@ -39,7 +39,7 @@ public class AssessmentsActivity extends DrawerActivity implements AssessmentLis
         NewAssessmentDialogFragment.OnNewAssessmentDialogFragmentInteractionListener,
         OnAssessmentClickListener,
         OnDeleteListener
-        {
+{
     private static final String TAG = "AssessmentsActivity";
     private final String RIGHT_TAG = "right";
     private Assessment currentAssessment;
@@ -119,9 +119,9 @@ public class AssessmentsActivity extends DrawerActivity implements AssessmentLis
     }
 
     public void addAssessment() {
-          NewAssessmentDialogFragment nadf = NewAssessmentDialogFragment.newInstance(currentTerm);
-          FragmentManager fragmentManager = getSupportFragmentManager();
-          nadf.show(fragmentManager, "dialog");
+        NewAssessmentDialogFragment nadf = NewAssessmentDialogFragment.newInstance(currentTerm);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        nadf.show(fragmentManager, "dialog");
     }
 
     public void changeAssessment(Assessment assessment) {

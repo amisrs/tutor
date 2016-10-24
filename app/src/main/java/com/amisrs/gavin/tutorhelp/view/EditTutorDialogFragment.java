@@ -106,7 +106,7 @@ public class EditTutorDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-           tutorParam = getArguments().getParcelable(ARG_TUTOR);
+            tutorParam = getArguments().getParcelable(ARG_TUTOR);
             imgPath = tutorParam.getPerson().getProfilePath();
         }
 

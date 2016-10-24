@@ -74,7 +74,7 @@ public class TutorActivity extends AppCompatActivity implements NewTutorDialogFr
         tutorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if(parent.getSelectedItem() == null) {
+                if(parent.getSelectedItem() == null) {
                     Log.d(TAG, "A null thing is selected.");
                     deleteButton.setEnabled(false);
                     loginButton.setEnabled(false);

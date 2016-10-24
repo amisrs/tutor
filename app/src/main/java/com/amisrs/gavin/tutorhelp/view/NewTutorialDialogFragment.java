@@ -159,13 +159,13 @@ public class NewTutorialDialogFragment extends DialogFragment {
         });*/
 
         builder.setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("aa", "create");
-                        positivePress();
-                        dialogListener.onDialogPositiveClick(NewTutorialDialogFragment.this);
-                    }
-                })
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.d("aa", "create");
+                positivePress();
+                dialogListener.onDialogPositiveClick(NewTutorialDialogFragment.this);
+            }
+        })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

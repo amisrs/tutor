@@ -8,6 +8,6 @@
         android:layout_height="300dp"
         android:background="#ccc"
         app:drawable="@drawable/ic_done_black_24dp"
-         />
-<!--TODO : Delete?-->
+        />
+    <!--TODO : Delete?-->
 </FrameLayout>

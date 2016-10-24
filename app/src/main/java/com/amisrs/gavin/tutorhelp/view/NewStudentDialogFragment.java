@@ -19,6 +19,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,7 @@ public class NewStudentDialogFragment extends DialogFragment {
     private String imgPath = "default.png";
     Bitmap photo;
     Boolean imgTaken = false;
+    Boolean isInt = true;
 
     TextInputEditText zid;
     TextInputEditText fname;
@@ -261,12 +263,13 @@ public class NewStudentDialogFragment extends DialogFragment {
         String zidString = zid.getText().toString();
         Pattern zidPattern = Pattern.compile("\\d+");
         Matcher zidMatcher = zidPattern.matcher(zidString);
+
         if (zidMatcher.find()) {
 
 
             String fnameString = fname.getText().toString();
             String lnameString = lname.getText().toString();
-            int zidInt = Integer.parseInt(zid.getText().toString());
+            final int zidInt = Integer.parseInt(zid.getText().toString());
             String emailString = email.getText().toString();
             String profilePath = imgPath;
             System.out.println("imgPath = " + imgPath);

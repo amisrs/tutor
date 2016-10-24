@@ -3,22 +3,22 @@
 
     <!--TODO: change the icons-->
     <group android:id="@+id/menuGrp2">
-    <item
-        android:id="@+id/nd_tutorial"
-        android:icon="@android:drawable/sym_action_chat"
-        android:title="@string/tutorials" />
+        <item
+            android:id="@+id/nd_tutorial"
+            android:icon="@android:drawable/sym_action_chat"
+            android:title="@string/tutorials" />
     </group>
     <group android:id="@+id/menuGrp3">
-    <item
-        android:id="@+id/nd_attendance"
-        android:icon="@android:drawable/ic_menu_my_calendar"
-        android:title="@string/attendance" />
+        <item
+            android:id="@+id/nd_attendance"
+            android:icon="@android:drawable/ic_menu_my_calendar"
+            android:title="@string/attendance" />
     </group>
     <group android:id="@+id/menuGrp4">
-    <item
-        android:id="@+id/nd_student"
-        android:icon="@drawable/ic_person_black_24dp_2x"
-        android:title="@string/student"/>
+        <item
+            android:id="@+id/nd_student"
+            android:icon="@drawable/ic_person_black_24dp_2x"
+            android:title="@string/student"/>
     </group>
     <group android:id="@+id/menuGrp5">
         <item
@@ -26,12 +26,12 @@
             android:icon="@android:drawable/btn_star_big_on"
             android:title="@string/assessment"/>
     </group>
-    <group android:id="@+id/menuGrp6">
+    <g4roup android:id="@+id/menuGrp6">
         <item
             android:id="@+id/nd_graph"
             android:icon="@android:drawable/ic_menu_agenda"
             android:title="@string/grade"/>
-    </group>
+    </g4roup>
     <group android:id="@+id/menuGrp1">
         <item
             android:id="@+id/nd_home"

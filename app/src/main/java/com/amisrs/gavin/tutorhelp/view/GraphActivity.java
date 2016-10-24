@@ -75,7 +75,7 @@ public class GraphActivity extends DrawerActivity {
         pieEntries.add(new PieEntry(HDCount, "HD"));
         pieEntries.add(new PieEntry(FCount, "F"));
 
-        PieDataSet pieDataSet = new PieDataSet(pieEntries, getString(R.string.attendance));
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, getString(R.string.grade));
         pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
 
         PieData pieData = new PieData(pieDataSet);

@@ -62,7 +62,7 @@ public class AssessmentListFragment extends Fragment {
         AssessmentListFragment fragment = new AssessmentListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_TERM, term);
-       fragment.setArguments(args);
+        fragment.setArguments(args);
         return fragment;
     }
 

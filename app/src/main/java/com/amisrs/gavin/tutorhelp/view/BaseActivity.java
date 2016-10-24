@@ -49,7 +49,7 @@ public class BaseActivity extends DrawerActivity implements StudentListFragment.
         tutorial = getIntent().getParcelableExtra("tutorial");
         setToolbarTitle(getString(R.string.attendance));
 
-            TutorialQueries tutorialQueries = new TutorialQueries(this);
+        TutorialQueries tutorialQueries = new TutorialQueries(this);
         ArrayList<Student> students = tutorialQueries.getStudentsForTutorial(tutorial);
         if(students.size() < 1) {
             Toast.makeText(BaseActivity.this, getString(R.string.nostudents), Toast.LENGTH_LONG).show();

@@ -63,7 +63,7 @@ public class AssessmentListAdapter extends RecyclerView.Adapter<AssessmentListAd
         public void bindStudent(final Assessment assessment) {
             //String name = student.getPerson().getFirstName() + "  " +  student.getPerson().getLastName();
             //studentName.setText(name);
-           // lname.setText(student.getPerson().getLastName());
+            // lname.setText(student.getPerson().getLastName());
             //zid.setText(String.valueOf(student.getPerson().getzID()));
             name.setText(assessment.getName());
             weighting.setText((int)assessment.getWeighting() + "%");

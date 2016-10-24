@@ -71,10 +71,10 @@ public class NewTutorialActivity extends AppCompatActivity {
         String termString = semSp.getSelectedItem().toString() + " " + yearSp.getSelectedItem().toString();
 
         Tutorial newTutorial = new Tutorial(tutor.getTutorID(),
-                                            name.getText().toString(),
-                                            timeSlot.getText().toString(),
-                                            location.getText().toString(),
-                                            termString);
+                name.getText().toString(),
+                timeSlot.getText().toString(),
+                location.getText().toString(),
+                termString);
         int tutorialID = (int)tutorialQueries.addTutorial(newTutorial);
         WeekQueries weekQueries = new WeekQueries(this);
         for(int i=1; i<Tutorial.MAX_WEEKS+1; i++) {

@@ -286,6 +286,7 @@ public class AssessmentDetailsFragment extends Fragment {
         final BarChart distributionChart = new BarChart(getContext());
         Description distrcription = new Description();
         distrcription.setText(getString(R.string.distributionChart));
+        distributionChart.setDescription(distrcription);
         distributionChart.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         List<BarEntry> entries = new ArrayList<BarEntry>();

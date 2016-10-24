@@ -9,6 +9,6 @@
         android:background="#ccc"
         android:paddingBottom="40dp"
         android:paddingLeft="20dp"
- />
-<!--TODO: Delete?-->
+        />
+    <!--TODO: Delete?-->
 </FrameLayout>

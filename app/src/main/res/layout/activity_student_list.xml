@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.amisrs.gavin.tutorhelp.view.StudentListActivity">
-<!--TODO: delete this one -->
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_students"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
+    <!--TODO: delete this one -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_students"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
     <!--http://stackoverflow.com/questions/24459352/how-can-i-add-the-new-floating-action-button-between-two-widgets-layouts-->
 

@@ -131,12 +131,12 @@ public class TutorialListAdapter extends RecyclerView.Adapter<TutorialListAdapte
                         AlertDialog alertDialog = new AlertDialog.Builder(context)
                                 .setMessage(R.string.deleteTutorialMsg)
                                 .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                tutorialQueries.deleteTutorial(tutorial);
-                                                onDeleteListener.onDelete();
-                                            }
-                                        })
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        tutorialQueries.deleteTutorial(tutorial);
+                                        onDeleteListener.onDelete();
+                                    }
+                                })
                                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {

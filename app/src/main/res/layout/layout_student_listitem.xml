@@ -11,24 +11,24 @@
     tools:context="com.amisrs.gavin.tutorhelp.controller.StudentListAdapter">
 
 
-        <TextView
-            android:id="@+id/student_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorPrimaryDark" />
+    <TextView
+        android:id="@+id/student_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimaryDark" />
 
 
 
-        <TextView
-            android:id="@+id/student_zid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/student_name"
-            android:layout_alignParentStart="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/colorPrimary" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/student_zid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/student_name"
+        android:layout_alignParentStart="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorPrimary" />
+</RelativeLayout>
 
 
