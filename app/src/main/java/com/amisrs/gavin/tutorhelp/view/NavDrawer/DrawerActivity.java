@@ -47,10 +47,14 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     private int navItemIndex;
     Tutor tutor;
     Tutorial tutorial;
-    TextView tutorName;
+    TextView tutorFname;
+    TextView tutorLname;
     TextView tutorEmail;
+    TextView tutorName;
     ImageView navHeaderBg;
     ImageView tutorProfile;
+    String title;
+
 
     //TODO: add <include> in xml
     @Override
@@ -120,6 +124,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         * Retrieve, initialise and set the values for the navigation header layout
         */
         View header = navigationView.getHeaderView(0);
+
         tutorName = (TextView) header.findViewById(R.id.tv_tutorName);
         tutorEmail = (TextView) header.findViewById(R.id.tv_tutorEmail);
         navHeaderBg = (ImageView) header.findViewById(R.id.iv_navDrawer_bg);
@@ -127,6 +132,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         tutorName.setText(tutor.getPerson().getFirstName() + " " + tutor.getPerson().getLastName());
         tutorEmail.setText(tutor.getPerson().getEmail());
+       // tutorFname = (TextView) header.findViewById(R.id.tv_tutorFname);
+        //tutorLname = (TextView) header.findViewById(R.id.tv_tutorLname);
+
+
+        //tutorFname.setText(tutor.getPerson().getFirstName());
+       // tutorLname.setText(tutor.getPerson().getLastName());
+        //tutorEmail.setText(tutor.getPerson().getEmail());
 
         Glide.with(this)
                 .load(R.drawable.wp_004)
@@ -224,6 +236,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 Intent tutorialIntent = new Intent(this, TutorialListActivity.class);
                 tutorialIntent.putExtra("tutor", tutor);
                 startActivity(tutorialIntent);
+                setTitle("Tutorials");
                 return true;
 
             case R.id.nd_attendance:
@@ -233,6 +246,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 attendanceIntent.putExtra("tutor", tutor);
                 Log.d(TAG, "going to attendance for tutorial " + tutorial.getName());
                 startActivity(attendanceIntent);
+                setTitle("Attendance");
                 return true;
 
             case R.id.nd_student:
@@ -242,6 +256,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 studentIntent.putExtra("tutorial", tutorial);
                 Log.d(TAG, "going to student for tutorial " + tutorial.getName());
                 startActivity(studentIntent);
+                setTitle("Students");
                 return true;
 
             case R.id.nd_assessment:
@@ -251,6 +266,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 intent.putExtra("tutor", tutor);
                 Log.d(TAG, "going to assessments for term " + tutorial.getTerm());
                 startActivity(intent);
+                setTitle("Assessment");
                 return true;
 
         }
@@ -258,11 +274,5 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         return super.onOptionsItemSelected(menuItem);
     }
 
-    public TextView getTutorName() {
-        return tutorName;
-    }
 
-    public void setTutorName(TextView tutorName) {
-        this.tutorName = tutorName;
-    }
 }

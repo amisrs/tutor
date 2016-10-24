@@ -85,8 +85,8 @@ public class PersonQueries extends QueryBase {
 
     public void addImageFilePathForPerson(int id, String imgPath) {
         open();
-        String updatePath = "update" + DBContract.PersonTable.TABLE_NAME +
-                " set " + DBContract.PersonTable.COLUMN_PROFILEPIC + " = \"" + imgPath + "\"" +
+        String updatePath = "update " + DBContract.PersonTable.TABLE_NAME +
+                " set " + DBContract.PersonTable.COLUMN_PROFILEPIC + " = " + "\'" +  imgPath + "\'" +
                 " where " + DBContract.PersonTable.COLUMN_PERSONID + " = " + id;
         db.execSQL(updatePath);
         close();

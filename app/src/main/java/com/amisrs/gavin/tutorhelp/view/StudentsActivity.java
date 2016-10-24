@@ -53,8 +53,9 @@ public class StudentsActivity extends DrawerActivity implements StudentListFragm
         OnDeleteListener {
 
     private static final String TAG = "StudentsActivity";
-
     private final String RIGHT_TAG = "right";
+    private final String DETAIL_TAG = "studentDetails";
+
     private ImageView profilePic;
     private ImageButton captureButton;
     private String fileName;
@@ -146,6 +147,13 @@ public class StudentsActivity extends DrawerActivity implements StudentListFragm
         if (name.equals("save")) {
             refreshStudentList();
             //changeStudent(currentStudent);
+        } else if (name.equals("imgUpdate")){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment fragment1 = fragmentManager.findFragmentByTag(DETAIL_TAG);
+            fragmentTransaction.remove(fragment1);
+            fragmentTransaction.commit();
+
         }
     }
 

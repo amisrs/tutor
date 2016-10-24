@@ -18,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+
         <ImageView
             android:id="@+id/iv_tutor_profile"
             android:layout_width="125dp"
@@ -47,5 +48,20 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@color/white"/>
     </RelativeLayout>
+
+<!--TODO finish the edit functionality-->
+        <ImageButton
+            android:id="@+id/iv_edit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_mode_edit_black_36dp"
+            android:tint="@color/white"
+            android:scaleType="fitXY"
+            android:background="@android:color/transparent"/>
+
+
 
 </RelativeLayout>

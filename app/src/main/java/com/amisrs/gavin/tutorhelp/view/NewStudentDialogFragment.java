@@ -38,6 +38,8 @@ import com.amisrs.gavin.tutorhelp.other.DbBitmapUtility;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -215,7 +217,10 @@ public class NewStudentDialogFragment extends DialogFragment {
         FileOutputStream fileOutputStream = null;
         String imgFilePath = getContext().getFilesDir().toString();
         //TODO : handle for case of null
-        fileName = zid.getText().toString() + "_student.PNG";
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        fileName = strDate + "_student.PNG";
         try {
             fileOutputStream = getContext().openFileOutput(fileName, Context.MODE_PRIVATE);
             fileOutputStream.write(DbBitmapUtility.getBytes(bitmap));
@@ -272,6 +277,7 @@ public class NewStudentDialogFragment extends DialogFragment {
             StudentQueries studentQueries = new StudentQueries(getContext());
             studentQueries.addStudent(new Student(addedPerson.getPersonID(), addedPerson), tutorialParam);
 
+            addedPerson.setProfilePath(imgPath);
             Log.d(TAG, "Added person to database: " + addedPerson.getzID() + " " + addedPerson.getFirstName() + " " + addedPerson.getLastName());
             dialogListener.onDialogPositiveClick(this);
 

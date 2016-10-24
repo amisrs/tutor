@@ -8,25 +8,44 @@
 
     <!-- TODO: Update blank fragment layout, ADD PADDING-->
     <!-- TODO: add the take photo button to this image -->
-
+<FrameLayout
+    android:id="@+id/fl_image"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/iv_pic"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"/>
+
+    <ImageButton
+        android:id="@+id/btn_camera_capture"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center|bottom"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        android:background="@android:color/transparent"
+        android:paddingBottom="10dp"
+        android:src="@drawable/ic_add_a_photo_black_24dp"
+        />
+</FrameLayout>
     <!--<TextView
         android:id="@+id/tv_name"
 
         android:background="@color/colorPrimaryDark"/>-->
 
+    <RelativeLayout
+        android:id="@+id/rl_sDetails"
+        android:layout_toRightOf="@id/fl_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     
  <android.support.design.widget.TextInputEditText
         android:id="@+id/tv_fname"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_pic"
         android:textSize="@dimen/tutorialListBig"
         android:editable="false"
         android:text="Student"/>
@@ -45,7 +64,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_fname"
-        android:layout_toRightOf="@id/iv_pic"
         android:textSize="24sp"
         android:editable="false"
         android:text="Email"/>
@@ -85,20 +103,21 @@
 
 
 
+
     <android.support.design.widget.TextInputEditText
         android:id="@+id/tv_zid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_email"
-        android:layout_toRightOf="@id/iv_pic"
         android:textSize="@dimen/tutorialListName"
         android:editable="false"
         android:maxLength="@integer/zidlength"
         android:text="5062206"/>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_tutorial"
-        android:layout_below="@+id/iv_pic"
+        android:layout_below="@+id/rl_sDetails"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
