@@ -18,6 +18,7 @@
         android:layout_height="36dp"
         android:layout_marginRight="6dp"
         android:layout_centerVertical="true"
+        android:tint="@color/colorGrey"
         android:src="@drawable/ic_person_black_24dp_2x"/>
 
     <TextView
@@ -123,6 +124,7 @@
         android:layout_centerVertical="true"
         android:src="@drawable/ic_mode_edit_black_36dp"
         android:scaleType="fitXY"
+        android:tint="@color/colorGrey"
         android:background="@android:color/transparent"/>
     <ImageButton
         android:id="@+id/iv_save"
@@ -133,6 +135,7 @@
         android:src="@drawable/ic_done_black_24dp"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
+        android:tint="@color/colorGrey"
         android:visibility="invisible"/>
 
 
@@ -145,7 +148,8 @@
         android:layout_centerVertical="true"
         android:scaleType="fitXY"
         android:src="@drawable/ic_delete_forever_black_24dp"
-        android:background="@android:color/transparent"/>
+        android:background="@android:color/transparent"
+        android:tint="@color/colorGrey"/>
 
     </RelativeLayout>
 

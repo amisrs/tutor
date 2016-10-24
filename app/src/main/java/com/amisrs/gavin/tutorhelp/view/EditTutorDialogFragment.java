@@ -35,6 +35,8 @@ import com.bumptech.glide.Glide;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,7 +51,7 @@ import static android.support.v4.content.PermissionChecker.checkSelfPermission;
  * create an instance of this fragment.
  */
 public class EditTutorDialogFragment extends DialogFragment {
-    private static final String TAG = "NewTutorDialogFragment";
+    private static final String TAG = "EditTutorDialogFragment";
 
     private static final String ARG_TUTOR = "tutor";
     private Tutor tutorParam;
@@ -73,9 +75,9 @@ public class EditTutorDialogFragment extends DialogFragment {
     TextInputEditText email;
 
     private EditTutorDialogFragment.OnFragmentInteractionListener mListener;
-    private EditTutorDialogFragment.NewTutorDialogFragmentListener dialogListener;
+    private EditTutorDialogFragment.EditTutorDialogFragmentListener dialogListener;
 
-    public interface NewTutorDialogFragmentListener {
+    public interface EditTutorDialogFragmentListener {
         public void onDialogPositiveClick(DialogFragment fragment);
 
         public void onDialogNegativeClick(DialogFragment fragment);
@@ -104,6 +106,7 @@ public class EditTutorDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
            tutorParam = getArguments().getParcelable(ARG_TUTOR);
+            imgPath = tutorParam.getPerson().getProfilePath();
         }
 
 
@@ -164,7 +167,7 @@ public class EditTutorDialogFragment extends DialogFragment {
 
 
         builder
-                .setPositiveButton(R.string.create, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Log.d("aa", "create");
@@ -214,7 +217,12 @@ public class EditTutorDialogFragment extends DialogFragment {
                     imgTaken = false;
                     break;
             }
+
+            if(imgTaken) {
+                getImagePath(photo);
+            }
         }
+
     }
 
     @Override
@@ -227,34 +235,45 @@ public class EditTutorDialogFragment extends DialogFragment {
         }
     }
 
-
+    public void setDialogListener(EditTutorDialogFragmentListener editTutorDialogFragmentListener) {
+        dialogListener = editTutorDialogFragmentListener;
+    }
 
     //http://stackoverflow.com/questions/23131768/how-to-save-an-image-to-internal-storage-and-then-show-it-on-another-activity?noredirect=1&lq=1
-    private String saveImagePath(Bitmap bitmap){
+    private String getImagePath(Bitmap bitmap) {
         FileOutputStream fileOutputStream = null;
         String imgFilePath = getContext().getFilesDir().toString();
+        //TODO : handle for case of null
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
 
-        fileName = zid.getText().toString()+"_tutor.PNG";
-        try{
+        fileName = strDate + "_tutor.PNG";
+
+        try {
             fileOutputStream = getContext().openFileOutput(fileName, Context.MODE_PRIVATE);
             fileOutputStream.write(DbBitmapUtility.getBytes(bitmap));
             fileOutputStream.flush();
-            imgPath = imgFilePath+"/" + fileName;
+            imgPath = imgFilePath + "/" + fileName;
             //TODO: delete the test line below
             System.out.println("imgPath = " + imgPath);
-        } catch (FileNotFoundException e){
+
+            PersonQueries personQueries = new PersonQueries(getContext());
+            personQueries.addImageFilePathForPerson(tutorParam.getPersonID(), imgPath);
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try{
+            try {
                 fileOutputStream.close();
                 Log.d(TAG, "FileOutputStream is closed successfully");
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         Log.d(TAG, "File path is saved to DB");
+        System.out.println(tutorParam.getPerson().getProfilePath());
         return imgFilePath;
 
     }
@@ -266,9 +285,6 @@ public class EditTutorDialogFragment extends DialogFragment {
         fname = (TextInputEditText) dialog.findViewById(R.id.et_fname);
         lname = (TextInputEditText) dialog.findViewById(R.id.et_lname);
         email = (TextInputEditText) dialog.findViewById(R.id.et_email);
-        if(imgTaken) {
-            saveImagePath(photo);
-        }
 
 
         //TODO: improve validation
@@ -289,8 +305,11 @@ public class EditTutorDialogFragment extends DialogFragment {
             PersonQueries personQueries = new PersonQueries(getContext());
             personQueries.updatePerson(tutorParam.getPersonID(), fnameString, lnameString, zidInt, emailString);
             personQueries.addImageFilePathForPerson(tutorParam.getPersonID(), profilePath);
+            mListener.onFragmentInteraction("updated");
             //Log.d(TAG, "Added person to database: " + addedPerson.getzID() + " " + addedPerson.getFirstName() + " " + addedPerson.getLastName());
             dialogListener.onDialogPositiveClick(this);
+            Intent intent = new Intent(getContext(), TutorActivity.class);
+            startActivity(intent);
         } else {
             //the zid has non-digits in it
             zid.setError("zID must only contain numbers.");
@@ -312,6 +331,14 @@ public class EditTutorDialogFragment extends DialogFragment {
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
+        }
+
+        if(context instanceof EditTutorDialogFragmentListener) {
+            dialogListener = (EditTutorDialogFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement EditTutorDialogFragmentListener");
+
         }
     }
 

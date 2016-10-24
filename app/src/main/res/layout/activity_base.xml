@@ -15,21 +15,27 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="2dp"
+            android:elevation="4dp"
             android:background="@color/white"
 
             android:layout_weight="3">
-            <Spinner
-                android:layout_height="wrap_content"
+            <RelativeLayout
+                android:id="@+id/rl_spinn"
+                android:background="@color/colorAccent"
                 android:layout_width="match_parent"
-                android:id="@+id/sp_week">
-            </Spinner>
+                android:layout_height="wrap_content">
+                <Spinner
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:id="@+id/sp_week">
+                </Spinner>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_left"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:layout_below="@id/sp_week"
+                android:layout_below="@id/rl_spinn"
                 >
 
             </RelativeLayout>

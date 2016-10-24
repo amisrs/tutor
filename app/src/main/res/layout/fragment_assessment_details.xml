@@ -17,6 +17,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/tutorialListBig"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:textColor="@color/colorPrimary"
+
             android:editable="false"
             android:text="Assessment"/>
 
@@ -29,6 +32,7 @@
             android:layout_marginRight="@dimen/smallButtonSize"
             android:src="@drawable/ic_done_black_24dp"
             android:scaleType="fitXY"
+            android:tint="@color/colorGrey"
             android:background="@android:color/transparent"
             android:visibility="invisible"/>
 
@@ -40,6 +44,7 @@
             android:layout_toLeftOf="@id/iv_save"
             android:src="@drawable/ic_mode_edit_black_36dp"
             android:scaleType="fitXY"
+            android:tint="@color/colorGrey"
             android:background="@android:color/transparent"/>
 
         <ImageButton
@@ -50,6 +55,7 @@
             android:layout_toLeftOf="@id/iv_edit"
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
+            android:tint="@color/colorGrey"
             android:src="@drawable/ic_delete_forever_black_24dp"
             android:background="@android:color/transparent"/>
 
@@ -90,6 +96,7 @@
                         android:scrollHorizontally="false"
                         android:editable="false"
                         android:hint="@string/description"
+                        android:textColor="@color/colorPrimary"
                         android:text="desc"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -105,6 +112,8 @@
                     android:id="@+id/et_weighting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+
                     android:hint="@string/weighting"
                     android:editable="false"
                 />
@@ -121,6 +130,8 @@
                     android:id="@+id/et_maxmark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+
                     android:hint="@string/maxmarks"
                     android:editable="false"
                     />

@@ -84,6 +84,7 @@
     <string name="create">Create</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="update">Update</string>
 
     <string name="attended">Attended</string>
     <string name="notAttended">Not Attended</string>

@@ -66,7 +66,7 @@ public class BaseActivity extends DrawerActivity implements StudentListFragment.
             weeks = weekQueries.getAllWeeksForTutorial(tutorial);
 
             spinner = (Spinner) findViewById(R.id.sp_week);
-            spinner.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+            spinner.getBackground().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
 
             ArrayAdapter<Week> arrayAdapter = new ArrayAdapter<Week>(this, android.R.layout.simple_spinner_item, weeks);
             spinner.setAdapter(arrayAdapter);

@@ -60,7 +60,7 @@ public class AssessmentsActivity extends DrawerActivity implements AssessmentLis
 
         floatingActionButton = (FloatingActionButton)findViewById(R.id.fab_add_assessment);
         termSp = (Spinner)findViewById(R.id.sp_term);
-        termSp.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.SRC_ATOP);
+        termSp.getBackground().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
 
         termSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

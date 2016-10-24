@@ -3,6 +3,7 @@ package com.amisrs.gavin.tutorhelp.view.NavDrawer;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amisrs.gavin.tutorhelp.R;
+import com.amisrs.gavin.tutorhelp.db.TutorQueries;
 import com.amisrs.gavin.tutorhelp.model.Student;
 import com.amisrs.gavin.tutorhelp.model.Tutor;
 import com.amisrs.gavin.tutorhelp.model.Tutorial;
@@ -40,7 +42,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 
 //http://stackoverflow.com/questions/36095691/android-navigationdrawer-multiple-activities-same-menu
-public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EditTutorDialogFragment.OnFragmentInteractionListener {
+public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EditTutorDialogFragment.OnFragmentInteractionListener ,
+        EditTutorDialogFragment.EditTutorDialogFragmentListener{
     private static final String TAG = "DrawerActivity";
     DrawerLayout drawerLayout;
     FrameLayout activityContainer;
@@ -284,6 +287,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 navItemIndex = 6;
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 EditTutorDialogFragment etdf = EditTutorDialogFragment.newInstance(tutor);
+                etdf.setDialogListener(this);
                 etdf.show(fragmentManager, "dialog");
         }
 
@@ -297,6 +301,20 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
     @Override
     public void onFragmentInteraction(String name) {
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment fragment) {
+
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment fragment) {
+        TutorQueries tutorQueries = new TutorQueries(this);
+        tutor = tutorQueries.getTutorById(tutor.getTutorID());
+        setContentView(R.layout.activity_drawer);
+        Log.d(TAG, "update the thing");
 
     }
 }

@@ -22,6 +22,7 @@
         android:layout_centerVertical="true"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
+        android:tint="@color/colorGrey"
         android:visibility="invisible"/>
     <ImageButton
         android:id="@+id/iv_edit"
@@ -31,6 +32,7 @@
         android:layout_toLeftOf="@id/iv_save"
         android:src="@drawable/ic_mode_edit_black_36dp"
         android:scaleType="fitXY"
+        android:tint="@color/colorGrey"
         android:background="@android:color/transparent"/>
 
 

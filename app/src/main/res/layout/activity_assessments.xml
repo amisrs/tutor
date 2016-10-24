@@ -16,15 +16,22 @@
             android:elevation="1dp"
             android:layout_weight="3">
 
-            <Spinner
-                android:id="@+id/sp_term"
+            <RelativeLayout
+                android:id="@+id/rl_spinn"
+                android:background="@color/colorAccent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></Spinner>
+                android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/sp_term"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></Spinner>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
-                android:layout_below="@id/sp_term"
+                android:layout_below="@id/rl_spinn"
                 android:id="@+id/rl_left">
 
                 <android.support.design.widget.FloatingActionButton

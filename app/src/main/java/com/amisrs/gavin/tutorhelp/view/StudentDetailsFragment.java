@@ -336,6 +336,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
 
 
                     editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
+                    captureButton.setVisibility(View.INVISIBLE);
                     saveButton.setVisibility(View.INVISIBLE);
                     isEdit = false;
                 }
