@@ -2,6 +2,9 @@ package com.amisrs.gavin.tutorhelp.view;
 
 import android.Manifest;
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -67,6 +70,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import static android.support.v4.content.PermissionChecker.checkSelfPermission;
 
@@ -105,6 +109,8 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
     Boolean imgTaken = false;
     ImageView profile;
     ImageButton captureButton;
+    ImageButton bluetoothButton;
+    BluetoothManager bluetoothManager;
 
     //http://www.androidhive.info/2012/01/android-text-to-speech-tutorial/
     private TextToSpeech textToSpeech;
@@ -141,6 +147,8 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
             tutorialParam = getArguments().getParcelable(ARG_TUTORIAL);
             tutorParam = getArguments().getParcelable(ARG_TUTOR);
         }
+        bluetoothManager = (BluetoothManager) getContext().getSystemService(Context.BLUETOOTH_SERVICE);
+
     }
 
     @Override
@@ -161,6 +169,19 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
         final TextInputEditText zidTextView = (TextInputEditText) view.findViewById(R.id.tv_zid);
         final TextInputEditText emailTextView = (TextInputEditText) view.findViewById(R.id.tv_email);
         profile = (ImageView) view.findViewById(R.id.iv_pic);
+        bluetoothButton = (ImageButton) view.findViewById(R.id.btn_bluetooth);
+        bluetoothButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "bt button clicked");
+                BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
+                Set<BluetoothDevice> bondedDevices = bluetoothAdapter.getBondedDevices();
+
+                Log.d(TAG, bondedDevices.toString());
+
+            }
+        });
+
         captureButton = (ImageButton) view.findViewById(R.id.btn_camera_capture);
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override

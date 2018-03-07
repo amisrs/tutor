@@ -24,8 +24,8 @@
 
             <ImageView
                 android:id="@+id/iv_pic"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
 
                 android:layout_centerVertical="true"
                 android:background="@android:color/transparent"
@@ -43,6 +43,12 @@
                 android:tint="#EEEEEE"
                 android:visibility="invisible"/>
         </FrameLayout>
+        <ImageButton
+            android:id="@+id/btn_bluetooth"
+            android:layout_width="@dimen/smallButtonSize"
+            android:layout_height="@dimen/smallButtonSize"
+            android:layout_below="@id/fl_camera"
+            android:src="@drawable/ic_mail_outline_black_24dp"/>
         <!--<TextView
             android:id="@+id/tv_name"
             android:background="@color/colorPrimaryDark"/>-->
@@ -55,6 +61,7 @@
             android:layout_toRightOf="@id/fl_camera"
             android:editable="false"
             android:text="Student"
+            android:layout_marginBottom="0dp"
             android:textSize="24sp" />
 
         <android.support.design.widget.TextInputEditText
@@ -64,13 +71,15 @@
             android:layout_toRightOf="@id/tv_fname"
             android:editable="false"
             android:text="Name"
+            android:layout_marginBottom="0dp"
+
             android:textSize="24sp" />
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_fname"
+            android:layout_below="@+id/tv_zid"
             android:layout_toRightOf="@id/fl_camera"
             android:editable="false"
             android:text="Email"
@@ -82,6 +91,7 @@
             android:layout_height="@dimen/smallButtonSize"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="22dp"
+            android:layout_below="@+id/iv_pic"
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
             android:src="@drawable/ic_done_black_24dp"
@@ -100,29 +110,28 @@
             android:tint="@color/colorGrey" />
 
 
-        <ImageButton
-            android:id="@+id/ib_delete"
-            android:layout_width="@dimen/smallButtonSize"
-            android:layout_height="@dimen/smallButtonSize"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="22dp"
-            android:layout_toLeftOf="@id/iv_edit"
-            android:background="@android:color/transparent"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_delete_forever_black_24dp"
-            android:tint="@color/colorGrey" />
-
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/tv_zid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_email"
-            android:layout_toRightOf="@id/fl_camera"
-            android:editable="false"
-            android:maxLength="@integer/zidlength"
-            android:text="5062206"
-            android:textSize="16sp" />
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:layout_below="@+id/tv_fname"
+            android:layout_toRightOf="@+id/fl_camera"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="zid"
+            android:textColor="@color/colorGrey"/>
+
+        <!--<android.support.design.widget.TextInputEditText-->
+            <!--android:id="@+id/tv_zid"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/tv_email"-->
+            <!--android:layout_toRightOf="@id/fl_camera"-->
+            <!--android:editable="false"-->
+            <!--android:maxLength="@integer/zidlength"-->
+            <!--android:text="5062206"-->
+            <!--android:textSize="16sp" />-->
     </RelativeLayout>
 
     <ScrollView
@@ -214,7 +223,22 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_height="@dimen/barChartHeight"
                 android:layout_below="@id/rv_assessments"></RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/ib_delete"
+                android:layout_width="@dimen/smallButtonSize"
+                android:layout_height="@dimen/smallButtonSize"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="22dp"
+                android:layout_below="@id/rl_chart"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_delete_forever_black_24dp"
+                android:tint="@color/colorGrey" />
+
         </RelativeLayout>
+
+
     </ScrollView>
 
 

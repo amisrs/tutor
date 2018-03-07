@@ -163,7 +163,7 @@ public class NewStudentDialogFragment extends DialogFragment {
                 });
 
         final AlertDialog alertDialog = builder.create();
-        zid = (TextInputEditText) view.findViewById(R.id.et_zid);
+        zid = (TextInputEditText) view.findViewById(R.id.et_student_zid);
         zid.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.amisrs.gavin.tutorhelp.view.NewStudentActivity">
+    tools:context="com.amisrs.gavin.tutorhelp.view.NewStudentDialogFragment">
 
     <TextView
         android:id="@+id/student_title"
@@ -90,8 +90,8 @@
 
     <FrameLayout
         android:id="@+id/fl_camera"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:paddingRight="16dp"
         android:layout_centerVertical="true"

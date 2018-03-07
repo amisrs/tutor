@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amisrs.gavin.tutorhelp.R;
 import com.amisrs.gavin.tutorhelp.db.WeekQueries;
@@ -88,14 +89,14 @@ public class StudentWeekDetailsFragment extends Fragment {
         isEdit = false;
         isEmpty = true;
         View view = inflater.inflate(R.layout.fragment_student_week_details, container, false);
-        TextView weekText = (TextView) view.findViewById(R.id.tv_week);
+        //TextView weekText = (TextView) view.findViewById(R.id.tv_week);
         final TextView studentText = (TextView) view.findViewById(R.id.tv_student);
         Switch aSwitch = (Switch) view.findViewById(R.id.cb_attended);
         final TextInputEditText publicComment = (TextInputEditText) view.findViewById(R.id.et_pub);
         final TextInputEditText privateComment = (TextInputEditText) view.findViewById(R.id.et_priv);
-        final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
+//        final ImageButton editButton = (ImageButton) view.findViewById(R.id.iv_edit);
         final ImageButton saveButton = (ImageButton) view.findViewById(R.id.iv_save);
-        final ImageButton emailButton = (ImageButton) view.findViewById(R.id.emailBtn);
+//        final ImageButton emailButton = (ImageButton) view.findViewById(R.id.emailBtn);
         final ImageView profile = (ImageView) view.findViewById(R.id.iv_profile);
         final TextView idText = (TextView) view.findViewById(R.id.tv_zid);
 
@@ -113,7 +114,7 @@ public class StudentWeekDetailsFragment extends Fragment {
             }
         });
 
-        weekText.setText(weekParam.toString());
+        //xt.setText(weekParam.toString());
         studentText.setText(studentParam.getPerson().getFirstName() + " " + studentParam.getPerson().getLastName());
         idText.setText("z" + String.valueOf(studentParam.getPerson().getzID()));
         final WeekQueries weekQueries = new WeekQueries(getContext());
@@ -127,33 +128,33 @@ public class StudentWeekDetailsFragment extends Fragment {
         } else {
             aSwitch.setChecked(true);
         }
-        if(publicComment.getText().toString().matches("")){
-            isEmpty = true;
-            emailButton.setVisibility(View.GONE);
-
-        } else {
-            isEmpty = false;
-            emailButton.setVisibility(View.VISIBLE);
-        }
+//        if(publicComment.getText().toString().matches("")){
+//            isEmpty = true;
+//            emailButton.setVisibility(View.INVISIBLE);
+//
+//        } else {
+//            isEmpty = false;
+//            emailButton.setVisibility(View.VISIBLE);
+//        }
 
         /*
         * The following resource was referenced -
         * https://code.tutsplus.com/tutorials/quick-tip-enabling-users-to-send-email-from-your-android-applications-the-easy-way--mobile-1686
         */
-        emailButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-
-                String[] emailTo = new String[]{studentParam.getPerson().getEmail()};
-                intent.putExtra(Intent.EXTRA_EMAIL, emailTo);
-                intent.putExtra(Intent.EXTRA_SUBJECT, "INFS3634");
-                intent.setType("*/*");
-                String emailBody = studentWeek.getPublicComment();
-                intent.putExtra(Intent.EXTRA_TEXT, emailBody);
-                startActivity(intent.createChooser(intent, "Send email in: "));
-            }
-        });
+//        emailButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(Intent.ACTION_SEND);
+//
+//                String[] emailTo = new String[]{studentParam.getPerson().getEmail()};
+//                intent.putExtra(Intent.EXTRA_EMAIL, emailTo);
+//                intent.putExtra(Intent.EXTRA_SUBJECT, "INFS3634");
+//                intent.setType("*/*");
+//                String emailBody = studentWeek.getPublicComment();
+//                intent.putExtra(Intent.EXTRA_TEXT, emailBody);
+//                startActivity(intent.createChooser(intent, "Send email in: "));
+//            }
+//        });
 
 
         //TODO: add in ui elements to manipulate and save to this studentWeek
@@ -164,50 +165,53 @@ public class StudentWeekDetailsFragment extends Fragment {
                 studentWeek.setPublicComment(publicComment.getText().toString());
                 studentWeek.setPrivateComment(privateComment.getText().toString());
                 weekQueries.updateStudentWeek(studentWeek);
+                Toast.makeText(getContext(), R.string.editSave, Toast.LENGTH_SHORT).show();
+
                 //update grade
 
-                publicComment.setInputType(InputType.TYPE_NULL);
-                privateComment.setInputType(InputType.TYPE_NULL);
+//                publicComment.setInputType(InputType.TYPE_NULL);
+//                privateComment.setInputType(InputType.TYPE_NULL);
 
-                editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
-                saveButton.setVisibility(View.GONE);
+//                editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
+//                saveButton.setVisibility(View.INVISIBLE);
 
                 //checks the public field. If empty, email button is disabled.
-                if(publicComment.getText().toString().matches("")){
-                    isEmpty = true;
-                    emailButton.setVisibility(View.GONE);
-
-                } else {
-                    isEmpty = false;
-                    emailButton.setVisibility(View.VISIBLE);
-                }
+//                if(publicComment.getText().toString().matches("")){
+//                    isEmpty = true;
+//                    emailButton.setVisibility(View.INVISIBLE);
+//
+//                } else {
+//                    isEmpty = false;
+//                    emailButton.setVisibility(View.VISIBLE);
+//                }
                 isEdit = false;
                 //onButtonPressed("save");
             }
         });
 
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isEdit) {
-                    publicComment.setInputType(InputType.TYPE_CLASS_TEXT);
-                    privateComment.setInputType(InputType.TYPE_CLASS_TEXT);
-                    editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_clear_black_36dp));
-                    saveButton.setVisibility(View.VISIBLE);
-
-                    isEdit = true;
-                } else {
-                    publicComment.setText(studentWeek.getPublicComment());
-                    privateComment.setText(studentWeek.getPrivateComment());
-                    publicComment.setInputType(InputType.TYPE_NULL);
-                    privateComment.setInputType(InputType.TYPE_NULL);
-
-                    editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
-                    saveButton.setVisibility(View.GONE);
-                    isEdit = false;
-                }
-            }
-        });
+//        editButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (!isEdit) {
+//                    publicComment.setInputType(InputType.TYPE_CLASS_TEXT);
+//                    privateComment.setInputType(InputType.TYPE_CLASS_TEXT);
+//
+//                    editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_clear_black_36dp));
+//                    saveButton.setVisibility(View.VISIBLE);
+//
+//                    isEdit = true;
+//                } else {
+//                    publicComment.setText(studentWeek.getPublicComment());
+//                    privateComment.setText(studentWeek.getPrivateComment());
+//                    publicComment.setInputType(InputType.TYPE_NULL);
+//                    privateComment.setInputType(InputType.TYPE_NULL);
+//
+//                    editButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_mode_edit_black_36dp));
+//                    saveButton.setVisibility(View.INVISIBLE);
+//                    isEdit = false;
+//                }
+//            }
+//        });
 
         // Inflate the layout for this fragment
         return view;
