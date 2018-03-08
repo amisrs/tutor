@@ -105,12 +105,12 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
     private static final int CAMERA_PERMISSION_CODE = 1;
     private static final int REQUEST_CODE = 100;
     private String imgPath = "default.png";
+    private Context context;
     Bitmap photo;
     Boolean imgTaken = false;
     ImageView profile;
     ImageButton captureButton;
     ImageButton bluetoothButton;
-    BluetoothManager bluetoothManager;
 
     //http://www.androidhive.info/2012/01/android-text-to-speech-tutorial/
     private TextToSpeech textToSpeech;
@@ -147,7 +147,7 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
             tutorialParam = getArguments().getParcelable(ARG_TUTORIAL);
             tutorParam = getArguments().getParcelable(ARG_TUTOR);
         }
-        bluetoothManager = (BluetoothManager) getContext().getSystemService(Context.BLUETOOTH_SERVICE);
+        context = getContext();
 
     }
 
@@ -174,10 +174,10 @@ public class StudentDetailsFragment extends Fragment implements OnMarkUpdateList
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "bt button clicked");
-                BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
-                Set<BluetoothDevice> bondedDevices = bluetoothAdapter.getBondedDevices();
 
-                Log.d(TAG, bondedDevices.toString());
+                Intent btIntent = new Intent(context, BluetoothActivity.class);
+                startActivity(btIntent);
+
 
             }
         });

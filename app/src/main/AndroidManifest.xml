@@ -34,7 +34,9 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.NavDrawer.DrawerActivity" />
         <activity android:name=".view.Assessment.AssessmentsActivity" />
-        <activity android:name=".view.GraphActivity"></activity>
+        <activity android:name=".view.GraphActivity" />
+        <activity android:name=".view.BluetoothActivity" />
+        <activity android:name=".controller.BluetoothListAdapter"></activity>
     </application>
 
 </manifest>
